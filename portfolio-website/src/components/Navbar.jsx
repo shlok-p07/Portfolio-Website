@@ -5,7 +5,7 @@ const navItems = [
     href: "#main",
   },
   {
-    name: "About",
+    name: "About Me",
     href: "#about",
   },
   {
@@ -24,17 +24,17 @@ const navItems = [
 
 export const Navbar = () => {
   return (
-    <nav className="sticky top-0 z-50 w-full py-3 backdrop-blur-xl bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.25)]">
+    <nav className="fixed top-0 left-0 right-0 z-50 w-full py-3 backdrop-blur-xl bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.25)]">
       <div className="w-full px-6 relative text-sm flex items-center gap-4">
-        <div className="flex items-center shrink-0">
+        <a href="#main" className="flex items-center shrink-0 cursor-pointer hover:scale-110 transition-transform duration-300">
           <img className="h-15s w-15 mr-2" src={sp_logo} alt="sp_logo" />
-        </div>
+        </a>
         <div className="flex-1 flex justify-center">
           <ul className="hidden lg:flex space-x-12">
             {navItems.map((item) => (
               <li key={item.name}>
                 <a
-                  className="text-white hover:text-blue-400 transition"
+                  className="text-white text-lg hover:text-blue-400 transition"
                   href={item.href}
                 >
                   {item.name}
