@@ -12,6 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Environment variables (SENSITIVE - NEVER COMMIT)
+.env
+.env.local
+.env.*.local
+
+# EmailJS credentials
+# ⚠️ IMPORTANT: Store your EmailJS IDs in .env.local file:
+# VITE_EMAILJS_PUBLIC_KEY=your_public_key_here
+# VITE_EMAILJS_SERVICE_ID=your_service_id_here
+# VITE_EMAILJS_TEMPLATE_ID=your_template_id_here
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +33,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Testing
+coverage/
+.nyc_output/
+
+# Cache
+.cache/

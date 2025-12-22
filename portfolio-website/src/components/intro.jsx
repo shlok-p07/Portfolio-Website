@@ -57,7 +57,7 @@ export const Intro = () => {
           <img
             src={headshotpic}
             alt="Shlok Patel"
-            className="object-cover opacity-45"
+            className="object-cover opacity-100"
           />
         </div>
       </div>

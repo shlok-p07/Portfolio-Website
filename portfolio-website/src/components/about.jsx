@@ -40,9 +40,9 @@ export const About = () => {
     <div
       id="about"
       ref={containerRef}
-      className="bg-neutral-950 w-full flex justify-center py-20 border-b border-neutral-900"
+      className="relative w-full flex justify-center py-20 border-b border-neutral-800/40 bg-black/10"
     >
-      <div className="w-11/12 flex flex-col gap-10">
+      <div className="w-full px-6 flex flex-col gap-10 relative z-10">
         <h1 className="text-6xl text-center text-blue-500 font-extrabold tracking-wider">
           About Me
         </h1>
