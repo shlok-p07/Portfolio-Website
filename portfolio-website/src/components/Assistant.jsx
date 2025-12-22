@@ -7,7 +7,7 @@ const KNOWLEDGE_BASE = [
     q: "What is your tech stack?",
     a: "Shlok builds production-grade systems with React, Next.js, Vite, and Tailwind, backed by robust TypeScript and JavaScript. He is fluent in Python and Node.js, with experience designing APIs using Express and Flask. On the data and ML side, he works with PyTorch, scikit-learn, and Jupyter to develop and evaluate models, and uses PostgreSQL and Supabase for reliable data storage. He ships with modern engineering practices using Git and Docker, and is comfortable moving between full-stack engineering, machine learning, and quantitative workflows.",
     extendedInfo: "Breaking down his stack: Frontend-wise, he excels in React ecosystem (React, Next.js) with Vite for fast builds, styled with Tailwind CSS and animated with GSAP. Backend development includes Node.js/Express and Python/Flask for building robust APIs. For ML work, he uses PyTorch for deep learning and scikit-learn for traditional ML. Database experience spans PostgreSQL and Supabase for both relational and real-time data. DevOps tools include Docker for containerization and Git for version control. He's constantly learning and adapting to new technologies.",
-    keywords: ["stack", "tech", "technology", "technologies", "skills", "tools", "frontend", "backend", "react", "javascript", "typescript", "python", "node", "tailwind", "gsap", "emailjs", "next", "vite", "express", "flask", "pytorch", "supabase", "postgres", "docker", "git", "languages", "frameworks", "libraries"],
+    keywords: ["tech stack", "technology stack", "technologies", "skills", "programming languages", "frontend", "backend", "react", "javascript", "typescript", "python", "frameworks", "what do you use", "your stack", "technical skills"],
     relatedTopics: ["projects", "experience"],
     followUps: ["What projects have you built?", "What's your strongest area?"],
   },
@@ -16,7 +16,7 @@ const KNOWLEDGE_BASE = [
     q: "Availability and location?",
     a: "Shlok is open to new opportunities and actively interviewing. He has experience collaborating effectively across time zones, thrives in async-first environments, and remains flexible in adapting to diverse team schedules and workflows.",
     extendedInfo: "Currently based in the Boston area while studying at Northeastern University. He's seeking full-time software engineering roles, particularly interested in positions involving full-stack development, ML/AI engineering, or quantitative development. Open to remote, hybrid, or on-site positions. He can start immediately or align with typical graduation timelines. Comfortable working across US time zones and has experience with global teams.",
-    keywords: ["availability", "available", "when", "timezone", "time", "location", "where", "remote", "onsite", "hybrid", "open", "interviewing", "boston", "start", "looking", "seeking", "when can you", "when are you"],
+    keywords: ["availability", "available", "when can you start", "when are you available", "your availability", "remote", "onsite", "hybrid", "interviewing", "boston area", "based in", "willing to relocate"],
     relatedTopics: ["contact", "experience"],
     followUps: ["How can I contact you?", "What roles are you seeking?"],
   },
@@ -25,7 +25,7 @@ const KNOWLEDGE_BASE = [
     q: "Top projects?",
     a: "Highlights: NU RATE-ON — real-time dining menus with Supabase/Postgres and React/Node; Rainfall Learning — an edtech platform with collaborative coding and modern React UI. Moreover, he is currently building ML/Quant related projects and once they are done; the portfolio will be updated.",
     extendedInfo: "NU RATE-ON shows his full-stack capabilities: real-time data sync with Supabase, complex state management, and responsive UI. Built for 1000+ daily users at Northeastern. Rainfall Learning demonstrates his edtech expertise with features like collaborative code editor, real-time collaboration, and modern authentication. The upcoming ML/Quant projects will showcase his data science and financial modeling skills. Each project emphasizes production-ready code, scalability, and user experience.",
-    keywords: ["project", "projects", "portfolio", "built", "build", "made", "created", "rate-on", "rateon", "rainfall", "edtech", "dining", "developed", "examples", "demos", "what have you built", "show me", "your projects", "your work"],
+    keywords: ["projects", "portfolio", "what have you built", "what did you build", "show me your work", "your projects", "rate-on", "rainfall", "nu rate", "examples of work"],
     relatedTopics: ["tech-stack", "experience"],
     followUps: ["What's your tech stack?", "Tell me about your experience"],
   },
@@ -34,7 +34,7 @@ const KNOWLEDGE_BASE = [
     q: "How to contact you?",
     a: "You can reach Shlok via the contact form, LinkedIn, or GitHub on this page. He responds quickly to recruiter outreach. Also, his student email: patel.s15@northeastern.edu",
     extendedInfo: "Best way to reach him: For job opportunities, use the contact form on this page or email patel.s15@northeastern.edu. He typically responds within 24 hours. Find him on LinkedIn for professional networking or GitHub to see his code. He's very responsive to recruiter messages and happy to schedule calls to discuss opportunities. Open to informational interviews and technical discussions.",
-    keywords: ["contact", "reach", "email", "linkedin", "github", "form", "connect", "get in touch", "talk", "message", "reach out", "resume", "cv", "call", "schedule", "meet", "how to contact", "contact you", "reach you"],
+    keywords: ["contact", "email", "linkedin", "github", "get in touch", "reach out", "how to contact", "contact you", "contact him", "reach you", "reach him", "send message", "patel.s15"],
     relatedTopics: ["availability"],
     followUps: ["When are you available?", "What opportunities interest you?"],
   },
@@ -154,7 +154,7 @@ export const Assistant = () => {
   const [messages, setMessages] = useState([
     {
       from: "bot",
-      text: "Hi! I'm Shlok's portfolio assistant. I can provide detailed insights about his projects, tech stack, experience, availability, and how to reach him. What would you like to explore?"
+      text: "Hi! I'm Shlok's portfolio assistant (still pretty basic — he's actively working on making me smarter!). I can help with questions about his projects, tech stack, experience, availability, and contact info. What would you like to know?"
     },
   ]);
   const [conversationContext, setConversationContext] = useState({
@@ -210,7 +210,7 @@ export const Assistant = () => {
       return "No problem! What else would you like to know?";
     }
     
-    if (intents.includes('thanks')) {
+    if (intents.includes('thanks') && message.length > 2) {
       const remainingTopics = KNOWLEDGE_BASE.filter(
         entry => !context.askedTopics.has(entry.id)
       );
@@ -243,18 +243,25 @@ export const Assistant = () => {
 
     // Direct topic detection - highest priority
     const directTopicMap = {
-      'experience': ['experience', 'background', 'work history', 'qualifications', 'your experience', 'his experience'],
-      'tech-stack': ['tech stack', 'technologies', 'skills', 'tools', 'what tech', 'what languages'],
-      'projects': ['projects', 'portfolio', 'what have you built', 'show your work'],
-      'contact': ['contact', 'email', 'reach you', 'get in touch'],
-      'availability': ['availability', 'available', 'when can', 'location'],
+      'experience': ['your experience', 'his experience', 'work history', 'background', 'experience summary', 'tell me about experience', 'what is experience'],
+      'tech-stack': ['tech stack', 'technology stack', 'what technologies', 'programming languages', 'what skills', 'technical skills'],
+      'projects': ['your projects', 'his projects', 'what have you built', 'what did you build', 'show me projects', 'portfolio projects'],
+      'contact': ['how to contact', 'contact you', 'contact him', 'reach out', 'get in touch', 'your email', 'his email'],
+      'availability': ['your availability', 'his availability', 'when available', 'when can you start', 'where are you located', 'where is he located'],
+      'education': ['education', 'university', 'northeastern', 'school', 'degree', 'studying'],
     };
 
-    for (const [topicId, phrases] of Object.entries(directTopicMap)) {
-      if (phrases.some(phrase => m.includes(phrase))) {
-        const entry = KNOWLEDGE_BASE.find(e => e.id === topicId);
-        if (entry) {
-          return { answer: entry.a, matchedTopic: entry.id, confidence: 'high' };
+    // Only match if it looks like a question about portfolio
+    const portfolioIndicators = ['what', 'where', 'when', 'how', 'tell', 'show', 'your', 'his', 'you', 'he', 'shlok'];
+    const hasPortfolioContext = portfolioIndicators.some(indicator => m.includes(indicator));
+
+    if (hasPortfolioContext) {
+      for (const [topicId, phrases] of Object.entries(directTopicMap)) {
+        if (phrases.some(phrase => m.includes(phrase))) {
+          const entry = KNOWLEDGE_BASE.find(e => e.id === topicId);
+          if (entry) {
+            return { answer: entry.a, matchedTopic: entry.id, confidence: 'high' };
+          }
         }
       }
     }
@@ -299,8 +306,8 @@ export const Assistant = () => {
       };
     }
     
-    // High confidence match
-    if (best.score > 3) {
+    // High confidence match - require strong score
+    if (best.score > 8) {
       return { 
         answer: best.entry.a, 
         matchedTopic: best.entry.id, 
@@ -309,7 +316,7 @@ export const Assistant = () => {
     }
     
     // Medium confidence - provide answer with caveat
-    if (best.score > 1) {
+    if (best.score > 4) {
       return { 
         answer: `${best.entry.a}\n\nWant more specifics on this topic?`, 
         matchedTopic: best.entry.id, 
@@ -322,7 +329,7 @@ export const Assistant = () => {
     const topicList = unaskedTopics.slice(0, 3).map(t => t.id.replace('-', ' ')).join(', ');
     
     return { 
-      answer: `I'm focused on Shlok's portfolio information. I can help with: ${topicList}. What interests you?`, 
+      answer: `Sorry, I don't have much data on that! I'm pretty basic right now and only focused on Shlok's portfolio — specifically: ${topicList}. What would you like to know about his work?`, 
       matchedTopic: null, 
       confidence: 'low' 
     };
