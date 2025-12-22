@@ -6,6 +6,7 @@ import { About } from "./components/about";
 import { Skills } from "./components/skills";
 import { Projects } from "./components/projects";
 import { Contact } from "./components/contact";
+import { Assistant } from "./components/Assistant";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -63,6 +64,7 @@ function App() {
         }
       `}</style>
       <Navbar />
+      <Assistant />
       <div className="w-full flex flex-col relative z-10 min-h-screen">
         <section id="main" className="w-full flex justify-center mt-40 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Intro />

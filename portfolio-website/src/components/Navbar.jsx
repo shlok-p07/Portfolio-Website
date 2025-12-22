@@ -46,6 +46,10 @@ export const Navbar = () => {
         <div className="hidden lg:flex">
           <a
             href="#assistant"
+            onClick={(e) => {
+              e.preventDefault();
+              window.dispatchEvent(new Event("open-assistant"));
+            }}
             className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-2 text-white border border-white/30 backdrop-blur-md hover:bg-white/30 transition"
           >
             AI Assistant
