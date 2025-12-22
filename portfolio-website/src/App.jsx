@@ -7,6 +7,7 @@ import { Skills } from "./components/skills";
 import { Projects } from "./components/projects";
 import { Contact } from "./components/contact";
 import { Assistant } from "./components/Assistant";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -76,6 +77,7 @@ function App() {
           <Contact />
         </div>
       </div>
+      <Analytics />
     </>
   );
 }
