@@ -6,7 +6,6 @@ import emailjs from "@emailjs/browser";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Initialize EmailJS with environment variable
 emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
 
 export const Contact = () => {
@@ -94,10 +93,10 @@ export const Contact = () => {
     <div
       id="contact"
       ref={containerRef}
-      className="relative w-full flex justify-center py-20 border-b border-neutral-800/40 bg-black/10"
+      className="relative w-full flex justify-center py-16 sm:py-20 border-b border-neutral-800/40 bg-black/10"
     >
-      <div className="w-full px-6 flex flex-col gap-10 items-center relative z-10">
-        <h1 className="text-6xl text-center text-blue-500 font-extrabold tracking-wider">
+      <div className="w-full px-4 sm:px-6 flex flex-col gap-8 sm:gap-10 items-center relative z-10">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
           Contact Me
         </h1>
         <div className="w-full flex justify-center">
@@ -106,7 +105,7 @@ export const Contact = () => {
             <div className="pointer-events-none absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-cyan-500/8 blur-3xl" />
 
             <div className="relative rounded-3xl border border-white/15 bg-white/6 backdrop-blur-xl shadow-2xl shadow-blue-500/10">
-              <form ref={formRef} onSubmit={sendEmail} className="grid grid-cols-1 gap-6 p-8 md:p-10">
+              <form ref={formRef} onSubmit={sendEmail} className="grid grid-cols-1 gap-6 p-6 sm:p-8 md:p-10">
                 <div>
                   <label htmlFor="name" className="sr-only">
                     Name
@@ -116,7 +115,7 @@ export const Contact = () => {
                     id="name"
                     name="name"
                     required
-                    className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
+                    className="w-full px-5 py-3.5 md:py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
                     placeholder="Name"
                   />
                 </div>
@@ -130,7 +129,7 @@ export const Contact = () => {
                     id="email"
                     name="email"
                     required
-                    className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
+                    className="w-full px-5 py-3.5 md:py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
                     placeholder="Email"
                   />
                 </div>
@@ -144,7 +143,7 @@ export const Contact = () => {
                     id="number"
                     name="number"
                     required
-                    className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
+                    className="w-full px-5 py-3.5 md:py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
                     placeholder="Phone Number"
                   />
                 </div>
@@ -158,7 +157,7 @@ export const Contact = () => {
                     name="message"
                     required
                     rows={6}
-                    className="w-full px-6 py-4 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
+                    className="w-full px-5 py-4 md:py-5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 shadow-lg shadow-black/30 focus:outline-none focus:ring-2 focus:ring-blue-400/40 focus:border-white/40"
                     placeholder="Your Message"
                   />
                 </div>
@@ -167,7 +166,7 @@ export const Contact = () => {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-auto px-8 py-3 rounded-2xl bg-linear-to-r from-blue-500 to-cyan-500 text-white font-semibold shadow-xl shadow-blue-500/30 hover:from-blue-400 hover:to-cyan-400 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition"
+                    className="w-auto px-8 py-3 rounded-2xl bg-linear-to-r from-blue-500 to-cyan-500 text-white font-semibold shadow-xl shadow-blue-500/30 hover:from-blue-400 hover:to-cyan-400 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition text-sm sm:text-base"
                   >
                     {loading ? "Sending..." : "Submit"}
                   </button>

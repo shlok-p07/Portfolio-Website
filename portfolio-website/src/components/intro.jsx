@@ -20,10 +20,10 @@ export const Intro = () => {
   }, []);
   return (
     <div id="main" className="text-blue-200 w-full min-h-[90vh] flex items-center justify-center font-mono">
-      <div className="w-11/12 max-w-6xl">
-        <div className="flex flex-wrap lg:items-center">
-          <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
-          <div className="pb-2 text-4xl">
+      <div className="w-full max-w-6xl px-1 sm:px-0 mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+          <div className="flex flex-col gap-4 items-start text-left">
+          <div className="pb-2 text-xl sm:text-2xl lg:text-4xl leading-tight">
             <TextType
               text={["Hi, I am Shlok Patel"]}
               typingSpeed={75}
@@ -31,10 +31,10 @@ export const Intro = () => {
               loop={false}
               cursorCharacter="|"
             />
-            <div className="flex items-baseline gap-2 text-blue-500 text-shadow-white -ml-2">
+            <div className="flex flex-wrap items-baseline justify-start gap-2 text-blue-500 text-shadow-white w-full">
               <RotatingText
                 texts={["Software", "Quant", "AI/ML"]}
-                mainClassName="px-1.5 sm:px-2 md:px-2 justify-center rounded-lg shadow-lg text-sm sm:text-base md:text-4xl"
+                mainClassName="justify-start text-left rounded-lg shadow-lg text-3xl"
                 staggerFrom={"last"}
                 initial={{ y: "100%" }}
                 animate={{ y: 0 }}
@@ -44,20 +44,20 @@ export const Intro = () => {
                 transition={{ type: "spring", damping: 30, stiffness: 400 }}
                 rotationInterval={3200}
               />
-              <span className="text-4xl">
+              <span className="text-3xl">
                   Developer
               </span>
             </div>
           </div>
-          <p className="my-2 max-w-xl py-6 font-light tracking-tighter text-2xl">
+          <p className="my-2 max-w-2xl py-2 sm:py-4 font-light tracking-tight text-base sm:text-lg md:text-xl leading-relaxed">
           Passion for working with system designs, numbers, and innovating softwares to solve problems through creativity across the globe.   
           </p>
         </div>
-        <div className="w-full lg:w-1/2 lg:p-8 flex justify-center lg:justify-center lg:items-start lg:-mt-24 lg:-mr-20">
+        <div className="w-full flex justify-center lg:justify-end lg:pl-6">
           <img
             src={headshotpic}
             alt="Shlok Patel"
-            className="object-cover opacity-100"
+            className="object-cover opacity-100 w-60 sm:w-72 md:w-80 lg:w-[22rem] max-w-full rounded-3xl shadow-2xl shadow-black/40"
           />
         </div>
       </div>

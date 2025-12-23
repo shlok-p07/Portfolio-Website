@@ -157,10 +157,10 @@ export const Skills = () => {
     <div
       id="skills"
       ref={containerRef}
-      className="relative w-full flex justify-center py-20 border-b border-neutral-800/40 bg-black/10"
+      className="relative w-full flex justify-center py-16 sm:py-20 border-b border-neutral-800/40 bg-black/10"
     >
-      <div className="w-full px-6 flex flex-col gap-10 items-center relative z-10">
-        <h1 className="text-6xl text-center text-blue-500 font-extrabold tracking-wider">
+      <div className="w-full px-4 sm:px-6 flex flex-col gap-8 sm:gap-10 items-center relative z-10 max-w-6xl">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
           Skills
         </h1>
         <div className="w-full">
@@ -172,8 +172,8 @@ export const Skills = () => {
             pauseOnHover
             ariaLabel="Technology stack logos"
             renderItem={(item) => (
-              <div className="flex items-center gap-2 px-4 py-2 bg-white/5 rounded-full text-blue-100 text-lg shadow-sm shadow-black/30">
-                <span className="text-3xl">{item.node}</span>
+              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/5 rounded-full text-blue-100 text-base sm:text-lg shadow-sm shadow-black/30">
+                <span className="text-2xl sm:text-3xl">{item.node}</span>
                 <span className="font-semibold">{item.title}</span>
               </div>
             )}

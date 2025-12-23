@@ -96,20 +96,20 @@ export const Projects = () => {
       <div
         id="projects"
         ref={containerRef}
-        className="relative w-full flex justify-center py-20 border-b border-neutral-800/40 bg-black/10"
+        className="relative w-full flex justify-center py-16 sm:py-20 border-b border-neutral-800/40 bg-black/10"
       >
-        <div className="w-full px-6 flex flex-col gap-16 items-center relative z-10">
-          <h1 className="text-6xl text-center text-blue-500 font-extrabold tracking-wider">
+        <div className="w-full px-4 sm:px-6 flex flex-col gap-14 items-center relative z-10 max-w-6xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
             Projects
           </h1>
 
-          <div className="w-full max-w-4xl flex flex-col gap-20">
+          <div className="w-full max-w-5xl flex flex-col gap-14 sm:gap-20">
             {/* Project Card */}
             <div key={project.id} className="flex flex-col gap-6">
               {/* Stack Container - Clickable */}
               <div
                 onClick={handleNext}
-                className="w-200 h-125 rounded-3xl hover:border-blue-500/30 transition-all duration-300 shadow-xl mx-auto cursor-pointer hover:shadow-2xl hover:scale-110"
+                className="w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl hover:border-blue-500/30 transition-all duration-300 shadow-xl mx-auto cursor-pointer hover:shadow-2xl hover:scale-105"
               >
                 <Stack
                   randomRotation={true}
@@ -144,7 +144,7 @@ export const Projects = () => {
                 <h2 className="text-3xl font-bold text-white">
                   {project.title}
                 </h2>
-                <p className="text-neutral-300 leading-relaxed">
+                <p className="text-neutral-300 leading-relaxed text-base sm:text-lg">
                   {project.description}
                 </p>
 
