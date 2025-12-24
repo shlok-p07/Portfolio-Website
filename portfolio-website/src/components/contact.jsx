@@ -21,26 +21,100 @@ export const Contact = () => {
     const animation = gsap.fromTo(
       el,
       {
-        opacity: 0,
-        y: 100,
+        opacity: 0.8,
+        y: 30,
       },
       {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        ease: "power3.out",
+        duration: 1.4,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 90%",
-          toggleActions: "play none none reverse",
+          start: "top 85%",
+          toggleActions: "play none none none",
           markers: false,
         },
       }
     );
 
+    // Animate title
+    const title = el.querySelector('h1');
+    if (title) {
+      gsap.fromTo(
+        title,
+        {
+          opacity: 0.8,
+          y: -15,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: title,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
+    // Animate form elements
+    const form = formRef.current;
+    if (form) {
+      const inputs = form.querySelectorAll('input, textarea');
+      gsap.fromTo(
+        inputs,
+        {
+          opacity: 0.8,
+          y: 10,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: form,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
+    // Animate social links
+    const socials = el.querySelectorAll('[href*="linkedin"], [href*="instagram"], [href*="github"]').closest?.('a');
+    const socialContainer = el.querySelector('.flex.gap-6');
+    if (socialContainer) {
+      gsap.fromTo(
+        socialContainer.querySelectorAll('a'),
+        {
+          opacity: 0.8,
+          scale: 0.95,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 0.8,
+          stagger: 0.08,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: socialContainer,
+            start: "top 70%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
     return () => {
       animation.scrollTrigger?.kill();
       animation.kill();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
@@ -93,7 +167,7 @@ export const Contact = () => {
     <div
       id="contact"
       ref={containerRef}
-      className="relative w-full flex justify-center py-16 sm:py-20 border-b border-neutral-800/40 bg-black/10"
+      className="relative w-full flex justify-center py-16 sm:py-20"
     >
       <div className="w-full px-4 sm:px-6 flex flex-col gap-8 sm:gap-10 items-center relative z-10">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
@@ -104,7 +178,7 @@ export const Contact = () => {
             <div className="pointer-events-none absolute -top-20 -left-20 w-72 h-72 rounded-full bg-blue-500/8 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-cyan-500/8 blur-3xl" />
 
-            <div className="relative rounded-3xl border border-white/15 bg-white/6 backdrop-blur-xl shadow-2xl shadow-blue-500/10">
+            <div className="relative rounded-3xl backdrop-blur-sm bg-white/[0.02]">
               <form ref={formRef} onSubmit={sendEmail} className="grid grid-cols-1 gap-6 p-6 sm:p-8 md:p-10">
                 <div>
                   <label htmlFor="name" className="sr-only">
@@ -162,25 +236,27 @@ export const Contact = () => {
                   />
                 </div>
 
-                <div className="flex justify-start">
+                <div className="flex justify-center md:col-span-6 w-full">
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-auto px-8 py-3 rounded-2xl bg-linear-to-r from-blue-500 to-cyan-500 text-white font-semibold shadow-xl shadow-blue-500/30 hover:from-blue-400 hover:to-cyan-400 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition text-sm sm:text-base"
+                    className="w-auto px-8 py-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white font-semibold hover:bg-white/15 hover:border-white/30 hover:text-blue-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 text-sm sm:text-base"
                   >
                     {loading ? "Sending..." : "Submit"}
                   </button>
                 </div>
 
                 {formMessage.text && (
-                  <div
-                    className={`text-sm font-medium p-3 rounded-lg md:col-start-2 md:col-span-5 ${
-                      formMessage.type === "success"
-                        ? "bg-green-500/20 border border-green-500/50 text-green-400"
-                        : "bg-red-500/20 border border-red-500/50 text-red-400"
-                    }`}
-                  >
-                    {formMessage.text}
+                  <div className="flex justify-center md:col-span-6 w-full">
+                    <div
+                      className={`text-sm font-medium p-3 rounded-lg text-center w-full max-w-md ${
+                        formMessage.type === "success"
+                          ? "bg-blue-500/20 border border-blue-500/50 text-blue-400"
+                          : "bg-red-500/20 border border-red-500/50 text-red-400"
+                      }`}
+                    >
+                      {formMessage.text}
+                    </div>
                   </div>
                 )}
               </form>
@@ -195,15 +271,6 @@ export const Contact = () => {
                 className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/15 transition cursor-pointer flex items-center justify-center"
               >
                 <FaLinkedin className="text-white text-2xl" />
-              </a>
-              <a
-                href="https://www.instagram.com/shlokp.07/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/15 transition cursor-pointer flex items-center justify-center"
-              >
-                <FaInstagram className="text-white text-2xl" />
               </a>
               <a
                 href="https://github.com/shlok-p07"

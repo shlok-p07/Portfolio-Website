@@ -133,20 +133,65 @@ export const Skills = () => {
 
     gsap.fromTo(
       el,
-      { opacity: 0, y: 50 },
+      { opacity: 0.8, y: 20 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: "power2.out",
+        duration: 1.2,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 80%",
-          end: "top 50%",
-          scrub: 0.5,
+          start: "top 85%",
+          toggleActions: "play none none none",
         },
       }
     );
+
+    // Animate title
+    const title = el.querySelector('h1');
+    if (title) {
+      gsap.fromTo(
+        title,
+        {
+          opacity: 0.8,
+          y: -15,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
+    // Animate logo carousel container
+    const carousel = el.querySelector('.w-screen');
+    if (carousel) {
+      gsap.fromTo(
+        carousel,
+        {
+          opacity: 0.8,
+          y: 20,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.4,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: carousel,
+            start: "top 70%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -157,28 +202,30 @@ export const Skills = () => {
     <div
       id="skills"
       ref={containerRef}
-      className="relative w-full flex justify-center py-16 sm:py-20 border-b border-neutral-800/40 bg-black/10"
+      className="relative w-full flex flex-col py-16 sm:py-20"
     >
-      <div className="w-full px-4 sm:px-6 flex flex-col gap-8 sm:gap-10 items-center relative z-10 max-w-6xl">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
-          Skills
-        </h1>
-        <div className="w-full">
-          <LogoLoop
-            logos={techLogos}
-            speed={140}
-            gap={36}
-            logoHeight={44}
-            pauseOnHover
-            ariaLabel="Technology stack logos"
-            renderItem={(item) => (
-              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/5 rounded-full text-blue-100 text-base sm:text-lg shadow-sm shadow-black/30">
-                <span className="text-2xl sm:text-3xl">{item.node}</span>
-                <span className="font-semibold">{item.title}</span>
-              </div>
-            )}
-          />
+      <div className="w-full px-4 sm:px-6 flex justify-center mb-8 sm:mb-10 relative z-10">
+        <div className="max-w-6xl">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
+            Skills
+          </h1>
         </div>
+      </div>
+      <div className="w-screen overflow-hidden">
+        <LogoLoop
+          logos={techLogos}
+          speed={140}
+          gap={36}
+          logoHeight={44}
+          pauseOnHover
+          ariaLabel="Technology stack logos"
+          renderItem={(item) => (
+            <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-white/5 rounded-full text-blue-100 text-base sm:text-lg shadow-sm shadow-black/30">
+              <span className="text-2xl sm:text-3xl">{item.node}</span>
+              <span className="font-semibold">{item.title}</span>
+            </div>
+          )}
+        />
       </div>
     </div>
   );

@@ -39,6 +39,9 @@ const DEFAULTS = {
   segments: 35
 };
 
+const ALLOW_USER_ROTATION = false;
+const AUTO_ROTATE_SPEED_DEG = 0.12;
+
 const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
 const normalizeAngle = d => ((d % 360) + 360) % 360;
 const wrapAngleSigned = deg => {
@@ -260,6 +263,22 @@ export default function DomeGallery({
     applyTransform(rotationRef.current.x, rotationRef.current.y);
   }, []);
 
+  useEffect(() => {
+    let rafId = null;
+    const spin = () => {
+      const current = rotationRef.current;
+      const nextY = wrapAngleSigned(current.y + AUTO_ROTATE_SPEED_DEG);
+      rotationRef.current = { x: current.x, y: nextY };
+      applyTransform(current.x, nextY);
+      rafId = requestAnimationFrame(spin);
+    };
+
+    rafId = requestAnimationFrame(spin);
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   const stopInertia = useCallback(() => {
     if (inertiaRAF.current) {
       cancelAnimationFrame(inertiaRAF.current);
@@ -330,17 +349,19 @@ export default function DomeGallery({
           if (dist2 > 16) movedRef.current = true;
         }
 
-        const nextX = clamp(
-          startRotRef.current.x - dyTotal / dragSensitivity,
-          -maxVerticalRotationDeg,
-          maxVerticalRotationDeg
-        );
-        const nextY = startRotRef.current.y + dxTotal / dragSensitivity;
+        if (ALLOW_USER_ROTATION) {
+          const nextX = clamp(
+            startRotRef.current.x - dyTotal / dragSensitivity,
+            -maxVerticalRotationDeg,
+            maxVerticalRotationDeg
+          );
+          const nextY = startRotRef.current.y + dxTotal / dragSensitivity;
 
-        const cur = rotationRef.current;
-        if (cur.x !== nextX || cur.y !== nextY) {
-          rotationRef.current = { x: nextX, y: nextY };
-          applyTransform(nextX, nextY);
+          const cur = rotationRef.current;
+          if (cur.x !== nextX || cur.y !== nextY) {
+            rotationRef.current = { x: nextX, y: nextY };
+            applyTransform(nextX, nextY);
+          }
         }
 
         if (last) {
@@ -362,13 +383,13 @@ export default function DomeGallery({
           let vx = vMagX * dirX;
           let vy = vMagY * dirY;
 
-          if (!isTap && Math.abs(vx) < 0.001 && Math.abs(vy) < 0.001 && Array.isArray(movement)) {
+          if (ALLOW_USER_ROTATION && !isTap && Math.abs(vx) < 0.001 && Math.abs(vy) < 0.001 && Array.isArray(movement)) {
             const [mx, my] = movement;
             vx = (mx / dragSensitivity) * 0.02;
             vy = (my / dragSensitivity) * 0.02;
           }
 
-          if (!isTap && (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005)) {
+          if (ALLOW_USER_ROTATION && !isTap && (Math.abs(vx) > 0.005 || Math.abs(vy) > 0.005)) {
             startInertia(vx, vy);
           }
           startPosRef.current = null;

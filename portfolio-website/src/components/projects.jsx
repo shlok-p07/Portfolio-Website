@@ -19,22 +19,68 @@ export const Projects = () => {
     gsap.fromTo(
       el,
       {
-        opacity: 0,
-        y: 100,
+        opacity: 0.8,
+        y: 30,
       },
       {
         opacity: 1,
         y: 0,
-        duration: 1.2,
-        ease: "power3.out",
+        duration: 1.4,
+        ease: "power1.out",
         scrollTrigger: {
           trigger: el,
-          start: "top 90%",
-          toggleActions: "play none none reverse",
+          start: "top 85%",
+          toggleActions: "play none none none",
           markers: false,
         },
       }
     );
+
+    // Animate title
+    const title = el.querySelector('h1');
+    if (title) {
+      gsap.fromTo(
+        title,
+        {
+          opacity: 0.8,
+          y: -15,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
+
+    // Animate project card on scroll
+    const projectCard = el.querySelector('.bg-white\\/5');
+    if (projectCard) {
+      gsap.fromTo(
+        projectCard,
+        {
+          opacity: 0.85,
+          scale: 0.99,
+        },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: projectCard,
+            start: "top 75%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -96,7 +142,7 @@ export const Projects = () => {
       <div
         id="projects"
         ref={containerRef}
-        className="relative w-full flex justify-center py-16 sm:py-20 border-b border-neutral-800/40 bg-black/10"
+        className="relative w-full flex justify-center py-16 sm:py-20"
       >
         <div className="w-full px-4 sm:px-6 flex flex-col gap-14 items-center relative z-10 max-w-6xl">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
@@ -104,15 +150,13 @@ export const Projects = () => {
           </h1>
 
           <div className="w-full max-w-5xl flex flex-col gap-14 sm:gap-20">
-            {/* Project Card */}
             <div key={project.id} className="flex flex-col gap-6">
-              {/* Stack Container - Clickable */}
               <div
                 onClick={handleNext}
-                className="w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl hover:border-blue-500/30 transition-all duration-300 shadow-xl mx-auto cursor-pointer hover:shadow-2xl hover:scale-105"
+                className="w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl hover:border-blue-500/30 transition-all duration-300 mx-auto cursor-pointer hover:scale-105"
               >
                 <Stack
-                  randomRotation={true}
+                  randomRotation={false}
                   sensitivity={180}
                   sendToBackOnClick={true}
                   cards={[
@@ -144,7 +188,7 @@ export const Projects = () => {
                 <h2 className="text-3xl font-bold text-white">
                   {project.title}
                 </h2>
-                <p className="text-neutral-300 leading-relaxed text-base sm:text-lg">
+                <p className="text-neutral-300 leading-relaxed text-base sm:text-lg text-justify">
                   {project.description}
                 </p>
 
