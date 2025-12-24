@@ -126,6 +126,10 @@
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1a1f35 75%, #0f172a 100%);
     background-attachment: fixed;
     min-height: 100vh;
+    scrollbar-width: none;
+  }
+  body::-webkit-scrollbar {
+    display: none;
   }
   html, body, #root {
     min-height: 100%;

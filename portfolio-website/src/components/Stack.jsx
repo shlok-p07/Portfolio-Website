@@ -16,7 +16,7 @@ function CardRotate({ children, onSendToBack, sensitivity, disableDrag = false }
     }
   }
 
-  if (disableDrag) {
+  if (disableDrag || sensitivity <= 0) {
     return (
       <motion.div className="absolute inset-0 cursor-pointer" style={{ x: 0, y: 0 }}>
         {children}

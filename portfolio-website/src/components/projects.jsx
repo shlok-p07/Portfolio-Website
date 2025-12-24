@@ -11,10 +11,14 @@ gsap.registerPlugin(ScrollTrigger);
 export const Projects = () => {
   const containerRef = useRef(null);
   const [currentProject, setCurrentProject] = useState(0);
+  const [isTouch, setIsTouch] = useState(false);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+
+    const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+    setIsTouch(coarse);
 
     gsap.fromTo(
       el,
@@ -153,12 +157,14 @@ export const Projects = () => {
             <div key={project.id} className="flex flex-col gap-6">
               <div
                 onClick={handleNext}
-                className="w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl hover:border-blue-500/30 transition-all duration-300 mx-auto cursor-pointer hover:scale-105"
+                className={`w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl transition-all duration-300 mx-auto ${
+                  isTouch ? "" : "hover:border-blue-500/30 cursor-pointer hover:scale-105"
+                }`}
               >
                 <Stack
                   randomRotation={false}
-                  sensitivity={180}
-                  sendToBackOnClick={true}
+                  sensitivity={0}
+                  sendToBackOnClick={false}
                   cards={[
                     <img
                       key={0}
