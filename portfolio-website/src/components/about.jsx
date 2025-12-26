@@ -101,7 +101,7 @@ export const About = () => {
               <DomeGallery fit={0.32} minRadius={400} />
             </div>
           </div>
-          <div className="w-full lg:w-[60%] text-blue-100 text-base sm:text-lg md:text-xl leading-relaxed space-y-4 text-justify">
+          <div className="w-full lg:w-[60%] text-blue-100 text-base sm:text-lg md:text-xl leading-relaxed space-y-4 text-justify font-normal">
             <p>
               I am a student at Northeastern University’s Khoury College of
               Computer Sciences and D’Amore-McKim School of Business, pursuing a

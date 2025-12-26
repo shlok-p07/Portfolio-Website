@@ -154,10 +154,10 @@ export const Projects = () => {
           </h1>
 
           <div className="w-full max-w-5xl flex flex-col gap-14 sm:gap-20">
-            <div key={project.id} className="flex flex-col gap-6">
+            <div key={project.id} className="flex flex-col gap-6 items-center">
               <div
                 onClick={handleNext}
-                className={`w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl transition-all duration-300 mx-auto ${
+                className={`w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl transition-all duration-300 ${
                   isTouch ? "" : "hover:border-blue-500/30 cursor-pointer hover:scale-105"
                 }`}
               >
@@ -181,14 +181,12 @@ export const Projects = () => {
                 />
               </div>
 
-              <div className="text-center">
-                <p 
-                  onClick={handleNext}
-                  className="text-sm text-neutral-500 hover:text-blue-400 transition-colors duration-200 cursor-pointer"
-                >
-                  Click to view next project
-                </p>
-              </div>
+              <p
+                onClick={handleNext}
+                className="text-sm text-neutral-500 hover:text-blue-400 transition-colors duration-200 cursor-pointer text-center max-w-3xl w-full"
+              >
+                Click to view next project
+              </p>
 
               <div className="flex flex-col gap-4 pt-8">
                 <h2 className="text-3xl font-bold text-white">

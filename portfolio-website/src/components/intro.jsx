@@ -100,7 +100,7 @@ export const Intro = () => {
               </span>
             </div>
           </div>
-          <p className="max-w-2xl font-light tracking-tight text-lg sm:text-xl md:text-2xl leading-relaxed">
+          <p className="max-w-2xl font-normal tracking-tight text-lg sm:text-xl leading-relaxed">
           Passion for working with system designs, numbers, and innovating softwares to solve problems through creativity across the globe.   
           </p>
         </div>
