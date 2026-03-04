@@ -193,7 +193,7 @@ export const Projects = () => {
                       style={{
                         width: "100%",
                         height: "100%",
-                        objectFit: "cover",
+                        objectFit: project.id === 3 ? "contain" : "cover",
                         borderRadius: "1.5rem",
                       }}
                     />,
