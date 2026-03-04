@@ -71,7 +71,7 @@ const techLogos = [
     href: "https://devdocs.io/javascript/",
   },
   { node: <SiNodedotjs />, title: "Node.js", href: "https://nodejs.org/en" },
-  { node: <SiPytorch />, title: "Pytorch", href: "https://pytorch.org/" },
+  { node: <SiPytorch />, title: "PyTorch", href: "https://pytorch.org/" },
   {
     node: <SiScikitlearn />,
     title: "Scikit-learn",

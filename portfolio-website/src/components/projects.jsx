@@ -5,7 +5,7 @@ import Stack from "./Stack";
 import { ChevronLeft, ChevronRight, Github } from "lucide-react";
 import rateon from "../assets/rateon.png";
 import rainfall from "../assets/rainfall.webp";
-
+import project3 from "../assets/project3.png";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Projects = () => {
@@ -129,6 +129,26 @@ export const Projects = () => {
       ],
       image: rainfall,
       github: "",
+    },
+    {
+      id: 3,
+      title: "Derivative Hedging Using Reinforcement Learning",
+      description:
+        "Traditional hedging approaches like delta or gamma hedging assume simplified market dynamics and static parameters. In practice, market conditions evolve dynamically. This project applies Reinforcement Learning (RL) to develop adaptive hedging strategies that learn to minimize portfolio risk in real-time. The RL agents dynamically adjust hedge ratios (delta, gamma, vega) based on changing market states, using simulated or historical price data, volatility shifts, and transaction costs. The project evaluates performance via hedging error, portfolio variance, transaction cost efficiency, and drawdown compared to traditional benchmarks. Optional extensions include Distributional Robust RL (DRRL), cost-aware or risk-sensitive RL variants, and alternative reward structures.",
+      tech: [
+        "Python",
+    "NumPy",
+    "SciPy",
+    "Matplotlib",
+    "Gymnasium",
+    "Stable-Baselines3 (PPO, SAC)",
+    "PyTorch",
+    "Jupyter Notebook",
+    "Git",
+    "GitHub"
+      ],
+      image: project3,
+      github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
     },
   ];
 
