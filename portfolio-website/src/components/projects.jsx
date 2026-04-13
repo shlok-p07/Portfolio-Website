@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Github } from "lucide-react";
 import rateon from "../assets/rateon.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
+import sgacms from "../assets/sgacms.png";
 gsap.registerPlugin(ScrollTrigger);
 
 export const Projects = () => {
@@ -131,25 +132,47 @@ export const Projects = () => {
       github: "",
     },
     {
-      id: 3,
-      title: "Derivative Hedging Using Reinforcement Learning",
-      description:
-        "Traditional hedging approaches like delta or gamma hedging assume simplified market dynamics and static parameters. In practice, market conditions evolve dynamically. This project applies Reinforcement Learning (RL) to develop adaptive hedging strategies that learn to minimize portfolio risk in real-time. The RL agents dynamically adjust hedge ratios (delta, gamma, vega) based on changing market states, using simulated or historical price data, volatility shifts, and transaction costs. The project evaluates performance via hedging error, portfolio variance, transaction cost efficiency, and drawdown compared to traditional benchmarks. Optional extensions include Distributional Robust RL (DRRL), cost-aware or risk-sensitive RL variants, and alternative reward structures.",
-      tech: [
-        "Python",
-    "NumPy",
-    "SciPy",
-    "Matplotlib",
-    "Gymnasium",
+  id: 3,
+  title: "RL Derivative Hedging Research Platform",
+  description:
+    "A full-stack research platform that trains PPO and SAC reinforcement learning agents to outperform classical Black-Scholes delta hedging on real SPY market data. The RL agents learn cost-aware, regime-adaptive hedge ratios across 1,200+ distinct 30-day windows drawn from 5 years of SPY history — including the 2020 COVID crash and 2022 rate shock. Performance is benchmarked across four scenarios (base, high transaction costs, volatility mismatch, and regime switching) using Sharpe ratio, 95% VaR/CVaR, and P&L distribution metrics. RL agents significantly outperform delta hedging in high-TC and vol-mismatch regimes by learning to rebalance only when the hedge benefit exceeds the cost — an emergent property requiring no explicit programming. The platform ships with a Streamlit research dashboard featuring live training, a frame-by-frame episode demo, scenario lab, and a live SPY options chain with implied volatility surface.",
+  tech: [
+    "Python",
     "Stable-Baselines3 (PPO, SAC)",
     "PyTorch",
-    "Jupyter Notebook",
+    "Gymnasium",
+    "Streamlit",
+    "Plotly",
+    "NumPy",
+    "SciPy",
+    "yfinance",
+    "TensorBoard",
     "Git",
-    "GitHub"
-      ],
-      image: project3,
-      github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
-    },
+  ],
+  image: project3,
+  imageFit: "contain",
+  github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
+},
+    {
+  id: 4,
+  title: "SGA Website Internal CMS",
+  description:
+    "A full-stack content management system built for Northeastern's Student Government Association Webmaster Team, enabling non-technical staff to visually create, edit, and publish website content without touching source code. The platform features a drag-and-drop page editor powered by React Puck, a custom block library (containers, columns, grids, rich text, media), and a full versioning system where every save creates a new version and publishing is explicit — so drafts never accidentally go live. The data model maps documents to URL routes, allowing flexible multi-route publishing. Built with Next.js 16 Server Actions, Prisma, and a Supabase-managed PostgreSQL database, with S3-compatible media storage. A soft-delete archive system and role-based access protect against accidental data loss.",
+  tech: [
+    "Next.js",
+    "TypeScript",
+    "React",
+    "Prisma",
+    "PostgreSQL",
+    "Supabase",
+    "Tailwind CSS",
+    "Puck Editor",
+    "Vercel",
+  ],
+  image: sgacms,
+  imageFit: "contain",
+  github: "https://github.com/SGAOperations/website-development",
+},
   ];
 
   const handlePrev = () => {
@@ -193,7 +216,8 @@ export const Projects = () => {
                       style={{
                         width: "100%",
                         height: "100%",
-                        objectFit: project.id === 3 ? "contain" : "cover",
+                        objectFit: project.imageFit || "cover",
+                        objectPosition: "center",
                         borderRadius: "1.5rem",
                       }}
                     />,
