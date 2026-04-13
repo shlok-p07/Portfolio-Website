@@ -147,7 +147,6 @@ export const Projects = () => {
     "SciPy",
     "yfinance",
     "TensorBoard",
-    "Git",
   ],
   image: project3,
   imageFit: "contain",
