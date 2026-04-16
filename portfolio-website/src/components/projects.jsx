@@ -95,9 +95,9 @@ export const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "NU RATE-ON",
+      title: "NU Dining",
       description:
-        "A full-stack web application that delivers real-time dining hall menus and student ratings to help students make faster, more informed dining decisions. The platform integrates directly with the university’s dining database via API, ensuring accurate and up-to-date menu information across all dining halls. The application features secure email–password authentication and an accessible, user-friendly interface designed with a welcoming aesthetic tailored to the Northeastern community. By allowing users to compare menus and popularity across dining locations, the product streamlines meal planning and enhances the overall campus dining experience.",
+        "A full-stack web application that delivers real-time dining hall menus and student ratings to help students make faster, more informed dining decisions. The platform integrates directly with the university’s dining database via API, ensuring accurate and up-to-date menu information across all dining halls. The application features secure email password authentication and an accessible, user friendly interface designed with a welcoming aesthetic tailored to the Northeastern community. It also includes a personalized calorie tracking system where authenticated users can set daily calorie goals, log meals directly from menu items, view automatic calorie and macro totals, and monitor weekly intake trends with goal-based nutrition insights. By allowing users to compare menus and popularity across dining locations, the product streamlines meal planning and enhances the overall campus dining experience.",
       tech: [
         "React",
         "Javascript",
