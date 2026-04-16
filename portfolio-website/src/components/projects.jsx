@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Stack from "./Stack";
 import { ChevronLeft, ChevronRight, Github } from "lucide-react";
-import rateon from "../assets/rateon.png";
+import dining from "../assets/dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
 import sgacms from "../assets/sgacms.png";
@@ -108,7 +108,7 @@ export const Projects = () => {
         "Node.js",
         "PostgreSQL",
       ],
-      image: rateon,
+      image: dining,
       github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
     },
     {
