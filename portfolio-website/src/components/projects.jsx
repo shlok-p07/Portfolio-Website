@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Stack from "./Stack";
 import { ChevronLeft, ChevronRight, Github } from "lucide-react";
-import dining from "../assets/dining.png";
+import dining from "../assets/Dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
 import sgacms from "../assets/sgacms.png";
