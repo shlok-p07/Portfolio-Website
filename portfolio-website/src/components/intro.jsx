@@ -138,33 +138,20 @@ export const Intro = () => {
               Passion for working with system designs, numbers, and innovating software to solve problems through creativity across the globe.
             </p>
 
-            {/* stat pills */}
-            <div className="flex flex-wrap gap-3 pt-1">
-              {[
-                { label: "GPA", value: "3.84 / 4.00" },
-                { label: "Northeastern", value: "CS + FinTech" },
-                { label: "Available", value: "Summer 2027" },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/5 border border-blue-500/15 text-xs font-mono"
-                >
-                  <span className="text-neutral-500">{item.label}</span>
-                  <span className="text-blue-300">{item.value}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* tech line */}
-            <div className="flex flex-wrap gap-2 pt-1">
-              {["Python", "React", "TypeScript", "PyTorch", "Next.js", "PostgreSQL"].map((t) => (
-                <span
-                  key={t}
-                  className="px-2 py-0.5 text-[11px] font-mono rounded bg-white/5 border border-white/10 text-neutral-400"
-                >
-                  {t}
-                </span>
-              ))}
+            {/* CTAs */}
+            <div className="flex items-center gap-3 pt-1">
+              <a
+                href="#projects"
+                className="px-5 py-2.5 rounded-lg bg-blue-500 hover:bg-blue-400 text-white text-sm font-mono font-semibold transition-colors duration-200 no-underline"
+              >
+                View Projects
+              </a>
+              <a
+                href="#contact"
+                className="px-5 py-2.5 rounded-lg bg-white/5 border border-white/15 hover:bg-white/10 hover:border-blue-500/30 text-neutral-300 hover:text-white text-sm font-mono font-semibold transition-all duration-200 no-underline"
+              >
+                Get in Touch
+              </a>
             </div>
           </div>
 
