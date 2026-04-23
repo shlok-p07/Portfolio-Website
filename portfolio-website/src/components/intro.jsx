@@ -7,6 +7,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CODE_SNIPPETS = [
+  { top: "8%",  left: "2%",  text: "const sharpe = pnl / std(returns);", delay: "0s" },
+  { top: "22%", left: "0%",  text: "agent.learn(total_timesteps=500_000)", delay: "0.4s" },
+  { top: "38%", left: "1%",  text: "SELECT menu, votes FROM dining_hall", delay: "0.8s" },
+  { top: "55%", left: "0%",  text: "await supabase.from('menus').select()", delay: "1.2s" },
+  { top: "70%", left: "2%",  text: "docker build -t rainfall-ide .", delay: "1.6s" },
+  { top: "84%", left: "1%",  text: "git push origin feature/crdt-sync", delay: "2.0s" },
+  { top: "12%", right: "1%", text: "model = PPO('MlpPolicy', env)", delay: "0.2s" },
+  { top: "27%", right: "0%", text: "prisma.page.create({ data: dto })", delay: "0.6s" },
+  { top: "44%", right: "1%", text: "Y.Doc() // CRDT conflict-free sync", delay: "1.0s" },
+  { top: "60%", right: "0%", text: "np.std(returns) * np.sqrt(252)", delay: "1.4s" },
+  { top: "76%", right: "1%", text: "ScrollTrigger.create({ start: 'top 80%' })", delay: "1.8s" },
+];
+
 export const Intro = () => {
   const containerRef = useRef(null);
   const textRef = useRef(null);
@@ -69,51 +83,125 @@ export const Intro = () => {
       );
     }
   }, []);
+
   return (
-    <div id="main" ref={containerRef} className="text-blue-200 w-full py-12 flex items-center justify-center font-mono">
+    <div id="main" ref={containerRef} className="text-blue-200 w-full py-12 flex items-center justify-center font-mono relative">
+
+      {/* floating code snippets */}
+      {CODE_SNIPPETS.map((s, i) => (
+        <span
+          key={i}
+          className="absolute font-mono text-[10px] sm:text-[11px] text-blue-500/20 whitespace-nowrap pointer-events-none select-none hidden lg:block"
+          style={{
+            top: s.top,
+            left: s.left,
+            right: s.right,
+            animationDelay: s.delay,
+            animation: `fadeInCode 1.2s ease-out ${s.delay} both`,
+          }}
+        >
+          {s.text}
+        </span>
+      ))}
+
       <div className="w-full max-w-6xl px-1 sm:px-0 mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+
+          {/* Text side */}
           <div ref={textRef} className="flex flex-col gap-6 items-start text-left">
-          <div className="pb-2 text-2xl sm:text-3xl lg:text-4xl leading-tight">
-            <TextType
-              text={["Hi, I am Shlok Patel"]}
-              typingSpeed={75}
-              showCursor={true}
-              loop={false}
-              cursorCharacter="|"
-            />
-            <div className="flex flex-wrap items-baseline justify-start gap-2 text-blue-500 text-shadow-white w-full">
-              <RotatingText
-                texts={["Software", "Quant", "AI/ML"]}
-                mainClassName="justify-start text-left text-4xl"
-                staggerFrom={"last"}
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "-120%" }}
-                staggerDuration={0.025}
-                splitLevelClassName="overflow-hidden"
-                transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                rotationInterval={3200}
+            <div className="pb-2 text-2xl sm:text-3xl lg:text-4xl leading-tight">
+              <TextType
+                text={["Hi, I am Shlok Patel"]}
+                typingSpeed={75}
+                showCursor={true}
+                loop={false}
+                cursorCharacter="|"
               />
-              <span className="text-4xl">
-                  Developer
-              </span>
+              <div className="flex flex-wrap items-baseline justify-start gap-2 text-blue-500 text-shadow-white w-full">
+                <RotatingText
+                  texts={["Software", "Quant", "AI/ML"]}
+                  mainClassName="justify-start text-left text-4xl"
+                  staggerFrom={"last"}
+                  initial={{ y: "100%" }}
+                  animate={{ y: 0 }}
+                  exit={{ y: "-120%" }}
+                  staggerDuration={0.025}
+                  splitLevelClassName="overflow-hidden"
+                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
+                  rotationInterval={3200}
+                />
+                <span className="text-4xl">Developer</span>
+              </div>
+            </div>
+
+            <p className="max-w-2xl font-normal tracking-tight text-lg sm:text-xl leading-relaxed">
+              Passion for working with system designs, numbers, and innovating software to solve problems through creativity across the globe.
+            </p>
+
+            {/* stat pills */}
+            <div className="flex flex-wrap gap-3 pt-1">
+              {[
+                { label: "GPA", value: "3.84 / 4.00" },
+                { label: "Northeastern", value: "CS + FinTech" },
+                { label: "Available", value: "Summer 2027" },
+              ].map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-500/5 border border-blue-500/15 text-xs font-mono"
+                >
+                  <span className="text-neutral-500">{item.label}</span>
+                  <span className="text-blue-300">{item.value}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* tech line */}
+            <div className="flex flex-wrap gap-2 pt-1">
+              {["Python", "React", "TypeScript", "PyTorch", "Next.js", "PostgreSQL"].map((t) => (
+                <span
+                  key={t}
+                  className="px-2 py-0.5 text-[11px] font-mono rounded bg-white/5 border border-white/10 text-neutral-400"
+                >
+                  {t}
+                </span>
+              ))}
             </div>
           </div>
-          <p className="max-w-2xl font-normal tracking-tight text-lg sm:text-xl leading-relaxed">
-          Passion for working with system designs, numbers, and innovating softwares to solve problems through creativity across the globe.   
-          </p>
-        </div>
-        <div className="w-full flex justify-center lg:justify-end lg:pl-6">
-          <img
-            src={headshotpic}
-            alt="Shlok Patel"
-            ref={imageRef}
-            className=" opacity-100 md:w-96 lg:w-[28rem] max-w-full rounded-3xl  "
-          />
+
+          {/* Image side */}
+          <div className="w-full flex justify-center lg:justify-end lg:pl-6">
+            <div className="relative" ref={imageRef}>
+              {/* glow behind photo */}
+              <div
+                className="absolute pointer-events-none"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  background: "radial-gradient(ellipse at center, rgba(59,130,246,0.45) 0%, rgba(99,102,241,0.22) 40%, transparent 68%)",
+                  filter: "blur(32px)",
+                  zIndex: 0,
+                }}
+              />
+              <img
+                src={headshotpic}
+                alt="Shlok Patel"
+                className="relative z-10 opacity-100 md:w-96 lg:w-md max-w-full rounded-3xl"
+              />
+            </div>
+          </div>
+
         </div>
       </div>
-      </div>
+
+      <style>{`
+        @keyframes fadeInCode {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 };

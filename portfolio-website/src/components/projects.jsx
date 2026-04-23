@@ -1,280 +1,218 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Stack from "./Stack";
-import { ChevronLeft, ChevronRight, Github } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
+import BorderGlow from "./BorderGlow";
 import dining from "../assets/Dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
 import sgacms from "../assets/sgacms.png";
+
 gsap.registerPlugin(ScrollTrigger);
 
+const PROJECTS = [
+  {
+    index: "01",
+    category: "Full Stack · Web",
+    date: "Sep 2025",
+    title: "NU Dining",
+    description:
+      "A full-stack web application delivering real-time dining hall menus and student ratings at Northeastern University. Built with a team of five developers using React, Node.js, and Supabase, the platform integrates live menu updates via a PostgreSQL backend, secure JWT-based authentication, and personalized calorie tracking with macro-level nutritional breakdowns. The REST API layer handles concurrent voting and menu synchronization across multiple dining locations, ensuring data consistency and sub-second response times under real student load.",
+    tech: ["React", "JavaScript", "Tailwind CSS", "Python", "Supabase", "Node.js", "PostgreSQL"],
+    image: dining,
+    imageFit: "cover",
+    github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
+    demo: "https://nu-dining.vercel.app/home",
+  },
+  {
+    index: "02",
+    category: "ML · Quantitative Finance",
+    date: "Dec 2025",
+    title: "RL Derivative Hedging",
+    description:
+      "A research-grade reinforcement learning platform training PPO and SAC agents to hedge SPY options positions more effectively than classical Black-Scholes delta hedging. The environment models 1,200 historical market windows with full Greeks computation, transaction cost penalties, and regime-aware reward shaping. After 500,000 training steps on PPO and 300,000 on SAC, the agents achieved a mean P&L shift from negative 0.162 to positive 0.064 and a Sharpe ratio improvement of three times the Black-Scholes baseline, evaluated across 4,000 out-of-sample episodes.",
+    tech: ["Python", "Stable-Baselines3", "PyTorch", "Streamlit", "NumPy", "SciPy", "yfinance", "TensorBoard"],
+    image: project3,
+    imageFit: "contain",
+    github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
+    demo: "https://reinforcementlearning-terminal.streamlit.app/",
+  },
+  {
+    index: "03",
+    category: "Full Stack · CMS",
+    date: "Jan 2026",
+    title: "SGA Website CMS",
+    description:
+      "A production content management system built for Northeastern's Student Government Association, serving over 5,000 students. The platform enables non-technical staff to create, edit, and publish pages through a drag-and-drop interface without writing code. Built with Next.js, TypeScript, and Prisma on a Supabase-backed PostgreSQL database, it supports full version history with rollback, role-based access control across editor and admin tiers, soft-delete archiving, and Prisma-validated API endpoints that enforce schema integrity on every mutation.",
+    tech: ["Next.js", "TypeScript", "React", "Prisma", "PostgreSQL", "Supabase", "Tailwind CSS"],
+    image: sgacms,
+    imageFit: "contain",
+    github: "https://github.com/SGAOperations/website-development",
+  },
+  {
+    index: "04",
+    category: "EdTech · Platform",
+    date: "Nov 2025",
+    title: "Rainfall Learning",
+    description:
+      "A startup platform making Python education accessible to middle and high school students through affordable one-on-one tutoring. As part of a fifteen-engineer team, the platform features a real-time collaborative IDE powered by CRDT-based Yjs synchronization that reduces edit conflicts to under two percent, integrated video chat, automated session scheduling, and per-student progress tracking. The React and TypeScript frontend is containerized via Docker, cutting environment failures by fifteen percent and enabling consistent deployments across local and production environments.",
+    tech: ["React", "TypeScript", "Docker", "PostgreSQL", "Prisma", "Express", "Tailwind CSS", "Material UI"],
+    image: rainfall,
+    imageFit: "cover",
+    github: "",
+  },
+];
+
+
 export const Projects = () => {
-  const containerRef = useRef(null);
-  const [currentProject, setCurrentProject] = useState(0);
-  const [isTouch, setIsTouch] = useState(false);
+  const cardsRef = useRef([]);
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-
-    const coarse = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
-    setIsTouch(coarse);
-
-    gsap.fromTo(
-      el,
-      {
-        opacity: 0.8,
-        y: 30,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.4,
-        ease: "power1.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          toggleActions: "play none none none",
-          markers: false,
-        },
-      }
-    );
-
-    // Animate title
-    const title = el.querySelector('h1');
-    if (title) {
-      gsap.fromTo(
-        title,
-        {
-          opacity: 0.8,
-          y: -15,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    }
-
-    // Animate project card on scroll
-    const projectCard = el.querySelector('.bg-white\\/5');
-    if (projectCard) {
-      gsap.fromTo(
-        projectCard,
-        {
-          opacity: 0.85,
-          scale: 0.99,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 1.2,
-          ease: "power1.out",
-          scrollTrigger: {
-            trigger: projectCard,
-            start: "top 75%",
-            toggleActions: "play none none none",
-          },
-        }
-      );
-    }
-
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    const ctx = gsap.context(() => {
+      cardsRef.current.forEach((card) => {
+        if (!card) return;
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 44 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.85,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    });
+    return () => ctx.revert();
   }, []);
 
-  const projects = [
-    {
-      id: 1,
-      title: "NU Dining",
-      description:
-        "A full-stack web application that delivers real-time dining hall menus and student ratings to help students make faster, more informed dining decisions. The platform integrates directly with the university’s dining database via API, ensuring accurate and up-to-date menu information across all dining halls. The application features secure email password authentication and an accessible, user friendly interface designed with a welcoming aesthetic tailored to the Northeastern community. It also includes a personalized calorie tracking system where authenticated users can set daily calorie goals, log meals directly from menu items, view automatic calorie and macro totals, and monitor weekly intake trends with goal-based nutrition insights. By allowing users to compare menus and popularity across dining locations, the product streamlines meal planning and enhances the overall campus dining experience.",
-      tech: [
-        "React",
-        "Javascript",
-        "Tailwind CSS",
-        "Python",
-        "Git",
-        "Supabase",
-        "Node.js",
-        "PostgreSQL",
-      ],
-      image: dining,
-      github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
-    },
-    {
-      id: 2,
-      title: "Rainfall Learning (EdTech Python Tutoring Platform)",
-      description:
-        "An startup project developing a web-based platform that makes Python education accessible to middle and high school students through affordable 1-on-1 tutoring at $40/hour. The platform’s main interface, which I am contributing to, is designed with an intuitive, student-friendly UI/UX, providing a seamless and engaging entry point to the platform. It features a custom web-based IDE with real-time collaborative coding (Yjs), integrated video chat, automated scheduling, progress tracking, and secure payment processing. Working alongside a 15+ person engineering team, I focus on usability, visual clarity, and interactive design to deliver a project-based, personalized learning experience that balances structured curriculum with hands-on coding practice, enabling students and families to engage with high-quality Python education in an approachable and effective way.",
-      tech: [
-        "Docker",
-        "React",
-        "PostgreSQL",
-        "Git",
-        "Github",
-        "Express",
-        "Tailwind CSS",
-        "TypeScript",
-        "Material UI",
-        "Prisma",
-      ],
-      image: rainfall,
-      github: "",
-    },
-    {
-  id: 3,
-  title: "RL Derivative Hedging Research Platform",
-  description:
-    "A full-stack research platform that trains PPO and SAC reinforcement learning agents to outperform classical Black-Scholes delta hedging on real SPY market data. The RL agents learn cost-aware, regime-adaptive hedge ratios across 1,200+ distinct 30-day windows drawn from 5 years of SPY history — including the 2020 COVID crash and 2022 rate shock. Performance is benchmarked across four scenarios (base, high transaction costs, volatility mismatch, and regime switching) using Sharpe ratio, 95% VaR/CVaR, and P&L distribution metrics. RL agents significantly outperform delta hedging in high-TC and vol-mismatch regimes by learning to rebalance only when the hedge benefit exceeds the cost — an emergent property requiring no explicit programming. The platform ships with a Streamlit research dashboard featuring live training, a frame-by-frame episode demo, scenario lab, and a live SPY options chain with implied volatility surface.",
-  tech: [
-    "Python",
-    "Stable-Baselines3 (PPO, SAC)",
-    "PyTorch",
-    "Gymnasium",
-    "Streamlit",
-    "Plotly",
-    "NumPy",
-    "SciPy",
-    "yfinance",
-    "TensorBoard",
-  ],
-  image: project3,
-  imageFit: "contain",
-  github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
-},
-    {
-  id: 4,
-  title: "SGA Website Internal CMS",
-  description:
-    "A full-stack content management system built for Northeastern's Student Government Association Webmaster Team, enabling non-technical staff to visually create, edit, and publish website content without touching source code. The platform features a drag-and-drop page editor powered by React Puck, a custom block library (containers, columns, grids, rich text, media), and a full versioning system where every save creates a new version and publishing is explicit — so drafts never accidentally go live. The data model maps documents to URL routes, allowing flexible multi-route publishing. Built with Next.js 16 Server Actions, Prisma, and a Supabase-managed PostgreSQL database, with S3-compatible media storage. A soft-delete archive system and role-based access protect against accidental data loss.",
-  tech: [
-    "Next.js",
-    "TypeScript",
-    "React",
-    "Prisma",
-    "PostgreSQL",
-    "Supabase",
-    "Tailwind CSS",
-    "Puck Editor",
-    "Vercel",
-  ],
-  image: sgacms,
-  imageFit: "contain",
-  github: "https://github.com/SGAOperations/website-development",
-},
-  ];
-
-  const handlePrev = () => {
-    setCurrentProject((prev) => (prev === 0 ? projects.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentProject((prev) => (prev === projects.length - 1 ? 0 : prev + 1));
-  };
-
-  const project = projects[currentProject];
-
   return (
-      <div
-        id="projects"
-        ref={containerRef}
-        className="relative w-full flex justify-center py-16 sm:py-20"
-      >
-        <div className="w-full px-4 sm:px-6 flex flex-col gap-14 items-center relative z-10 max-w-6xl">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
-            Projects
-          </h1>
+    <section
+      id="projects"
+      className="relative w-full flex justify-center py-16 sm:py-20"
+    >
+      <div className="w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-10">
 
-          <div className="w-full max-w-5xl flex flex-col gap-14 sm:gap-20">
-            <div key={project.id} className="flex flex-col gap-6 items-center">
-              <div
-                onClick={handleNext}
-                className={`w-full max-w-3xl aspect-[4/3] sm:aspect-[16/9] rounded-3xl transition-all duration-300 ${
-                  isTouch ? "" : "hover:border-blue-500/30 cursor-pointer hover:scale-105"
-                }`}
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
+          Projects
+        </h1>
+
+        {/* Cards */}
+        <div className="flex flex-col gap-6">
+          {PROJECTS.map((p, i) => (
+            <div
+              key={i}
+              ref={(el) => { cardsRef.current[i] = el; }}
+            >
+              <BorderGlow
+                borderRadius={16}
+                colors={["#3b82f6", "#6366f1", "#0ea5e9"]}
+                glowColor="217 91 60"
+                glowIntensity={0.9}
+                fillOpacity={0.35}
+                className="w-full"
               >
-                <Stack
-                  randomRotation={false}
-                  sensitivity={0}
-                  sendToBackOnClick={false}
-                  cards={[
+                <div
+                  className={`flex flex-col ${
+                    i % 2 === 1 ? "sm:flex-row-reverse" : "sm:flex-row"
+                  } bg-white/2 rounded-2xl border border-white/[0.07] transition-colors duration-300 overflow-hidden`}
+                >
+                  {/* Image */}
+                  <div className="sm:w-[45%] h-56 sm:h-auto relative overflow-hidden">
                     <img
-                      key={0}
-                      src={project.image}
-                      alt={project.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: project.imageFit || "cover",
-                        objectPosition: "center",
-                        borderRadius: "1.5rem",
-                      }}
-                    />,
-                  ]}
-                />
-              </div>
+                      src={p.image}
+                      alt={p.title}
+                      className="w-full h-full object-center transition-transform duration-500 hover:scale-[1.03]"
+                      style={{ objectFit: p.imageFit || "cover" }}
+                    />
+                    <div
+                      className={`absolute inset-0 bg-linear-to-r ${
+                        i % 2 === 1
+                          ? "from-neutral-950/60 to-transparent"
+                          : "from-transparent to-neutral-950/60"
+                      } hidden sm:block`}
+                    />
+                  </div>
 
-              <p
-                onClick={handleNext}
-                className="text-sm text-neutral-500 hover:text-blue-400 transition-colors duration-200 cursor-pointer text-center max-w-3xl w-full"
-              >
-                Click to view next project
-              </p>
-
-              <div className="flex flex-col gap-4 pt-8">
-                <h2 className="text-3xl font-bold text-white">
-                  {project.title}
-                </h2>
-                <p className="text-neutral-300 leading-relaxed text-base sm:text-lg text-justify">
-                  {project.description}
-                </p>
-
-                <div className="bg-neutral-900/60 border border-neutral-700/60 rounded-xl p-4 backdrop-blur">
-                  <p className="text-xs text-neutral-400 uppercase tracking-widest font-semibold mb-3">
-                    Tech Stack
-                  </p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-400 text-xs font-medium hover:bg-blue-500/20 hover:border-blue-500/50 transition-all duration-200"
-                      >
-                        {tech}
+                  {/* Content */}
+                  <div className="flex-1 flex flex-col justify-center gap-4 px-6 sm:px-8 py-6 sm:py-8">
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-[10px] text-blue-400 tracking-widest uppercase">
+                        {p.category}
                       </span>
-                    ))}
+                      <span className="w-1 h-1 rounded-full bg-neutral-700" />
+                      <span className="font-mono text-[10px] text-neutral-600">
+                        {p.date}
+                      </span>
+                    </div>
+
+                    <div className="relative">
+                      <span className="absolute -top-4 -left-1 text-8xl font-extrabold text-white/3 leading-none select-none pointer-events-none">
+                        {p.index}
+                      </span>
+                      <h2 className="relative text-2xl sm:text-3xl font-bold text-white leading-tight">
+                        {p.title}
+                      </h2>
+                    </div>
+
+                    <p className="text-neutral-400 text-sm leading-relaxed">
+                      {p.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2">
+                      {p.tech.map((t, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2.5 py-1 text-xs font-mono rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center gap-3 flex-wrap">
+                      {p.github ? (
+                        <a
+                          href={p.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-neutral-300 hover:text-white hover:border-blue-500/40 hover:bg-white/10 transition-all duration-200 no-underline"
+                        >
+                          <Github size={14} />
+                          View on GitHub
+                        </a>
+                      ) : (
+                        <div className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-neutral-500 cursor-not-allowed select-none">
+                          <Github size={14} className="opacity-50" />
+                          Ongoing Project
+                        </div>
+                      )}
+                      {p.demo && (
+                        <a
+                          href={p.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/25 text-sm font-mono text-blue-400 hover:text-blue-300 hover:border-blue-400/50 hover:bg-blue-500/15 transition-all duration-200 no-underline"
+                        >
+                          <ExternalLink size={14} />
+                          Live Demo
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-
-                {project.github ? (
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3 bg-neutral-900/80 border border-neutral-700/60 rounded-xl hover:bg-neutral-800/80 hover:border-blue-500/50 transition-all duration-200 text-neutral-300 hover:text-blue-400 font-medium no-underline"
-                  >
-                    <Github size={20} />
-                    View on GitHub
-                  </a>
-                ) : (
-                  <div className="flex items-center justify-center gap-2 w-full py-3 bg-neutral-900/80 border border-neutral-700/60 rounded-xl text-neutral-400 font-medium cursor-not-allowed select-none no-underline">
-                    <Github size={20} className="opacity-60" />
-                    Ongoing Project
-                  </div>
-                )}
-              </div>
+              </BorderGlow>
             </div>
-          </div>
+          ))}
         </div>
+
+
       </div>
+    </section>
   );
 };

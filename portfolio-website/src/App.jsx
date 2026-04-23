@@ -1,5 +1,9 @@
 import { useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./App.css";
+
+gsap.registerPlugin(ScrollTrigger);
 import { Navbar } from "./components/Navbar";
 import { Intro } from "./components/intro";
 import { About } from "./components/about";
@@ -54,6 +58,29 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      ["#about", "#skills", "#projects", "#contact"].forEach((id) => {
+        gsap.fromTo(
+          id,
+          { opacity: 0, y: 52 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: id,
+              start: "top 82%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
     <>
       <style>{`
@@ -67,7 +94,7 @@ function App() {
         <section id="main" className="w-full flex justify-center mt-24 sm:mt-32 lg:mt-40 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Intro />
         </section>
-        <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+        <div>
           <About />
           <Skills />
           <Projects/>
