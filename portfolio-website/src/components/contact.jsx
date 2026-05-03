@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { FaLinkedin, FaInstagram, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaFilePdf } from "react-icons/fa";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import emailjs from "@emailjs/browser";
@@ -87,7 +87,6 @@ export const Contact = () => {
     }
 
     // Animate social links
-    const socials = el.querySelectorAll('[href*="linkedin"], [href*="instagram"], [href*="github"]').closest?.('a');
     const socialContainer = el.querySelector('.flex.gap-6');
     if (socialContainer) {
       gsap.fromTo(
@@ -178,7 +177,7 @@ export const Contact = () => {
             <div className="pointer-events-none absolute -top-20 -left-20 w-72 h-72 rounded-full bg-blue-500/8 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 -right-16 w-64 h-64 rounded-full bg-cyan-500/8 blur-3xl" />
 
-            <div className="relative rounded-3xl backdrop-blur-sm bg-white/[0.02]">
+            <div className="relative rounded-3xl backdrop-blur-sm bg-white/2">
               <form ref={formRef} onSubmit={sendEmail} className="grid grid-cols-1 gap-6 p-6 sm:p-8 md:p-10">
                 <div>
                   <label htmlFor="name" className="sr-only">
@@ -280,6 +279,15 @@ export const Contact = () => {
                 className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/15 transition cursor-pointer flex items-center justify-center"
               >
                 <FaGithub className="text-white text-2xl" />
+              </a>
+              <a
+                href="/Shlok_Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Resume"
+                className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/15 transition cursor-pointer flex items-center justify-center"
+              >
+                <FaFilePdf className="text-white text-2xl" />
               </a>
             </div>
           </div>

@@ -7,12 +7,25 @@ import dining from "../assets/Dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
 import sgacms from "../assets/sgacms.png";
+import portfolioPic from "../assets/portfolio_pic.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PROJECTS = [
-  {
+   {
     index: "01",
+    category: "EdTech · Platform",
+    date: "Nov 2025",
+    title: "Rainfall Learning",
+    description:
+      "A startup platform making Python education accessible to middle and high school students through affordable one-on-one tutoring. As part of a fifteen-engineer team, the platform features a real-time collaborative IDE powered by CRDT-based Yjs synchronization that reduces edit conflicts to under two percent, integrated video chat, automated session scheduling, and per-student progress tracking. The React and TypeScript frontend is containerized via Docker, cutting environment failures by fifteen percent and enabling consistent deployments across local and production environments.",
+    tech: ["React", "TypeScript", "Docker", "PostgreSQL", "Prisma", "Express", "Tailwind CSS", "Material UI"],
+    image: rainfall,
+    imageFit: "cover",
+    github: "https://github.com/Aryan0102/Rainfall-Learning",
+  },
+  {
+    index: "02",
     category: "Full Stack · Web",
     date: "Sep 2025",
     title: "NU Dining",
@@ -25,7 +38,7 @@ const PROJECTS = [
     demo: "https://nu-dining.vercel.app/home",
   },
   {
-    index: "02",
+    index: "03",
     category: "ML · Quantitative Finance",
     date: "Dec 2025",
     title: "RL Derivative Hedging",
@@ -38,7 +51,7 @@ const PROJECTS = [
     demo: "https://reinforcementlearning-terminal.streamlit.app/",
   },
   {
-    index: "03",
+    index: "04",
     category: "Full Stack · CMS",
     date: "Jan 2026",
     title: "SGA Website CMS",
@@ -48,18 +61,6 @@ const PROJECTS = [
     image: sgacms,
     imageFit: "contain",
     github: "https://github.com/SGAOperations/website-development",
-  },
-  {
-    index: "04",
-    category: "EdTech · Platform",
-    date: "Nov 2025",
-    title: "Rainfall Learning",
-    description:
-      "A startup platform making Python education accessible to middle and high school students through affordable one-on-one tutoring. As part of a fifteen-engineer team, the platform features a real-time collaborative IDE powered by CRDT-based Yjs synchronization that reduces edit conflicts to under two percent, integrated video chat, automated session scheduling, and per-student progress tracking. The React and TypeScript frontend is containerized via Docker, cutting environment failures by fifteen percent and enabling consistent deployments across local and production environments.",
-    tech: ["React", "TypeScript", "Docker", "PostgreSQL", "Prisma", "Express", "Tailwind CSS", "Material UI"],
-    image: rainfall,
-    imageFit: "cover",
-    github: "",
   },
 ];
 
