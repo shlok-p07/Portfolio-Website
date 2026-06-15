@@ -7,7 +7,6 @@ import dining from "../assets/Dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
 import sgacms from "../assets/sgacms.png";
-import portfolioPic from "../assets/portfolio_pic.png";
 
 gsap.registerPlugin(ScrollTrigger);
 

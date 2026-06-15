@@ -1,5 +1,6 @@
 import TextType from "./text";
 import RotatingText from "./textr";
+import BorderGlow from "./BorderGlow";
 import headshotpic from "../assets/headshotpic.png";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
@@ -156,28 +157,24 @@ export const Intro = () => {
           </div>
 
           {/* Image side */}
-          <div className="w-full flex justify-center lg:justify-end lg:pl-6">
-            <div className="relative" ref={imageRef}>
-              {/* glow behind photo */}
-              <div
-                className="absolute pointer-events-none"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  background: "radial-gradient(ellipse at center, rgba(59,130,246,0.45) 0%, rgba(99,102,241,0.22) 40%, transparent 68%)",
-                  filter: "blur(32px)",
-                  zIndex: 0,
-                }}
-              />
-              <img
-                src={headshotpic}
-                alt="Shlok Patel"
-                className="relative z-10 opacity-100 md:w-96 lg:w-md max-w-full rounded-3xl"
-              />
-            </div>
+          <div className="w-full flex justify-center lg:justify-end lg:pl-6 items-center" ref={imageRef}>
+            <BorderGlow
+              borderRadius={9999}
+              colors={["#3b82f6", "#6366f1", "#0ea5e9"]}
+              glowColor="217 91 60"
+              glowIntensity={0.9}
+              glowRadius={30}
+              fillOpacity={0.35}
+              className="w-72 sm:w-80 md:w-96 lg:w-104 max-w-full aspect-square rounded-full"
+            >
+              <div className="w-full h-full aspect-square rounded-full overflow-hidden ring-1 ring-white/10 outline-none select-none">
+                <img
+                  src={headshotpic}
+                  alt="Shlok Patel"
+                  className="block w-full h-full object-cover object-center scale-105 select-none focus:outline-none"
+                />
+              </div>
+            </BorderGlow>
           </div>
 
         </div>
