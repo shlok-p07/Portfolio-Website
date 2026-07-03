@@ -128,6 +128,22 @@ export const Assistant = () => {
       return;
     }
 
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error(
+        "VITE_GEMINI_API_KEY is missing. Set it in .env.local for local dev, " +
+          "or in your host's environment variables (e.g. Vercel Project Settings) and redeploy."
+      );
+      setMessages((prev) => [
+        ...prev,
+        {
+          from: "bot",
+          text: "The assistant isn't configured yet. Please reach out via the contact form and Shlok will respond directly.",
+        },
+      ]);
+      return;
+    }
+
     setLoading(true);
 
     const newHistory = [
@@ -137,7 +153,7 @@ export const Assistant = () => {
 
     const callAPI = () =>
       fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${import.meta.env.VITE_GEMINI_API_KEY}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
