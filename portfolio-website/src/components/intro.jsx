@@ -130,7 +130,7 @@ export const Intro = ({ ready = true }) => {
             </div>
 
             <p className="max-w-2xl font-normal tracking-tight text-lg sm:text-xl leading-relaxed">
-              Passion for working with system designs, numbers, and innovating software to solve problems through creativity across the globe.
+             I love turning complex problems into simple, well-designed software bycombining systems thinking, data, and a bit of creativity.
             </p>
 
             {/* CTAs */}
