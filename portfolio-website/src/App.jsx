@@ -1,20 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./App.css";
 
 gsap.registerPlugin(ScrollTrigger);
 import { Navbar } from "./components/Navbar";
+import { CustomCursor } from "./components/CustomCursor";
+import { Preloader } from "./components/Preloader";
 import { Intro } from "./components/intro";
 import { About } from "./components/about";
 import { Skills } from "./components/skills";
 import { Projects } from "./components/projects";
+import { Research } from "./components/research";
 import { Contact } from "./components/contact";
 import { Assistant } from "./components/Assistant";
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    const ids = ["main", "about", "skills", "projects", "contact"];
+    const ids = ["main", "about", "skills", "projects", "research", "contact"];
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter(Boolean);
@@ -60,7 +65,7 @@ function App() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      ["#about", "#skills", "#projects", "#contact"].forEach((id) => {
+      ["#about", "#skills", "#projects", "#research", "#contact"].forEach((id) => {
         gsap.fromTo(
           id,
           { opacity: 0, y: 52 },
@@ -88,16 +93,19 @@ function App() {
           scroll-behavior: smooth;
         }
       `}</style>
+      {loading && <Preloader onDone={() => setLoading(false)} />}
+      <CustomCursor />
       <Navbar />
       <Assistant />
-      <div className="w-full flex flex-col relative z-10 min-h-screen px-4 sm:px-6">
-        <section id="main" className="w-full flex justify-center mt-24 sm:mt-32 lg:mt-40 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <Intro />
+      <div className="w-full flex flex-col relative z-10 min-h-screen px-4 sm:px-6 pb-4 sm:pb-6">
+        <section id="main" className="w-full min-h-svh flex items-center justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
+          <Intro ready={!loading} />
         </section>
         <div>
           <About />
           <Skills />
           <Projects/>
+          <Research />
           <Contact />
         </div>
       </div>

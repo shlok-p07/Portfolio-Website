@@ -14,6 +14,7 @@ const TextType = ({
   className = '',
   showCursor = true,
   hideCursorWhileTyping = false,
+  hideCursorWhenDone = false,
   cursorCharacter = '|',
   cursorClassName = '',
   cursorBlinkDuration = 0.5,
@@ -147,8 +148,15 @@ const TextType = ({
     onSentenceComplete
   ]);
 
+  const isTypingComplete =
+    !loop &&
+    currentTextIndex === textArray.length - 1 &&
+    !isDeleting &&
+    displayedText === textArray[textArray.length - 1];
+
   const shouldHideCursor =
-    hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+    (hideCursorWhileTyping && (currentCharIndex < textArray[currentTextIndex].length || isDeleting)) ||
+    (hideCursorWhenDone && isTypingComplete);
 
   return createElement(
     Component,
@@ -163,6 +171,7 @@ const TextType = ({
     showCursor && (
       <span
         ref={cursorRef}
+        style={shouldHideCursor ? { display: 'none' } : undefined}
         className={`ml-1 inline-block opacity-100 ${shouldHideCursor ? 'hidden' : ''} ${cursorClassName}`}
       >
         {cursorCharacter}

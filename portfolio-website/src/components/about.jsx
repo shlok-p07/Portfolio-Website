@@ -1,4 +1,5 @@
 import DomeGallery from "./dome";
+import SectionHeading from "./SectionHeading";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -89,12 +90,10 @@ export const About = () => {
     <div
       id="about"
       ref={containerRef}
-      className="relative w-full flex justify-center py-16 sm:py-20"
+      className="relative w-full flex justify-center py-20 sm:py-28"
     >
-      <div className="w-full px-4 sm:px-6 flex flex-col gap-8 sm:gap-10 relative z-10">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
-          About Me
-        </h1>
+      <div className="w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-8 sm:gap-10 relative z-10">
+        <SectionHeading>About Me</SectionHeading>
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center justify-center">
           <div className="w-full lg:w-[40%] max-w-lg rounded-3xl p-3 backdrop-blur-sm bg-white/[0.02]">
             <div className="w-full aspect-video rounded-2xl overflow-hidden">

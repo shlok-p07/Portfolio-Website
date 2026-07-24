@@ -1,5 +1,4 @@
 import TextType from "./text";
-import RotatingText from "./textr";
 import BorderGlow from "./BorderGlow";
 import headshotpic from "../assets/headshotpic.png";
 import { useEffect, useRef } from "react";
@@ -22,7 +21,7 @@ const CODE_SNIPPETS = [
   { top: "76%", right: "1%", text: "ScrollTrigger.create({ start: 'top 80%' })", delay: "1.8s" },
 ];
 
-export const Intro = () => {
+export const Intro = ({ ready = true }) => {
   const containerRef = useRef(null);
   const textRef = useRef(null);
   const imageRef = useRef(null);
@@ -111,27 +110,22 @@ export const Intro = () => {
           {/* Text side */}
           <div ref={textRef} className="flex flex-col gap-6 items-start text-left">
             <div className="pb-2 text-2xl sm:text-3xl lg:text-4xl leading-tight">
-              <TextType
-                text={["Hi, I am Shlok Patel"]}
-                typingSpeed={75}
-                showCursor={true}
-                loop={false}
-                cursorCharacter="|"
-              />
-              <div className="flex flex-wrap items-baseline justify-start gap-2 text-blue-500 text-shadow-white w-full">
-                <RotatingText
-                  texts={["Software", "Quant", "AI/ML"]}
-                  mainClassName="justify-start text-left text-4xl"
-                  staggerFrom={"last"}
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  exit={{ y: "-120%" }}
-                  staggerDuration={0.025}
-                  splitLevelClassName="overflow-hidden"
-                  transition={{ type: "spring", damping: 30, stiffness: 400 }}
-                  rotationInterval={3200}
+              {ready ? (
+                <TextType
+                  text={["Hi, I am Shlok Patel."]}
+                  typingSpeed={75}
+                  showCursor={true}
+                  loop={false}
+                  cursorCharacter="|"
+                  hideCursorWhenDone={true}
                 />
-                <span className="text-4xl">Developer</span>
+              ) : (
+                <span className="invisible">Hi, I am Shlok Patel.</span>
+              )}
+              <div className="flex flex-wrap items-baseline justify-start gap-2 text-blue-500 text-shadow-white w-full">
+               <p className="text-sm sm:text-sm lg:text-sm font-semibold tracking-wide">
+                CS and FinTech Student at Northeastern University
+                </p>
               </div>
             </div>
 
@@ -164,7 +158,6 @@ export const Intro = () => {
               glowColor="217 91 60"
               glowIntensity={0.9}
               glowRadius={30}
-              fillOpacity={0.35}
               className="w-72 sm:w-80 md:w-96 lg:w-104 max-w-full aspect-square rounded-full"
             >
               <div className="w-full h-full aspect-square rounded-full overflow-hidden ring-1 ring-white/10 outline-none select-none">

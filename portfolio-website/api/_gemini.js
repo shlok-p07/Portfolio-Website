@@ -41,6 +41,14 @@ Organization Projects (in progress):
 - Rainfall Learning platform: real-time collaborative coding IDE with CRDT-based sync (via his Software Engineer role)
 - Student Government Association website: resource hub for 5,000+ Northeastern students using TypeScript, React, and Next.js (via his SGA Software Engineer role)
 
+Research:
+1. Multimodal Sensor Fusion for Early Parkinson's Detection (July 2026 – Present)
+   - Undergraduate researcher with the Intelligent Automation (IoT) Research Group at Northeastern University, advised by Prof. Sarita Singh
+   - Applied machine learning and multimodal deep learning; investigates whether fusing heterogeneous sensor streams (hand tremor, voice, and gait time-series) outperforms single-source models, using early Parkinson's indicator prediction as the application domain
+   - Designs the fusion architectures (early, late, gated, and attention-based), builds the feature-extraction and training pipeline, and benchmarks strategies under subject-independent cross-validation with statistical significance testing for reproducible, non-leaky results
+   - Works on model compression and optimization for deployment on resource-constrained edge devices
+   - Focus areas: multimodal representation learning, model evaluation methodology, and edge/embedded ML; tools include Python, PyTorch, NumPy, pandas, scikit-learn, and embedded C/C++
+
 Activities & Leadership:
 1. Quantitative Analyst @ Disrupt – Northeastern Fintech Club (Jan 2026 – Present)
    - Developing quant trading strategies (pairs trading, mean reversion, momentum) using $50K simulated capital

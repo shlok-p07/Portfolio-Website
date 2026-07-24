@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, ExternalLink } from "lucide-react";
 import BorderGlow from "./BorderGlow";
+import SectionHeading from "./SectionHeading";
 import dining from "../assets/Dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
@@ -17,7 +18,7 @@ const PROJECTS = [
     date: "Nov 2025",
     title: "Rainfall Learning",
     description:
-      "A startup platform making Python education accessible to middle and high school students through affordable one-on-one tutoring. As part of a fifteen-engineer team, the platform features a real-time collaborative IDE powered by CRDT-based Yjs synchronization that reduces edit conflicts to under two percent, integrated video chat, automated session scheduling, and per-student progress tracking. The React and TypeScript frontend is containerized via Docker, cutting environment failures by fifteen percent and enabling consistent deployments across local and production environments.",
+      "Built a real-time collaborative coding platform with a 15-engineer team, engineering a CRDT-based (Yjs) live IDE that cut edit conflicts to under 2%. Containerized the React/TypeScript stack with Docker, reducing environment failures by 15% across local and production deployments.",
     tech: ["React", "TypeScript", "Docker", "PostgreSQL", "Prisma", "Express", "Tailwind CSS", "Material UI"],
     image: rainfall,
     imageFit: "cover",
@@ -29,7 +30,7 @@ const PROJECTS = [
     date: "Sep 2025",
     title: "NU Dining",
     description:
-      "A full-stack web application delivering real-time dining hall menus and student ratings at Northeastern University. Built with a team of five developers using React, Node.js, and Supabase, the platform integrates live menu updates via a PostgreSQL backend, secure JWT-based authentication, and personalized calorie tracking with macro-level nutritional breakdowns. The REST API layer handles concurrent voting and menu synchronization across multiple dining locations, ensuring data consistency and sub-second response times under real student load.",
+      "Led 5 developers to ship a full-stack dining platform delivering live menus and student ratings at Northeastern. Built JWT-secured REST APIs on a PostgreSQL/Supabase backend that sustain sub-second responses under concurrent voting across multiple dining halls.",
     tech: ["React", "JavaScript", "Tailwind CSS", "Python", "Supabase", "Node.js", "PostgreSQL"],
     image: dining,
     imageFit: "cover",
@@ -42,7 +43,7 @@ const PROJECTS = [
     date: "Dec 2025",
     title: "RL Derivative Hedging",
     description:
-      "A research-grade reinforcement learning platform training PPO and SAC agents to hedge SPY options positions more effectively than classical Black-Scholes delta hedging. The environment models 1,200 historical market windows with full Greeks computation, transaction cost penalties, and regime-aware reward shaping. After 500,000 training steps on PPO and 300,000 on SAC, the agents achieved a mean P&L shift from negative 0.162 to positive 0.064 and a Sharpe ratio improvement of three times the Black-Scholes baseline, evaluated across 4,000 out-of-sample episodes.",
+      "Trained PPO and SAC agents to hedge SPY options across 1,200 market windows with full Greeks and transaction-cost modeling. Improved mean P&L from −0.162 to +0.064 and tripled the Sharpe ratio over the Black-Scholes delta-hedging baseline across 4,000 out-of-sample episodes.",
     tech: ["Python", "Stable-Baselines3", "PyTorch", "Streamlit", "NumPy", "SciPy", "yfinance", "TensorBoard"],
     image: project3,
     imageFit: "contain",
@@ -55,7 +56,7 @@ const PROJECTS = [
     date: "Jan 2026",
     title: "SGA Website CMS",
     description:
-      "A production content management system built for Northeastern's Student Government Association, serving over 5,000 students. The platform enables non-technical staff to create, edit, and publish pages through a drag-and-drop interface without writing code. Built with Next.js, TypeScript, and Prisma on a Supabase-backed PostgreSQL database, it supports full version history with rollback, role-based access control across editor and admin tiers, soft-delete archiving, and Prisma-validated API endpoints that enforce schema integrity on every mutation.",
+      "Engineered a production CMS serving 5,000+ students, letting non-technical staff publish pages via a drag-and-drop interface. Built on Next.js, TypeScript, and Prisma with full version history, role-based access control, and schema-validated APIs on every mutation.",
     tech: ["Next.js", "TypeScript", "React", "Prisma", "PostgreSQL", "Supabase", "Tailwind CSS"],
     image: sgacms,
     imageFit: "contain",
@@ -63,13 +64,35 @@ const PROJECTS = [
   },
 ];
 
-
 export const Projects = () => {
+  const timelineRef = useRef(null);
+  const fillRef = useRef(null);
   const cardsRef = useRef([]);
+  const nodesRef = useRef([]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      cardsRef.current.forEach((card) => {
+      // Reactive progress line — fills as the section scrolls through the viewport
+      if (fillRef.current) {
+        gsap.fromTo(
+          fillRef.current,
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: "none",
+            scrollTrigger: {
+              trigger: timelineRef.current,
+              start: "top 55%",
+              end: "bottom 65%",
+              scrub: 0.6,
+              invalidateOnRefresh: true,
+            },
+          }
+        );
+      }
+
+      // Cards reveal + node activation
+      cardsRef.current.forEach((card, i) => {
         if (!card) return;
         gsap.fromTo(
           card,
@@ -81,136 +104,185 @@ export const Projects = () => {
             ease: "power2.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 88%",
+              start: "top 85%",
               toggleActions: "play none none none",
             },
           }
         );
+
+        const node = nodesRef.current[i];
+        if (node) {
+          gsap.fromTo(
+            node,
+            { scale: 0.4, opacity: 0.3 },
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.5,
+              ease: "back.out(2)",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 78%",
+                toggleActions: "play none none none",
+              },
+            }
+          );
+        }
       });
-    });
-    return () => ctx.revert();
+    }, timelineRef);
+
+    // Recompute trigger positions once images/fonts settle so the line stays in sync
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const t = setTimeout(refresh, 400);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      clearTimeout(t);
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section
       id="projects"
-      className="relative w-full flex justify-center py-16 sm:py-20"
+      className="relative w-full flex justify-center py-20 sm:py-28"
     >
-      <div className="w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-10">
+      <div className="w-full max-w-6xl px-4 sm:px-6 flex flex-col gap-12 sm:gap-16">
 
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl text-center text-blue-500 font-extrabold tracking-wider">
-          Projects
-        </h1>
+        <SectionHeading>Projects</SectionHeading>
 
-        {/* Cards */}
-        <div className="flex flex-col gap-6">
-          {PROJECTS.map((p, i) => (
+        {/* Timeline */}
+        <div ref={timelineRef} className="relative flex flex-col gap-14 sm:gap-20">
+
+          {/* Spine + reactive fill */}
+          <div className="absolute top-0 bottom-0 left-5 md:left-1/2 -translate-x-1/2 w-px bg-white/10 overflow-hidden rounded-full">
             <div
-              key={i}
-              ref={(el) => { cardsRef.current[i] = el; }}
-            >
-              <BorderGlow
-                borderRadius={16}
-                colors={["#3b82f6", "#6366f1", "#0ea5e9"]}
-                glowColor="217 91 60"
-                glowIntensity={0.9}
-                fillOpacity={0.35}
-                className="w-full"
+              ref={fillRef}
+              className="absolute inset-x-0 top-0 h-full origin-top scale-y-0 bg-linear-to-b from-sky-400 via-indigo-500 to-blue-500"
+            />
+          </div>
+
+          {PROJECTS.map((p, i) => {
+            const isLeft = i % 2 === 0;
+            return (
+              <div
+                key={i}
+                ref={(el) => { cardsRef.current[i] = el; }}
+                className="relative pl-14 md:pl-0"
               >
-                <div
-                  className={`flex flex-col ${
-                    i % 2 === 1 ? "sm:flex-row-reverse" : "sm:flex-row"
-                  } bg-white/2 rounded-2xl border border-white/[0.07] transition-colors duration-300 overflow-hidden`}
+                {/* Node */}
+                <span
+                  ref={(el) => { nodesRef.current[i] = el; }}
+                  className="absolute top-5 left-5 md:left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
                 >
-                  {/* Image */}
-                  <div className="sm:w-[45%] h-56 sm:h-auto relative overflow-hidden">
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      className="w-full h-full object-center transition-transform duration-500 hover:scale-[1.03]"
-                      style={{ objectFit: p.imageFit || "cover" }}
-                    />
-                    <div
-                      className={`absolute inset-0 bg-linear-to-r ${
-                        i % 2 === 1
-                          ? "from-neutral-950/60 to-transparent"
-                          : "from-transparent to-neutral-950/60"
-                      } hidden sm:block`}
-                    />
-                  </div>
+                  <span className="absolute w-8 h-8 rounded-full bg-blue-500/15 animate-pulse" />
+                  <span className="relative w-4 h-4 rounded-full bg-blue-500 ring-4 ring-blue-500/20 shadow-[0_0_14px_rgba(59,130,246,0.75)]" />
+                </span>
 
-                  {/* Content */}
-                  <div className="flex-1 flex flex-col justify-center gap-4 px-6 sm:px-8 py-6 sm:py-8">
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-[10px] text-blue-400 tracking-widest uppercase">
-                        {p.category}
-                      </span>
-                      <span className="w-1 h-1 rounded-full bg-neutral-700" />
-                      <span className="font-mono text-[10px] text-neutral-600">
-                        {p.date}
-                      </span>
-                    </div>
-
-                    <div className="relative">
-                      <span className="absolute -top-4 -left-1 text-8xl font-extrabold text-white/3 leading-none select-none pointer-events-none">
-                        {p.index}
-                      </span>
-                      <h2 className="relative text-2xl sm:text-3xl font-bold text-white leading-tight">
-                        {p.title}
-                      </h2>
-                    </div>
-
-                    <p className="text-neutral-400 text-sm leading-relaxed">
-                      {p.description}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {p.tech.map((t, idx) => (
-                        <span
-                          key={idx}
-                          className="px-2.5 py-1 text-xs font-mono rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="flex items-center gap-3 flex-wrap">
-                      {p.github ? (
-                        <a
-                          href={p.github}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-neutral-300 hover:text-white hover:border-blue-500/40 hover:bg-white/10 transition-all duration-200 no-underline"
-                        >
-                          <Github size={14} />
-                          View on GitHub
-                        </a>
-                      ) : (
-                        <div className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-neutral-500 cursor-not-allowed select-none">
-                          <Github size={14} className="opacity-50" />
-                          Ongoing Project
+                {/* Card column (alternates sides on desktop) */}
+                <div className="md:grid md:grid-cols-2 md:items-start">
+                  <div className={isLeft ? "md:col-start-1 md:pr-14" : "md:col-start-2 md:pl-14"}>
+                    <BorderGlow
+                      borderRadius={16}
+                      colors={["#3b82f6", "#6366f1", "#0ea5e9"]}
+                      glowColor="217 91 60"
+                      glowIntensity={0.9}
+                      className="w-full"
+                    >
+                      <div className="flex flex-col bg-white/2 rounded-2xl border border-white/[0.07] overflow-hidden">
+                        {/* Image */}
+                        <div className="h-44 sm:h-52 relative overflow-hidden">
+                          <img
+                            src={p.image}
+                            alt={p.title}
+                            className="w-full h-full object-center transition-transform duration-500 hover:scale-[1.04]"
+                            style={{ objectFit: p.imageFit || "cover" }}
+                          />
+                          <div className="absolute inset-0 bg-linear-to-t from-neutral-950/80 via-neutral-950/10 to-transparent" />
+                          <span className="absolute top-2 right-4 text-6xl font-extrabold text-white/10 leading-none select-none pointer-events-none">
+                            {p.index}
+                          </span>
                         </div>
-                      )}
-                      {p.demo && (
-                        <a
-                          href={p.demo}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/25 text-sm font-mono text-blue-400 hover:text-blue-300 hover:border-blue-400/50 hover:bg-blue-500/15 transition-all duration-200 no-underline"
-                        >
-                          <ExternalLink size={14} />
-                          Live Demo
-                        </a>
-                      )}
-                    </div>
+
+                        {/* Content */}
+                        <div className="flex flex-col gap-3.5 px-5 sm:px-6 py-5 sm:py-6">
+                          <div className="flex items-center gap-3 flex-wrap">
+                            <span className="font-mono text-[10px] text-blue-400 tracking-widest uppercase">
+                              {p.category}
+                            </span>
+                          </div>
+
+                          <h2 className="text-xl sm:text-2xl font-bold text-white leading-tight">
+                            {p.title}
+                          </h2>
+
+                          <p className="text-neutral-400 text-sm leading-relaxed">
+                            {p.description}
+                          </p>
+
+                          <div className="flex flex-wrap gap-2">
+                            {p.tech.map((t, idx) => (
+                              <span
+                                key={idx}
+                                className="px-2.5 py-1 text-xs font-mono rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400"
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex items-center gap-3 flex-wrap pt-1">
+                            {p.github ? (
+                              <a
+                                href={p.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-neutral-300 hover:text-white hover:border-blue-500/40 hover:bg-white/10 transition-all duration-200 no-underline"
+                              >
+                                <Github size={14} />
+                                View on GitHub
+                              </a>
+                            ) : (
+                              <div className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm font-mono text-neutral-500 cursor-not-allowed select-none">
+                                <Github size={14} className="opacity-50" />
+                                Ongoing Project
+                              </div>
+                            )}
+                            {p.demo && (
+                              <a
+                                href={p.demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/25 text-sm font-mono text-blue-400 hover:text-blue-300 hover:border-blue-400/50 hover:bg-blue-500/15 transition-all duration-200 no-underline"
+                              >
+                                <ExternalLink size={14} />
+                                Live Demo
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </BorderGlow>
                   </div>
                 </div>
-              </BorderGlow>
-            </div>
-          ))}
+              </div>
+            );
+          })}
+
+          {/* Terminal node — the timeline line ends here */}
+          <div className="relative h-4">
+            <span className="absolute top-0 left-5 md:left-1/2 -translate-x-1/2 z-10 flex items-center justify-center">
+              <span className="absolute w-9 h-9 rounded-full bg-blue-500/10 animate-pulse" />
+              <span className="relative w-4 h-4 rounded-full border-2 border-blue-400 bg-neutral-950 shadow-[0_0_16px_rgba(59,130,246,0.65)]" />
+            </span>
+          </div>
         </div>
 
+        {/* Label sits below the timeline terminus, outside the line */}
+        <p className="pl-14 md:pl-0 md:text-center font-mono text-sm sm:text-base text-blue-300 tracking-wide -mt-8 sm:-mt-10">
+          More on the way!
+        </p>
 
       </div>
     </section>

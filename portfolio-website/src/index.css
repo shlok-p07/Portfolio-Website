@@ -117,17 +117,21 @@
   * {
     @apply border-border outline-ring/50;
   }
+  .font-display {
+    font-family: "Bungee", cursive;
+    text-shadow: 0 0 16px rgba(59, 130, 246, 0.45);
+  }
   body {
     @apply bg-background text-foreground;
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    background-color: #0f172a;
-    background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1a1f35 75%, #0f172a 100%);
-    background-attachment: fixed;
+    background-color: #000;
+    background-image: none;
     min-height: 100vh;
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    scrollbar-color: #6366f1 transparent;
   }
   body::before {
     content: '';
@@ -147,12 +151,48 @@
     pointer-events: none;
     z-index: 9999;
   }
+  /* Custom aura scrollbar */
+  html::-webkit-scrollbar,
   body::-webkit-scrollbar {
-    display: none;
+    width: 11px;
+  }
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+  }
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    background-image: linear-gradient(180deg, #059bd6, #048ed8, #00a2ff);
+    box-shadow:
+      inset 0 0 6px rgba(255, 255, 255, 0.35),
+      0 0 10px rgba(59, 130, 246, 0.75),
+      0 0 20px rgba(99, 102, 241, 0.5);
+    transition: background-image 0.3s ease, box-shadow 0.3s ease;
+  }
+  html::-webkit-scrollbar-thumb:hover,
+  body::-webkit-scrollbar-thumb:hover {
+    background-image: linear-gradient(180deg, #7dd3fc, #818cf8, #60a5fa);
+    box-shadow:
+      inset 0 0 8px rgba(255, 255, 255, 0.5),
+      0 0 16px rgba(59, 130, 246, 0.95),
+      0 0 32px rgba(99, 102, 241, 0.7);
   }
   html, body, #root {
     min-height: 100%;
-    background-color: #0f172a;
+    background-color: #000;
     width: 100%;
   }
+}
+
+/* Unlayered so it wins over Tailwind's cursor-* utilities. */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+.custom-cursor-active input,
+.custom-cursor-active textarea {
+  cursor: text !important;
 }
