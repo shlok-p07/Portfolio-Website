@@ -26,6 +26,23 @@ const RESEARCH = [
     ],
     tech: ["Python", "PyTorch", "NumPy / pandas", "scikit-learn", "Embedded C/C++", "Model Optimization"],
   },
+  {
+    title: "AI Coding Tools in Programming Education",
+    group: "Intelligent Automation (IoT) Research Group",
+    institution: "Northeastern University",
+    advisor: "Prof. Sarita Singh",
+    description:
+      "Undergraduate research examining how AI coding assistants (GitHub Copilot, Cursor, ChatGPT/Codex, and Claude Code) can be introduced into early programming courses without eroding the foundational skills the tools presuppose. The study is organized around an integrated TPACK–SAMR–TAM–Bloom framework and contributes a differential \"human-baseline versus AI\" evaluation protocol: students solve a problem unaided, then with an AI tool, then conduct a structured gap analysis on a shared rubric spanning correctness, requirement coverage, edge-case handling, and security — applied across programming paradigms (Python, object-oriented Java, Prolog, and TypeScript/JavaScript) and task types including generation, debugging, testing, and refactoring. A phased model sequences tool use against competence gates so students build fundamentals before relying on AI. I lead the drafting of the conference submissions and support study design and evaluation. Two work-in-progress posters are in preparation for the ACM Technical Symposium on Computer Science Education (SIGCSE TS 2027).",
+    methods: [
+      "CS Education",
+      "AI-Assisted Programming",
+      "Curriculum & Assessment Design",
+      "Program Evaluation",
+      "Academic Integrity",
+      "Human–AI Interaction",
+    ],
+    tech: ["Claude Code", "GitHub Copilot", "Cursor", "ChatGPT", "Python", "Java", "Prolog", "TypeScript/JavaScript", "LaTeX"],
+  },
 ];
 
 export const Research = () => {

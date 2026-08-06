@@ -8,42 +8,17 @@ import dining from "../assets/Dining.png";
 import rainfall from "../assets/rainfall.webp";
 import project3 from "../assets/project3.png";
 import sgacms from "../assets/sgacms.png";
+import phishaware from "../assets/phishaware.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PROJECTS = [
-   {
+  {
     index: "01",
-    category: "EdTech · Platform",
-    date: "Nov 2025",
-    title: "Rainfall Learning",
-    description:
-      "Built a real-time collaborative coding platform with a 15-engineer team, engineering a CRDT-based (Yjs) live IDE that cut edit conflicts to under 2%. Containerized the React/TypeScript stack with Docker, reducing environment failures by 15% across local and production deployments.",
-    tech: ["React", "TypeScript", "Docker", "PostgreSQL", "Prisma", "Express", "Tailwind CSS", "Material UI"],
-    image: rainfall,
-    imageFit: "cover",
-    github: "https://github.com/Aryan0102/Rainfall-Learning",
-  },
-  {
-    index: "02",
-    category: "Full Stack · Web",
-    date: "Sep 2025",
-    title: "NU Dining",
-    description:
-      "Led 5 developers to ship a full-stack dining platform delivering live menus and student ratings at Northeastern. Built JWT-secured REST APIs on a PostgreSQL/Supabase backend that sustain sub-second responses under concurrent voting across multiple dining halls.",
-    tech: ["React", "JavaScript", "Tailwind CSS", "Python", "Supabase", "Node.js", "PostgreSQL"],
-    image: dining,
-    imageFit: "cover",
-    github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
-    demo: "https://nu-dining.vercel.app/home",
-  },
-  {
-    index: "03",
     category: "ML · Quantitative Finance",
-    date: "Dec 2025",
     title: "RL Derivative Hedging",
     description:
-      "Trained PPO and SAC agents to hedge SPY options across 1,200 market windows with full Greeks and transaction-cost modeling. Improved mean P&L from −0.162 to +0.064 and tripled the Sharpe ratio over the Black-Scholes delta-hedging baseline across 4,000 out-of-sample episodes.",
+      "A reinforcement-learning research platform that trains agents to hedge options positions the way a real trader would, modeling transaction costs and full Greeks and benchmarking performance against a classic Black-Scholes delta-hedging baseline.",
     tech: ["Python", "Stable-Baselines3", "PyTorch", "Streamlit", "NumPy", "SciPy", "yfinance", "TensorBoard"],
     image: project3,
     imageFit: "contain",
@@ -51,12 +26,46 @@ const PROJECTS = [
     demo: "https://reinforcementlearning-terminal.streamlit.app/",
   },
   {
+    index: "02",
+    category: "AI/ML · Security Training",
+    title: "PhishAware",
+    description:
+      "A gamified phishing-awareness platform that generates role-specific phishing scenarios through an AI/ML pipeline, personalizes training modules from employee pre-survey data, and includes an in-app AI chatbot to guide users through each simulation.",
+    tech: ["Next.js", "TypeScript", "React", "MongoDB", "Tailwind CSS", "Groq API", "Gemini API"],
+    image: phishaware,
+    imageFit: "cover",
+    github: "https://github.com/shlok-p07/Phish-Aware",
+    demo: "https://phish-aware.onrender.com/",
+  },
+  {
+    index: "03",
+    category: "EdTech · Platform",
+    title: "Rainfall Learning",
+    description:
+      "A real-time collaborative code editor that lets engineering teams write and edit the same files simultaneously, syncing changes instantly and resolving conflicts automatically through CRDT-based merging.",
+    tech: ["React", "TypeScript", "Docker", "PostgreSQL", "Prisma", "Express", "Tailwind CSS", "Material UI"],
+    image: rainfall,
+    imageFit: "cover",
+    github: "https://github.com/Aryan0102/Rainfall-Learning",
+  },
+  {
     index: "04",
+    category: "Full Stack · Web",
+    title: "NU Dining",
+    description:
+      "A full-stack dining platform that surfaces live menus and student ratings across every dining hall at Northeastern, letting students check what's available and rate it in real time.",
+    tech: ["React", "JavaScript", "Tailwind CSS", "Python", "Supabase", "Node.js", "PostgreSQL"],
+    image: dining,
+    imageFit: "cover",
+    github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
+    demo: "https://nu-dining.vercel.app/home",
+  },
+  {
+    index: "05",
     category: "Full Stack · CMS",
-    date: "Jan 2026",
     title: "SGA Website CMS",
     description:
-      "Engineered a production CMS serving 5,000+ students, letting non-technical staff publish pages via a drag-and-drop interface. Built on Next.js, TypeScript, and Prisma with full version history, role-based access control, and schema-validated APIs on every mutation.",
+      "A drag-and-drop content management system that lets non-technical staff at Northeastern's Student Government publish and manage web pages without writing code, complete with version history and role-based access control.",
     tech: ["Next.js", "TypeScript", "React", "Prisma", "PostgreSQL", "Supabase", "Tailwind CSS"],
     image: sgacms,
     imageFit: "contain",
