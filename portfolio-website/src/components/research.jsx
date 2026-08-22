@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const RESEARCH = [
   {
+    index: "01",
     title: "Multimodal Sensor Fusion for Early Parkinson's Detection",
     group: "Intelligent Automation (IoT) Research Group",
     institution: "Northeastern University",
@@ -27,6 +28,7 @@ const RESEARCH = [
     tech: ["Python", "PyTorch", "NumPy / pandas", "scikit-learn", "Embedded C/C++", "Model Optimization"],
   },
   {
+    index: "02",
     title: "AI Coding Tools in Programming Education",
     group: "Intelligent Automation (IoT) Research Group",
     institution: "Northeastern University",
@@ -96,19 +98,6 @@ export const Research = () => {
                 className="w-full"
               >
                 <div className="flex flex-col bg-white/2 rounded-2xl border border-white/[0.07] transition-colors duration-300 overflow-hidden px-6 sm:px-10 py-7 sm:py-9 gap-5">
-                  {/* Meta row */}
-                  <div className="flex items-center gap-3 flex-wrap">
-                    <span className="font-mono text-[10px] text-blue-400 tracking-widest uppercase">
-                      {r.category}
-                    </span>
-                    {r.status && (
-                      <span className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-[10px] font-mono uppercase tracking-widest text-blue-400">
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                        {r.status}
-                      </span>
-                    )}
-                  </div>
-
                   {/* Title */}
                   <div className="relative">
                     <span className="absolute -top-5 -left-1 text-8xl font-extrabold text-white/3 leading-none select-none pointer-events-none">
@@ -182,19 +171,17 @@ export const Research = () => {
                   )}
 
                   {/* Links */}
-                  {(r.paper || r.github) && (
+                  {r.paper && (
                     <div className="flex items-center gap-3 flex-wrap">
-                      {r.paper && (
-                        <a
-                          href={r.paper}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/25 text-sm font-mono text-blue-400 hover:text-blue-300 hover:border-blue-400/50 hover:bg-blue-500/15 transition-all duration-200 no-underline"
-                        >
-                          <ExternalLink size={14} />
-                          Read Paper
-                        </a>
-                      )}
+                      <a
+                        href={r.paper}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 w-fit px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/25 text-sm font-mono text-blue-400 hover:text-blue-300 hover:border-blue-400/50 hover:bg-blue-500/15 transition-all duration-200 no-underline"
+                      >
+                        <ExternalLink size={14} />
+                        Read Paper
+                      </a>
                     </div>
                   )}
                 </div>

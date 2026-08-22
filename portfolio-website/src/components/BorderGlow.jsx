@@ -37,6 +37,9 @@ function animateValue({ start = 0, end = 100, duration = 1000, delay = 0, ease =
   setTimeout(() => requestAnimationFrame(tick), delay);
 }
 
+const SWEEP_ANGLE_START = 110;
+const SWEEP_ANGLE_END = 465;
+
 const GRADIENT_POSITIONS = ['80% 55%', '69% 34%', '8% 6%', '41% 38%', '86% 85%', '82% 18%', '51% 4%'];
 const COLOR_MAP = [0, 1, 2, 0, 1, 2, 1];
 
@@ -65,9 +68,9 @@ const BorderGlow = ({
 }) => {
   const cardRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [cursorAngle, setCursorAngle] = useState(45);
+  const [cursorAngle, setCursorAngle] = useState(animated ? SWEEP_ANGLE_START : 45);
   const [edgeProximity, setEdgeProximity] = useState(0);
-  const [sweepActive, setSweepActive] = useState(false);
+  const [sweepActive, setSweepActive] = useState(animated);
 
   const getCenterOfElement = useCallback((el) => {
     const { width, height } = el.getBoundingClientRect();
@@ -108,10 +111,8 @@ const BorderGlow = ({
 
   useEffect(() => {
     if (!animated) return;
-    const angleStart = 110;
-    const angleEnd = 465;
-    setSweepActive(true);
-    setCursorAngle(angleStart);
+    const angleStart = SWEEP_ANGLE_START;
+    const angleEnd = SWEEP_ANGLE_END;
     animateValue({ duration: 500, onUpdate: v => setEdgeProximity(v / 100) });
     animateValue({ ease: easeInCubic, duration: 1500, end: 50, onUpdate: v => {
       setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);

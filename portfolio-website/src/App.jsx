@@ -97,7 +97,7 @@ function App() {
       <CustomCursor />
       <Navbar />
       <Assistant />
-      <div className="w-full flex flex-col relative z-10 min-h-screen px-4 sm:px-6 pb-4 sm:pb-6">
+      <div className="w-full flex flex-col relative z-10 min-h-screen overflow-x-clip px-4 sm:px-6 pb-4 sm:pb-6">
         <section id="main" className="w-full min-h-svh flex items-center justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Intro ready={!loading} />
         </section>

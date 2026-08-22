@@ -32,6 +32,7 @@ const LINKS = [
   },
   {
     label: "Resume",
+    value: "View PDF",
     href: "/Shlok_Resume.pdf",
     Icon: FaFilePdf,
     external: true,
@@ -122,9 +123,11 @@ export const Contact = () => {
                     <span className="text-white font-semibold text-lg leading-tight">
                       {l.label}
                     </span>
-                    <span className="text-neutral-400 text-sm truncate">
-                      {l.value}
-                    </span>
+                    {l.value && (
+                      <span className="text-neutral-400 text-sm truncate">
+                        {l.value}
+                      </span>
+                    )}
                   </div>
                   <ArrowUpRight
                     size={20}
