@@ -21,35 +21,32 @@ import {
   SiDocker,
   SiExpress,
   SiJupyter,
+  SiPostgresql,
 } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
 import BorderGlow from "./BorderGlow";
 import SectionHeading from "./SectionHeading";
 
+// Surface-plot glyph standing in for MATLAB. simple-icons (and therefore
+// react-icons) does not ship a MATLAB mark, so this is a generic mesh-plot
+// figure rather than a reproduction of the product logo. It uses currentColor
+// so it tints identically to the react-icons glyphs beside it.
 const MatlabIcon = () => (
-  <img
-    src="https://pemrogramanmatlab.com/wp-content/uploads/2023/07/pemrograman-matlab-adi-pamungkas-edited-1.jpg"
-    alt="MATLAB"
-    className="w-5 h-5 object-cover rounded-sm"
-    style={{ filter: "grayscale(1) brightness(1.4)" }}
-  />
-);
-
-const JavaIcon = () => (
-  <img
-    src="https://education.oracle.com/file/general/p-80-java.png"
-    alt="Java"
-    className="w-5 h-5 object-cover"
-    style={{ filter: "grayscale(1) brightness(1.4)" }}
-  />
-);
-
-const PostgreSqlIcon = () => (
-  <img
-    src="https://download.logo.wine/logo/PostgreSQL/PostgreSQL-Logo.wine.png"
-    alt="PostgreSQL"
-    className="w-5 h-5 object-cover"
-    style={{ filter: "grayscale(1) brightness(1.4)" }}
-  />
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.6"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="w-[1em] h-[1em]"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M2 14.2c3.3 0 4.6-8.2 8-8.2s3.4 8.2 6 8.2" />
+    <path d="M5 19.5c3.3 0 4.6-8.2 8-8.2s3.4 8.2 6 8.2" />
+    <path d="M2 14.2 5 19.5M10 6l3 5.3M16 14.2l3 5.3" />
+  </svg>
 );
 
 const SKILL_CATEGORIES = [
@@ -59,7 +56,7 @@ const SKILL_CATEGORIES = [
       { node: <SiPython />, title: "Python" },
       { node: <SiTypescript />, title: "TypeScript" },
       { node: <SiJavascript />, title: "JavaScript" },
-      { node: <JavaIcon />, title: "Java" },
+      { node: <FaJava />, title: "Java" },
       { node: <SiHtml5 />, title: "HTML" },
       { node: <MatlabIcon />, title: "MATLAB" },
     ],
@@ -80,7 +77,7 @@ const SKILL_CATEGORIES = [
   {
     label: "Databases & Cloud",
     skills: [
-      { node: <PostgreSqlIcon />, title: "PostgreSQL" },
+      { node: <SiPostgresql />, title: "PostgreSQL" },
       { node: <SiSupabase />, title: "Supabase" },
       { node: <SiMongodb />, title: "MongoDB" },
     ],

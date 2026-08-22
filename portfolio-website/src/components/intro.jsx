@@ -1,6 +1,6 @@
 import TextType from "./text";
 import BorderGlow from "./BorderGlow";
-import headshotpic from "../assets/headshotpic.png";
+import headshotpic from "../assets/headshotpic.webp";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

@@ -4,11 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Github, ExternalLink } from "lucide-react";
 import BorderGlow from "./BorderGlow";
 import SectionHeading from "./SectionHeading";
-import dining from "../assets/Dining.png";
+import dining from "../assets/Dining.webp";
 import rainfall from "../assets/rainfall.webp";
-import project3 from "../assets/project3.png";
-import sgacms from "../assets/sgacms.png";
-import phishaware from "../assets/phishaware.png";
+import project3 from "../assets/project3.webp";
+import sgacms from "../assets/sgacms.webp";
+import phishaware from "../assets/phishaware.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 

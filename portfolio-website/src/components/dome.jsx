@@ -1,34 +1,57 @@
 import { useEffect, useMemo, useRef, useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
+import nuSeal from '../assets/nu-seal.webp';
+import nycSkyline from '../assets/nyc-skyline.webp';
 
+// Tiles for the About-section gallery.
+//
+// TO REPLACE A FLAGGED TILE: drop your image in src/assets, add an import at
+// the top of this file, then swap the entry's `src` to that import and delete
+// its `todo` field. The enlarged view is 400x400 (see openedImageWidth), so
+// ~500px on the long edge is plenty; run it through cwebp like the two local
+// files below.
+//
+// Entries carrying a `todo` are still hot-linked to third-party hosts. They
+// render today, but nothing guarantees they will keep resolving, and the two
+// Google-cache URLs in particular are thumbnail-cache keys that rotate rather
+// than a hosting service. `todo` is documentation only -- it does not affect
+// rendering.
 const DEFAULT_IMAGES = [
   {
-    src: 'https://upload.wikimedia.org/wikipedia/commons/b/bb/NU_RGB_seal_R.png',
+    src: nuSeal,
     alt: 'Northeastern University'
   },
   {
+    src: nycSkyline,
+    alt: 'New York City',
+    // Sourced from pix4free.org, which publishes under CC BY 3.0. Free to use,
+    // but the licence asks for attribution -- add a credit line if you keep it.
+    credit: 'Photo via pix4free.org (CC BY 3.0)'
+  },
+  {
     src: 'https://thumbs.dreamstime.com/b/boston-skyline-night-massachusetts-usa-42010042.jpg',
-    alt: 'Boston Skyline'
+    alt: 'Boston Skyline',
+    todo: 'REPLACE: this is a watermarked preview from Dreamstime, a paid stock library. Use your own Boston photo or a properly licensed one.'
   },
   {
     src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrtJ4fRk3Y_sNUQm-dXwCdX36vCnQD2Hpi8A&s',
-    alt: 'Finance'
-  },
-  {
-    src: 'https://www.aprimo.com/wp-content/uploads/2024/03/Adobe-Creative-Cloud-Logo.png',
-    alt: 'Adobe'
+    alt: 'Finance',
+    todo: 'REPLACE: Google Images thumbnail-cache URL. Not a hosting service -- these keys expire.'
   },
   {
     src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQN35oUPDlZ340sJvvDBVUtGpcyVKU_qzLj2g&s',
-    alt: 'Chess'
+    alt: 'Chess',
+    todo: 'REPLACE: Google Images thumbnail-cache URL. Not a hosting service -- these keys expire.'
   },
   {
-    src: 'https://pix4free.org/assets/library/2021-01-12/originals/new_york_city_skyscrapers_cityscape_skyline.jpg',
-    alt: 'New York City'
+    src: 'https://www.aprimo.com/wp-content/uploads/2024/03/Adobe-Creative-Cloud-Logo.png',
+    alt: 'Adobe',
+    todo: 'REPLACE: Adobe trademark served off an unrelated company\'s WordPress uploads directory.'
   },
   {
     src: 'https://miro.medium.com/1*OOm0FFx3wlMBDoknYFUllw.jpeg',
-    alt: 'Quant'
+    alt: 'Quant',
+    todo: 'REPLACE: image lifted from a Medium article CDN; no licence and no stability guarantee.'
   }
 ];
 
@@ -856,6 +879,8 @@ export default function DomeGallery({
                       src={it.src}
                       draggable={false}
                       alt={it.alt}
+                      loading="lazy"
+                      onError={e => { e.currentTarget.style.opacity = '0'; }}
                       className="w-full h-full object-cover pointer-events-none"
                       style={{
                         backfaceVisibility: 'hidden',
