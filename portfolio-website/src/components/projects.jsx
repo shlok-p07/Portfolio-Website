@@ -58,7 +58,6 @@ const PROJECTS = [
     image: dining,
     imageFit: "cover",
     github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
-    demo: "https://nu-dining.vercel.app/home",
   },
   {
     index: "05",

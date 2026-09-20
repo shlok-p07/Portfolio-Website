@@ -33,7 +33,7 @@ const LINKS = [
   {
     label: "Resume",
     value: "View PDF",
-    href: "/Shlok_Resume.pdf",
+    href: "/Shlok Patel's Resume(CS).pdf",
     Icon: FaFilePdf,
     external: true,
   },
