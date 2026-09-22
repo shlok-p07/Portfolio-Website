@@ -1,115 +1,42 @@
 import { useEffect, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import "./App.css";
+import Terminal from "./components/Terminal";
+import SimplePage from "./components/SimplePage";
 
-gsap.registerPlugin(ScrollTrigger);
-import { Navbar } from "./components/Navbar";
-import { CustomCursor } from "./components/CustomCursor";
-import { Preloader } from "./components/Preloader";
-import { Intro } from "./components/intro";
-import { About } from "./components/about";
-import { Skills } from "./components/skills";
-import { Projects } from "./components/projects";
-import { Research } from "./components/research";
-import { Contact } from "./components/contact";
-import { Assistant } from "./components/Assistant";
+const SIMPLE = "#simple";
+const TERMINAL = "#terminal";
+
+const prefersSimple = () =>
+  window.matchMedia("(max-width: 767px), (pointer: coarse)").matches;
+
+const initialMode = () => {
+  const hash = window.location.hash;
+  if (hash === SIMPLE) return "simple";
+  if (hash === TERMINAL) return "terminal";
+  return prefersSimple() ? "simple" : "terminal";
+};
 
 function App() {
-  const [loading, setLoading] = useState(true);
+  const [mode, setMode] = useState(initialMode);
 
   useEffect(() => {
-    const ids = ["main", "about", "skills", "projects", "research", "contact"];
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean);
-
-    if (!elements.length) return;
-
-    let ticking = false;
-    const updateHash = () => {
-      ticking = false;
-      const viewportCenter = window.innerHeight * 0.35;
-      let bestId = null;
-      let bestDistance = Infinity;
-
-      elements.forEach((el) => {
-        const rect = el.getBoundingClientRect();
-        const distance = Math.abs(rect.top - viewportCenter);
-        const isVisible = rect.bottom > 0 && rect.top < window.innerHeight;
-        if (isVisible && distance < bestDistance) {
-          bestDistance = distance;
-          bestId = el.id;
-        }
-      });
-
-      if (bestId && window.location.hash !== `#${bestId}`) {
-        window.history.replaceState(null, "", `#${bestId}`);
-      }
+    const onHash = () => {
+      const hash = window.location.hash;
+      if (hash === SIMPLE) setMode("simple");
+      else if (hash === TERMINAL) setMode("terminal");
     };
-
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(updateHash);
-      }
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    updateHash();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ["#about", "#skills", "#projects", "#research", "#contact"].forEach((id) => {
-        gsap.fromTo(
-          id,
-          { opacity: 0, y: 52 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: id,
-              start: "top 82%",
-              toggleActions: "play none none none",
-            },
-          }
-        );
-      });
-    });
-    return () => ctx.revert();
-  }, []);
+  const go = (to) => {
+    window.location.hash = to === "simple" ? SIMPLE : TERMINAL;
+    setMode(to);
+  };
 
-  return (
-    <>
-      <style>{`
-        html {
-          scroll-behavior: smooth;
-        }
-      `}</style>
-      {loading && <Preloader onDone={() => setLoading(false)} />}
-      <CustomCursor />
-      <Navbar />
-      <Assistant />
-      <div className="w-full flex flex-col relative z-10 min-h-screen overflow-x-clip px-4 sm:px-6 pb-4 sm:pb-6">
-        <section id="main" className="w-full min-h-svh flex items-center justify-center animate-in fade-in slide-in-from-bottom-8 duration-1000">
-          <Intro ready={!loading} />
-        </section>
-        <div>
-          <About />
-          <Skills />
-          <Projects/>
-          <Research />
-          <Contact />
-        </div>
-      </div>
-    </>
+  return mode === "simple" ? (
+    <SimplePage onTerminal={() => go("terminal")} />
+  ) : (
+    <Terminal onSimple={() => go("simple")} />
   );
 }
 
