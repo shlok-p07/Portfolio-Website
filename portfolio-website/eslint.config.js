@@ -28,10 +28,11 @@ export default defineConfig([
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
       'react/jsx-uses-vars': 'error',
+      'no-empty': ['error', { allowEmptyCatch: true }],
     },
   },
   {
-    files: ['api/**/*.js', 'vite.config.js', '*.config.js'],
+    files: ['vite.config.js', '*.config.js'],
     languageOptions: {
       globals: globals.node,
     },
