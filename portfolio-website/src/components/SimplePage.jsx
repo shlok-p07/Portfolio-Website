@@ -1,4 +1,35 @@
+import { useEffect, useRef, useState } from "react";
 import { PROJECTS, EXPERIENCE, RESEARCH, TOOLKIT, PROFILE, CONTACT } from "../terminal/content";
+
+const SECTIONS = [
+  ["about", "about"],
+  ["skills", "tech stack"],
+  ["projects", "projects"],
+  ["experience", "experience"],
+  ["research", "research"],
+  ["contact", "contact"],
+];
+
+const reduced = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const Chip = ({ label, active, onClick }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-current={active ? "true" : undefined}
+    className={`shrink-0 cursor-pointer rounded border px-2 py-0.5 text-[12px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan ${
+      active
+        ? "border-cyan/60 bg-raised text-fg-bright"
+        : "border-line bg-raised text-cyan hover:border-cyan/50 hover:text-fg-bright"
+    }`}
+  >
+    {label}
+  </button>
+);
+
+const Bar = () => <span className="block h-[1.5px] w-4 bg-current" />;
 
 const newTab = (href) =>
   /^https?:/.test(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
@@ -72,185 +103,283 @@ const Row = ({ label, children, first }) => (
   </div>
 );
 
-export const SimplePage = ({ onTerminal }) => (
-  <div data-theme="dracula" className="h-full overflow-y-auto bg-bg">
-    <header className="sticky top-0 z-10 border-b border-line bg-panel/95 backdrop-blur">
-      <div className="mx-auto flex h-14 max-w-3xl items-center gap-3 px-5 sm:px-8">
-        <span className="truncate text-[14px] text-green">
-          shlok@portfolio<span className="text-dim">:~$</span>
-        </span>
-        <button
-          type="button"
-          onClick={onTerminal}
-          className="ml-auto shrink-0 cursor-pointer rounded-lg border border-purple/60 bg-transparent px-3 py-1.5 text-[12.5px] text-purple transition-colors hover:bg-purple hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
-        >
-          terminal version
-        </button>
-      </div>
-    </header>
+export const SimplePage = ({ onTerminal }) => {
+  const scrollRef = useRef(null);
+  const headerRef = useRef(null);
+  const [active, setActive] = useState(SECTIONS[0][0]);
+  const [open, setOpen] = useState(false);
 
-    <main className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-20">
-      <h1 className="m-0 text-[38px] leading-[1.1] font-bold tracking-tight text-fg-bright sm:text-[52px]">
-        {PROFILE.name}
-      </h1>
-      <p className="m-0 mt-3 text-[16px] text-cyan sm:text-[18px]">{PROFILE.role}</p>
-      <p className="m-0 mt-1 text-[14px] text-dim">{PROFILE.location}</p>
-      <p className="m-0 mt-6 max-w-[68ch] text-[16.5px] leading-[1.9] text-fg">{PROFILE.intro}</p>
-      <Links items={CONTACT.map((c) => ({ label: c.label, href: c.href }))} />
+  /* Buttons rather than #hash links on purpose: App routes modes off the hash
+     and only knows #simple and #terminal, so leaving #about in the URL would
+     send a returning desktop visitor to the terminal on reload. */
+  const go = (id) => {
+    setOpen(false);
+    const c = scrollRef.current;
+    const el = document.getElementById(id);
+    if (!c || !el) return;
+    const offset = (headerRef.current?.offsetHeight ?? 56) + 12;
+    const top = el.getBoundingClientRect().top - c.getBoundingClientRect().top + c.scrollTop - offset;
+    c.scrollTo({ top: Math.max(0, top), behavior: reduced() ? "auto" : "smooth" });
+    setActive(id);
+  };
 
-      <hr className="my-14 border-0 border-t border-line sm:my-20" />
+  // Highlight whichever section currently sits in the upper band of the view.
+  useEffect(() => {
+    const c = scrollRef.current;
+    if (!c) return;
+    const els = SECTIONS.map(([id]) => document.getElementById(id)).filter(Boolean);
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const seen = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (seen[0]) setActive(seen[0].target.id);
+      },
+      { root: c, rootMargin: "-15% 0px -70% 0px", threshold: 0 }
+    );
+    els.forEach((e) => obs.observe(e));
+    return () => obs.disconnect();
+  }, []);
 
-      <Section id="about" title="about">
-        {PROFILE.about.map((p, i) => (
-          <p key={i} className="m-0 mb-5 max-w-[68ch] text-[16.5px] leading-[1.9] text-fg">
-            {p}
-          </p>
-        ))}
-        <dl className="m-0 mt-8 overflow-hidden rounded-xl border border-line bg-panel">
-          {[
-            ["Degree", PROFILE.degree],
-            ["School", PROFILE.school],
-            ["GPA", PROFILE.gpa],
-            ["Graduation", PROFILE.graduation],
-            ["Available", PROFILE.availability],
-            ["Honors", PROFILE.honors],
-            ["Societies", PROFILE.societies],
-            ["Coursework", PROFILE.coursework],
-            ["Certifications", PROFILE.certifications],
-          ].map(([label, value], i) => (
-            <Row key={label} label={label} first={i === 0}>
-              {value}
-            </Row>
-          ))}
-        </dl>
-      </Section>
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
-      <Section id="skills" title="tech stack">
-        <div className="flex flex-col gap-4">
-          {TOOLKIT.map((g) => (
-            <div key={g.label} className="rounded-xl border border-line bg-panel p-5 sm:p-6">
-              <h3 className="m-0 text-[14px] font-bold uppercase tracking-[0.1em] text-yellow">
-                {g.label}
-              </h3>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {g.items.map((item) => (
-                  <Tag key={item}>{item}</Tag>
-                ))}
-              </div>
+  return (
+    <div ref={scrollRef} data-theme="dracula" className="h-full overflow-y-auto bg-bg">
+      <header
+        ref={headerRef}
+        className="sticky top-0 z-20 border-b border-line bg-panel/95 backdrop-blur"
+      >
+        <div className="mx-auto flex h-14 max-w-3xl items-center gap-3 px-5 sm:px-8">
+          <span className="min-w-0 truncate text-[14px] text-green">
+            shlok@portfolio<span className="text-dim">:~$</span>
+          </span>
+
+          <div className="ml-auto flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls="section-menu"
+              aria-label={open ? "Hide sections" : "Show sections"}
+              className="flex cursor-pointer items-center gap-2 rounded-lg border border-line bg-raised px-2.5 py-1.5 text-[12.5px] text-cyan transition-colors hover:border-cyan/50 hover:text-fg-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan sm:hidden"
+            >
+              <span className="flex flex-col gap-[3px]">
+                <Bar />
+                <Bar />
+                <Bar />
+              </span>
+              sections
+            </button>
+
+            <button
+              type="button"
+              onClick={onTerminal}
+              className="cursor-pointer rounded-lg border border-purple/60 bg-transparent px-3 py-1.5 text-[12.5px] text-purple transition-colors hover:bg-purple hover:text-bg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple"
+            >
+              <span className="sm:hidden">terminal</span>
+              <span className="hidden sm:inline">terminal version</span>
+            </button>
+          </div>
+        </div>
+
+        <nav aria-label="Sections" className="hidden border-t border-line sm:block">
+          <div className="mx-auto flex max-w-3xl items-center gap-1.5 overflow-x-auto px-5 py-2 sm:px-8">
+            <span className="shrink-0 pr-1 text-[12px] text-dim">sections:</span>
+            {SECTIONS.map(([id, label]) => (
+              <Chip key={id} label={label} active={active === id} onClick={() => go(id)} />
+            ))}
+          </div>
+        </nav>
+
+        {open && (
+          <nav id="section-menu" aria-label="Sections" className="border-t border-line sm:hidden">
+            <div className="mx-auto flex max-w-3xl flex-col px-5 py-2">
+              {SECTIONS.map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => go(id)}
+                  aria-current={active === id ? "true" : undefined}
+                  className={`cursor-pointer rounded px-2 py-2.5 text-left text-[15px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan ${
+                    active === id ? "bg-raised text-fg-bright" : "text-cyan hover:bg-raised"
+                  }`}
+                >
+                  <span className="select-none text-purple">##</span> {label}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-      </Section>
+          </nav>
+        )}
+      </header>
 
-      <Section id="projects" title="projects">
-        <div className="flex flex-col gap-5">
-          {PROJECTS.map((p, i) => (
-            <Card key={p.title}>
-              <div className="flex items-baseline gap-3">
-                <span className="shrink-0 select-none text-[14px] text-pink">[{num(i)}]</span>
-                <h3 className="m-0 text-[19px] font-bold leading-snug text-green sm:text-[21px]">
-                  {p.title}
+      <main className="mx-auto max-w-3xl px-5 py-12 sm:px-8 sm:py-20">
+        <h1 className="m-0 text-[38px] leading-[1.1] font-bold tracking-tight text-fg-bright sm:text-[52px]">
+          {PROFILE.name}
+        </h1>
+        <p className="m-0 mt-3 text-[16px] text-cyan sm:text-[18px]">{PROFILE.role}</p>
+        <p className="m-0 mt-1 text-[14px] text-dim">{PROFILE.location}</p>
+        <p className="m-0 mt-6 max-w-[68ch] text-[16.5px] leading-[1.9] text-fg">{PROFILE.intro}</p>
+        <Links items={CONTACT.map((c) => ({ label: c.label, href: c.href }))} />
+
+        <hr className="my-14 border-0 border-t border-line sm:my-20" />
+
+        <Section id="about" title="about">
+          {PROFILE.about.map((p, i) => (
+            <p key={i} className="m-0 mb-5 max-w-[68ch] text-[16.5px] leading-[1.9] text-fg">
+              {p}
+            </p>
+          ))}
+          <dl className="m-0 mt-8 overflow-hidden rounded-xl border border-line bg-panel">
+            {[
+              ["Degree", PROFILE.degree],
+              ["School", PROFILE.school],
+              ["GPA", PROFILE.gpa],
+              ["Graduation", PROFILE.graduation],
+              ["Available", PROFILE.availability],
+              ["Honors", PROFILE.honors],
+              ["Societies", PROFILE.societies],
+              ["Coursework", PROFILE.coursework],
+              ["Certifications", PROFILE.certifications],
+            ].map(([label, value], i) => (
+              <Row key={label} label={label} first={i === 0}>
+                {value}
+              </Row>
+            ))}
+          </dl>
+        </Section>
+
+        <Section id="skills" title="tech stack">
+          <div className="flex flex-col gap-4">
+            {TOOLKIT.map((g) => (
+              <div key={g.label} className="rounded-xl border border-line bg-panel p-5 sm:p-6">
+                <h3 className="m-0 text-[14px] font-bold uppercase tracking-[0.1em] text-yellow">
+                  {g.label}
                 </h3>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {g.items.map((item) => (
+                    <Tag key={item}>{item}</Tag>
+                  ))}
+                </div>
               </div>
-              {p.client && (
+            ))}
+          </div>
+        </Section>
+
+        <Section id="projects" title="projects">
+          <div className="flex flex-col gap-5">
+            {PROJECTS.map((p, i) => (
+              <Card key={p.title}>
+                <div className="flex items-baseline gap-3">
+                  <span className="shrink-0 select-none text-[14px] text-pink">[{num(i)}]</span>
+                  <h3 className="m-0 text-[19px] font-bold leading-snug text-green sm:text-[21px]">
+                    {p.title}
+                  </h3>
+                </div>
+                {p.client && (
+                  <p className="m-0 mt-2 text-[15.5px] text-cyan">
+                    Client: {p.client}
+                    {p.context && <span className="text-dim"> — {p.context}</span>}
+                  </p>
+                )}
+                {p.period && <p className="m-0 mt-1 text-[13.5px] text-yellow">{p.period}</p>}
+                <p className="m-0 mt-3 max-w-[68ch] text-[15.5px] leading-[1.85] text-fg">
+                  {p.description}
+                </p>
+                {p.stack && <Stack value={p.stack} />}
+                {p.skills && <Stack value={p.skills} />}
+                {(p.github || p.demo) && (
+                  <Links
+                    items={[
+                      p.github && { label: "Source code", href: p.github },
+                      p.demo && { label: "Live demo", href: p.demo },
+                    ].filter(Boolean)}
+                  />
+                )}
+                {(p.note || (!p.github && !p.demo)) && (
+                  <p className="m-0 mt-4 max-w-[68ch] text-[14px] text-dim">
+                    {p.note ?? "Repository is private."}
+                  </p>
+                )}
+              </Card>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="experience" title="experience">
+          <div className="flex flex-col gap-5">
+            {EXPERIENCE.map((j, i) => (
+              <Card key={i}>
+                <div className="flex items-baseline gap-3">
+                  <span className="shrink-0 select-none text-[14px] text-pink">[{num(i)}]</span>
+                  <h3 className="m-0 text-[19px] font-bold leading-snug text-purple sm:text-[21px]">
+                    {j.role}
+                  </h3>
+                </div>
+                <p className="m-0 mt-2 text-[15.5px] text-cyan">{j.org}</p>
+                {j.context && <p className="m-0 mt-0.5 text-[14px] text-dim">{j.context}</p>}
+                <p className="m-0 mt-1 text-[13.5px] text-yellow">
+                  {j.period} <span className="text-dim">· {j.location}</span>
+                </p>
+                <Bullets items={j.points} />
+                {j.stack && <Stack value={j.stack} />}
+              </Card>
+            ))}
+          </div>
+        </Section>
+
+        <Section id="research" title="research">
+          <div className="flex flex-col gap-5">
+            {RESEARCH.map((r, i) => (
+              <Card key={i}>
+                <div className="flex items-baseline gap-3">
+                  <span className="shrink-0 select-none text-[14px] text-pink">[{num(i)}]</span>
+                  <h3 className="m-0 text-[19px] font-bold leading-snug text-orange sm:text-[21px]">
+                    {r.title}
+                  </h3>
+                </div>
                 <p className="m-0 mt-2 text-[15.5px] text-cyan">
-                  Client: {p.client}
-                  {p.context && <span className="text-dim"> — {p.context}</span>}
+                  {r.role}, {r.group}
                 </p>
-              )}
-              {p.period && <p className="m-0 mt-1 text-[13.5px] text-yellow">{p.period}</p>}
-              <p className="m-0 mt-3 max-w-[68ch] text-[15.5px] leading-[1.85] text-fg">
-                {p.description}
-              </p>
-              {p.stack && <Stack value={p.stack} />}
-              {p.skills && <Stack value={p.skills} />}
-              {(p.github || p.demo) && (
-                <Links
-                  items={[
-                    p.github && { label: "Source code", href: p.github },
-                    p.demo && { label: "Live demo", href: p.demo },
-                  ].filter(Boolean)}
-                />
-              )}
-              {(p.note || (!p.github && !p.demo)) && (
-                <p className="m-0 mt-4 max-w-[68ch] text-[14px] text-dim">
-                  {p.note ?? "Repository is private."}
+                <p className="m-0 mt-1 text-[13.5px] text-yellow">
+                  Advised by {r.advisor} <span className="text-dim">· {r.period}</span>
                 </p>
-              )}
-            </Card>
-          ))}
-        </div>
-      </Section>
+                <Bullets items={r.work} />
+                <Stack value={r.stack} />
+              </Card>
+            ))}
+          </div>
+        </Section>
 
-      <Section id="experience" title="experience">
-        <div className="flex flex-col gap-5">
-          {EXPERIENCE.map((j, i) => (
-            <Card key={i}>
-              <div className="flex items-baseline gap-3">
-                <span className="shrink-0 select-none text-[14px] text-pink">[{num(i)}]</span>
-                <h3 className="m-0 text-[19px] font-bold leading-snug text-purple sm:text-[21px]">
-                  {j.role}
-                </h3>
-              </div>
-              <p className="m-0 mt-2 text-[15.5px] text-cyan">{j.org}</p>
-              {j.context && <p className="m-0 mt-0.5 text-[14px] text-dim">{j.context}</p>}
-              <p className="m-0 mt-1 text-[13.5px] text-yellow">
-                {j.period} <span className="text-dim">· {j.location}</span>
-              </p>
-              <Bullets items={j.points} />
-              {j.stack && <Stack value={j.stack} />}
-            </Card>
-          ))}
-        </div>
-      </Section>
+        <Section id="contact" title="contact">
+          <p className="m-0 mb-6 max-w-[68ch] text-[16.5px] leading-[1.9] text-fg">
+            Email is the surest way to reach me.
+          </p>
+          <dl className="m-0 overflow-hidden rounded-xl border border-line bg-panel">
+            {CONTACT.map((c, i) => (
+              <Row key={c.href} label={c.label} first={i === 0}>
+                <a
+                  href={c.href}
+                  {...newTab(c.href)}
+                  className="text-pink underline decoration-pink/40 underline-offset-4 transition-colors hover:decoration-pink hover:text-fg-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink"
+                >
+                  {c.value} ↗
+                </a>
+              </Row>
+            ))}
+          </dl>
+        </Section>
 
-      <Section id="research" title="research">
-        <div className="flex flex-col gap-5">
-          {RESEARCH.map((r, i) => (
-            <Card key={i}>
-              <div className="flex items-baseline gap-3">
-                <span className="shrink-0 select-none text-[14px] text-pink">[{num(i)}]</span>
-                <h3 className="m-0 text-[19px] font-bold leading-snug text-orange sm:text-[21px]">
-                  {r.title}
-                </h3>
-              </div>
-              <p className="m-0 mt-2 text-[15.5px] text-cyan">
-                {r.role}, {r.group}
-              </p>
-              <p className="m-0 mt-1 text-[13.5px] text-yellow">
-                Advised by {r.advisor} <span className="text-dim">· {r.period}</span>
-              </p>
-              <Bullets items={r.work} />
-              <Stack value={r.stack} />
-            </Card>
-          ))}
-        </div>
-      </Section>
-
-      <Section id="contact" title="contact">
-        <p className="m-0 mb-6 max-w-[68ch] text-[16.5px] leading-[1.9] text-fg">
-          Email is the surest way to reach me.
+        <p className="m-0 border-t border-line pt-8 text-[13px] text-dim">
+          <span className="text-green">shlok@portfolio</span>:~$ © 2026 {PROFILE.name}
         </p>
-        <dl className="m-0 overflow-hidden rounded-xl border border-line bg-panel">
-          {CONTACT.map((c, i) => (
-            <Row key={c.href} label={c.label} first={i === 0}>
-              <a
-                href={c.href}
-                {...newTab(c.href)}
-                className="text-pink underline decoration-pink/40 underline-offset-4 transition-colors hover:decoration-pink hover:text-fg-bright focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink"
-              >
-                {c.value} ↗
-              </a>
-            </Row>
-          ))}
-        </dl>
-      </Section>
-
-      <p className="m-0 border-t border-line pt-8 text-[13px] text-dim">
-        <span className="text-green">shlok@portfolio</span>:~$ © 2026 {PROFILE.name}
-      </p>
-    </main>
-  </div>
-);
+      </main>
+    </div>
+  );
+};
 
 export default SimplePage;

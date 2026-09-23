@@ -260,7 +260,6 @@ export const PROFILE = {
 };
 
 export const CONTACT = [
-  { label: "Portfolio", value: "shlokpatelportfolio.live", href: "https://shlokpatelportfolio.live" },
   { label: "Email", value: "patel.s15@northeastern.edu", href: "mailto:patel.s15@northeastern.edu" },
   { label: "LinkedIn", value: "@-shlokpatel", href: "https://www.linkedin.com/in/-shlokpatel" },
   { label: "GitHub", value: "@shlok-p07", href: "https://github.com/shlok-p07" },

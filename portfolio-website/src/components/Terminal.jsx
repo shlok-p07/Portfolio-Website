@@ -410,13 +410,13 @@ export const Terminal = ({ onSimple }) => {
       </div>
 
       <div className="shrink-0 border-t border-line bg-panel">
-        <div className="md:hidden flex gap-1.5 overflow-x-auto px-3 pt-2.5 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="md:hidden flex flex-wrap gap-1 px-3 pt-2 pb-1">
           {ALL_COMMANDS.map((cmd) => (
             <button
               key={cmd}
               type="button"
               onClick={() => run(cmd)}
-              className="shrink-0 px-2.5 py-1 rounded border border-line bg-raised text-blue text-[12px] cursor-pointer hover:text-fg-bright transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
+              className="shrink-0 px-2 py-1 rounded border border-line bg-raised text-blue text-[11.5px] leading-4 cursor-pointer hover:text-fg-bright transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
             >
               {cmd}
             </button>
@@ -444,8 +444,8 @@ export const Terminal = ({ onSimple }) => {
           className="flex items-center gap-1.5 px-4 sm:px-8 py-3"
         >
           <span aria-hidden="true" className="shrink-0 text-[13px]">
-            <span className="text-green">shlok@portfolio</span>
-            <span className="text-dim">:</span>
+            <span className="hidden sm:inline text-green">shlok@portfolio</span>
+            <span className="hidden sm:inline text-dim">:</span>
             <span className="text-blue">~</span>
             <span className="text-dim">$</span>
           </span>
