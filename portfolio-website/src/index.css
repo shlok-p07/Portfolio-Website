@@ -1,230 +1,217 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: var(--c-bg);
-  --color-panel: var(--c-panel);
-  --color-raised: var(--c-raised);
-  --color-line: var(--c-line);
-  --color-fg: var(--c-fg);
-  --color-fg-bright: var(--c-fg-bright);
-  --color-dim: var(--c-dim);
-  --color-red: var(--c-red);
-  --color-green: var(--c-green);
-  --color-yellow: var(--c-yellow);
-  --color-orange: var(--c-orange);
-  --color-blue: var(--c-blue);
-  --color-purple: var(--c-purple);
-  --color-cyan: var(--c-cyan);
-  --color-pink: var(--c-pink);
+  /* Roles, not hues: ink is foreground and borders, paper the page, haze a
+     raised surface, brand the signature colour (bands, posters, charts), cta
+     the one accent reserved for primary actions. Values are set on :root. */
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-haze: var(--haze);
+  --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
+  --color-cta: var(--cta);
+  --color-on-cta: var(--on-cta);
 
-  --font-sans: "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
-  --font-mono: "JetBrains Mono", ui-monospace, Menlo, Monaco, Consolas, monospace;
+  --font-display: "Clash Display", "Arial Black", sans-serif;
+  --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  --shadow-hard-sm: 3px 3px 0 0 var(--shadow);
+  --shadow-hard: 6px 6px 0 0 var(--shadow);
+  --shadow-hard-lg: 10px 10px 0 0 var(--shadow);
+}
+
+/* The palette: slate and teal. */
+:root {
+  --ink: #111827;
+  --paper: #ffffff;
+  --haze: #f3f4f6;
+  --brand: #1f3a5f;
+  --on-brand: #ffffff;
+  --cta: #0f766e;
+  --on-cta: #ffffff;
+  --shadow: #111827;
+  --contour: rgba(31, 58, 95, 0.1);
+  --contour-index: rgba(15, 118, 110, 0.45);
+  color-scheme: light;
 }
 
 @layer base {
-  * {
-    box-sizing: border-box;
-  }
-
-  html,
-  body,
-  #root {
-    height: 100%;
-    background: var(--color-bg);
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
   }
 
   body {
     margin: 0;
-    font-family: var(--font-mono);
-    font-size: 14px;
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
     line-height: 1.65;
-    color: var(--color-fg);
     -webkit-font-smoothing: antialiased;
-    font-variant-ligatures: none;
-    overflow: hidden;
   }
 
   ::selection {
-    background: #3e4451;
-    color: var(--color-fg-bright);
+    background: var(--color-brand);
+    color: var(--color-on-brand);
   }
 
-  ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+  :focus-visible {
+    outline: 3px solid var(--color-cta);
+    outline-offset: 3px;
   }
-  ::-webkit-scrollbar-track {
-    background: var(--color-bg);
+
+  /* Rails span the full viewport width. Clip on #root, not body: the
+     browser hands body's overflow up to the viewport, where it would not
+     clip, and phones would zoom the whole page out to fit. */
+  #root {
+    overflow-x: clip;
   }
-  ::-webkit-scrollbar-thumb {
-    background: #3e4451;
-    border: 3px solid var(--color-bg);
-    border-radius: 9999px;
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #4b5263;
+}
+
+@layer components {
+  /* Brutalist press: the element slides into its own shadow. */
+  .press {
+    box-shadow: var(--shadow-hard);
+    transition: transform 140ms ease-out, box-shadow 140ms ease-out;
   }
-  * {
+  .press:hover {
+    transform: translate(3px, 3px);
+    box-shadow: var(--shadow-hard-sm);
+  }
+  .press:active {
+    transform: translate(6px, 6px);
+    box-shadow: none;
+  }
+
+
+  html[data-motion="paused"] :is(.ticker-track, .piece-tour, .pillar) {
+    animation-play-state: paused;
+  }
+  /* A draw loop frozen mid-cycle could leave the line invisible, so a paused
+     page shows it fully drawn. */
+  html[data-motion="paused"] :is(.trail-loop, .s-draw) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  /* Rails: a slim scrollbar that still signals there's more to the right. */
+  .rail {
     scrollbar-width: thin;
-    scrollbar-color: #3e4451 var(--color-bg);
+    scrollbar-color: color-mix(in srgb, var(--color-ink) 45%, transparent) transparent;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.01ms !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
-}
-
-@layer components {
-  .man-just {
-    text-align: justify;
-    text-justify: inter-word;
-    hyphens: none;
+  /* While a details panel is open the page behind it stays put. */
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
 
-  .man-body {
-    padding-left: 3.5ch;
+  .ticker-track {
+    animation: ticker 48s linear infinite;
   }
-  @media (max-width: 640px) {
-    .man-body {
-      padding-left: 2ch;
-    }
-  }
-}
-
-:root,
-[data-theme="one-dark"] {
-  --c-bg: #1e2127;
-  --c-panel: #21252b;
-  --c-raised: #2c313a;
-  --c-line: #31363f;
-  --c-fg: #abb2bf;
-  --c-fg-bright: #dcdfe4;
-  --c-dim: #8b949e;
-  --c-red: #e06c75;
-  --c-green: #98c379;
-  --c-yellow: #e5c07b;
-  --c-orange: #d19a66;
-  --c-blue: #61afef;
-  --c-purple: #c678dd;
-  --c-cyan: #56b6c2;
-  --c-pink: #d16d9e;
-}
-
-[data-theme="dracula"] {
-  --c-bg: #282a36;
-  --c-panel: #21222c;
-  --c-raised: #343746;
-  --c-line: #44475a;
-  --c-fg: #f8f8f2;
-  --c-fg-bright: #ffffff;
-  --c-dim: #8f93a8;
-  --c-red: #ff5555;
-  --c-green: #50fa7b;
-  --c-yellow: #f1fa8c;
-  --c-orange: #ffb86c;
-  --c-blue: #8be9fd;
-  --c-purple: #bd93f9;
-  --c-cyan: #8be9fd;
-  --c-pink: #ff79c6;
-}
-
-[data-theme="gruvbox"] {
-  --c-bg: #282828;
-  --c-panel: #1d2021;
-  --c-raised: #3c3836;
-  --c-line: #504945;
-  --c-fg: #ebdbb2;
-  --c-fg-bright: #fbf1c7;
-  --c-dim: #a89984;
-  --c-red: #fb5643;
-  --c-green: #b8bb26;
-  --c-yellow: #fabd2f;
-  --c-orange: #fe8019;
-  --c-blue: #83a598;
-  --c-purple: #d3869b;
-  --c-cyan: #8ec07c;
-  --c-pink: #d3869b;
-}
-
-[data-theme="nord"] {
-  --c-bg: #2e3440;
-  --c-panel: #272c36;
-  --c-raised: #3b4252;
-  --c-line: #434c5e;
-  --c-fg: #d8dee9;
-  --c-fg-bright: #eceff4;
-  --c-dim: #93a1b5;
-  --c-red: #d08b91;
-  --c-green: #a3be8c;
-  --c-yellow: #ebcb8b;
-  --c-orange: #d28c76;
-  --c-blue: #88c0d0;
-  --c-purple: #b691af;
-  --c-cyan: #8fbcbb;
-  --c-pink: #d08faf;
-}
-
-[data-theme="solarized"] {
-  --c-bg: #002b36;
-  --c-panel: #00252e;
-  --c-raised: #073642;
-  --c-line: #0f4b5a;
-  --c-fg: #93a1a1;
-  --c-fg-bright: #eee8d5;
-  --c-dim: #7c9296;
-  --c-red: #e56663;
-  --c-green: #859900;
-  --c-yellow: #b58900;
-  --c-orange: #e96630;
-  --c-blue: #3094da;
-  --c-purple: #dd649f;
-  --c-cyan: #2aa198;
-  --c-pink: #dd629d;
-}
-
-@layer components {
-  @keyframes term-print {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: none; }
-  }
-  .term-print {
-    animation: term-print 220ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  .ticker:hover .ticker-track {
+    animation-play-state: paused;
   }
 
-  @keyframes term-caret {
-    0%, 49%   { opacity: 1; }
-    50%, 100% { opacity: 0; }
+  /* Interest posters: one slow loop each. */
+  .piece-tour {
+    animation: piece-tour 8s ease-in-out infinite;
   }
-  .term-caret {
-    animation: term-caret 1.06s steps(1, end) infinite;
+  .trail-loop {
+    stroke-dasharray: 1 1;
+    animation: draw-loop 5s ease-in-out infinite;
+  }
+  .s-draw {
+    stroke-dasharray: 1 1;
+    animation: draw-loop 7s ease-in-out infinite;
+  }
+  .pillar {
+    animation: pillar 6s steps(1) infinite;
+    animation-delay: var(--d, 0s);
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .term-print { animation: none; }
-    .term-caret { animation: none; opacity: 1; }
+
+  /* The one orchestrated moment: the hero assembles on load. */
+  .rise {
+    animation: rise 700ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+    animation-delay: calc(var(--i, 0) * 90ms);
+  }
+  .drop {
+    animation: drop 900ms cubic-bezier(0.3, 1.5, 0.5, 1) 350ms both;
+  }
+
+  details[open] .toggle {
+    transform: rotate(45deg);
+  }
+  summary::-webkit-details-marker {
+    display: none;
   }
 }
 
-[data-theme] {
-  --color-bg: var(--c-bg);
-  --color-panel: var(--c-panel);
-  --color-raised: var(--c-raised);
-  --color-line: var(--c-line);
-  --color-fg: var(--c-fg);
-  --color-fg-bright: var(--c-fg-bright);
-  --color-dim: var(--c-dim);
-  --color-red: var(--c-red);
-  --color-green: var(--c-green);
-  --color-yellow: var(--c-yellow);
-  --color-orange: var(--c-orange);
-  --color-blue: var(--c-blue);
-  --color-purple: var(--c-purple);
-  --color-cyan: var(--c-cyan);
-  --color-pink: var(--c-pink);
+@keyframes ticker {
+  to {
+    transform: translateX(calc(-1 * var(--shift, 50%)));
+  }
+}
+
+/* The rook slides a1 → a4 → d4 → d1 → a1, resting on each square. */
+@keyframes piece-tour {
+  0%, 20% { transform: translate(0, 0); }
+  25%, 45% { transform: translate(0, -180px); }
+  50%, 70% { transform: translate(180px, -180px); }
+  75%, 95% { transform: translate(180px, 0); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes draw-loop {
+  0% { stroke-dashoffset: 1; }
+  55%, 85% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -1; }
+}
+
+@keyframes pillar {
+  0% { background: var(--color-brand); color: var(--color-on-brand); }
+  25% { background: transparent; color: inherit; }
+}
+
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.6em);
+  }
+}
+
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-60px) rotate(-14deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track,
+  .rise,
+  .drop,
+  .piece-tour,
+  .pillar {
+    animation: none;
+  }
+  .trail-loop,
+  .s-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .ticker {
+    overflow-x: auto;
+  }
+  .press {
+    transition: none;
+  }
 }
