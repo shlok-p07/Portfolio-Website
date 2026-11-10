@@ -451,8 +451,8 @@ function App() {
             id="proj"
             label="Project type"
             groups={[
-              ["client", "Client projects", "Client"],
               ["independent", "Independent projects", "Independent"],
+              ["client", "Client projects", "Client"],
             ]}
             items={PROJECT_ITEMS}
           />
