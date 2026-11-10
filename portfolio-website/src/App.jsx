@@ -5,9 +5,8 @@ import Interests from "./components/Interests";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import ToolPill from "./components/ToolPill";
-import Rail, { RailCard } from "./components/Rail";
 import Details from "./components/Details";
-import Experience from "./components/Experience";
+import Explorer from "./components/Explorer";
 
 const NAV = [
   ["education", "Education"],
@@ -38,14 +37,56 @@ const TICKER = [
 
 
 
-// Client projects lead the rail, then featured work, then the rest, each in
-// their original order.
+// Client projects first, then featured work, then the rest, each in their
+// original order.
 const PROJECT_RAIL = [
   ...PROJECTS.filter((p) => p.client),
   ...PROJECTS.filter((p) => !p.client && p.featured),
   ...PROJECTS.filter((p) => !p.client && !p.featured),
 ];
 const list = (v) => (v ? v.split(", ") : []);
+
+/* Experience and Projects share one explorer; these shape each section's
+   entries for it. */
+const EXPERIENCE_ITEMS = EXPERIENCE.map((j) => ({
+  key: `${j.role}-${j.org}`,
+  group: j.group,
+  title: j.role,
+  org: j.org,
+  period: j.period,
+  where: [j.context ? `${j.org}, ${j.context}` : j.org, j.location].filter(Boolean).join(" · "),
+  overview: j.overview,
+  points: j.points,
+  tools: list(j.stack),
+  logo: j.logo,
+  mark: j.mark,
+  repo: j.github,
+  links: [
+    j.demo && { label: "Live site", href: j.demo },
+    j.github && { label: "Source code", href: j.github, primary: true },
+  ].filter(Boolean),
+}));
+
+const PROJECT_ITEMS = PROJECT_RAIL.map((p) => ({
+  key: p.title,
+  group: p.client ? "client" : "independent",
+  title: p.title,
+  org: p.client ? `Client: ${p.client}` : p.org,
+  period: p.period,
+  where: p.client ? `Client project for ${p.client}` : p.org,
+  fact: p.metric,
+  overview: p.overview,
+  points: p.highlights,
+  tools: [...list(p.stack), ...list(p.skills)],
+  logo: p.logo,
+  mark: p.mark,
+  repo: p.github,
+  links: [
+    p.demo && { label: "Live demo", href: p.demo },
+    p.page && { label: p.page.label, href: p.page.href },
+    p.github && { label: "Source code", href: p.github, primary: true },
+  ].filter(Boolean),
+}));
 
 const newTab = (href) =>
   /^https?:/.test(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
@@ -106,52 +147,6 @@ const Points = ({ items }) => (
   </ul>
 );
 
-/* Small text links inside a card. Each carries its project's name for
-   screen readers, since several cards share the same labels. */
-const TextLink = ({ href, children, name }) => (
-  <a
-    href={href}
-    {...newTab(href)}
-    className="text-[0.875rem] font-medium text-ink/70 underline decoration-ink/30 underline-offset-4 hover:text-ink hover:decoration-ink"
-  >
-    {children}
-    <span className="sr-only">
-      {" "}
-      for {name}
-      {newTab(href).target && " (opens in a new tab)"}
-    </span>
-  </a>
-);
-
-/* The one card used by both rails. Every card carries the same lines in the
-   same order, each with a fixed height, so lines sit level across cards:
-   dates, title (up to two lines), organisation (one line; two on phones,
-   where cards are narrow), summary (up to three lines), and a footer with
-   "View details" and any links. */
-const MiniCard = ({ kind, date, title, org, summary, links, tag, children }) => (
-  <>
-    <p className="m-0 flex items-center justify-between gap-2 font-mono text-[0.75rem] leading-5 text-ink/60">
-      <span className="truncate">{date}</span>
-      {tag && (
-        <span className="shrink-0 bg-brand px-1.5 text-[0.6875rem] font-bold text-on-brand">{tag}</span>
-      )}
-    </p>
-    <h3 className="m-0 mt-2 line-clamp-2 min-h-[2.3em] text-balance font-display text-[1.25rem] leading-[1.15] font-semibold">
-      {title}
-    </h3>
-    <p className="m-0 mt-1 line-clamp-2 min-h-12 text-[0.875rem] leading-6 font-medium text-ink/70 sm:line-clamp-1 sm:min-h-6" title={org}>
-      {org}
-    </p>
-    <p className="m-0 mt-3 line-clamp-3 min-h-[4.8em] text-[0.9375rem] leading-[1.6] text-ink/80">{summary}</p>
-    <div className="mt-5 flex min-h-11 flex-nowrap items-center gap-x-4 overflow-hidden border-t border-ink/15 pt-4 whitespace-nowrap">
-      <Details title={title} meta={kind}>
-        {children}
-      </Details>
-      {links}
-    </div>
-  </>
-);
-
 /* The single layout every details panel uses, top to bottom and always in
    this order: Organization and Dates, Overview, Highlights, Skills and tools,
    then any actions. Blocks are divided by hairlines. */
@@ -173,13 +168,14 @@ const KeyFacts = ({ rows }) => (
   </dl>
 );
 
-const Panel = ({ org, orgLabel = "Organization", dates, overview, highlights, tools, actions }) => (
+const Panel = ({ org, orgLabel = "Organization", dates, venue, overview, highlights, tools, actions }) => (
   <div className="flex flex-col gap-5">
     <KeyFacts
       rows={[
         [orgLabel, org],
-        ["Dates", dates],
-      ]}
+        dates && ["Dates", dates],
+        venue && ["Venue", venue],
+      ].filter(Boolean)}
     />
     <Block title="Overview">
       <p className="m-0">{overview}</p>
@@ -199,20 +195,6 @@ const Panel = ({ org, orgLabel = "Organization", dates, overview, highlights, to
     {actions}
   </div>
 );
-
-const ProjectButtons = ({ p }) =>
-  (p.demo || p.page || p.github) && (
-    <p className="m-0 flex flex-wrap gap-3 border-t border-ink/15 pt-5">
-      {p.demo && <Button href={p.demo}>Live demo</Button>}
-      {p.page && <Button href={p.page.href}>{p.page.label}</Button>}
-      {p.github && (
-        <Button href={p.github} tone="primary">
-          Source code
-        </Button>
-      )}
-    </p>
-  );
-
 
 /* The second study's design as a matrix of conditions: four assistants by
    four languages, each cell holding the three tasks. Setup, not results. */
@@ -453,59 +435,27 @@ function App() {
         </Section>
 
         <Section id="experience" title="Experience">
-          <Experience roles={EXPERIENCE} />
+          <Explorer
+            id="exp"
+            label="Experience type"
+            groups={[
+              ["professional", "Professional experience", "Professional"],
+              ["student", "Student organizations", "Student orgs"],
+            ]}
+            items={EXPERIENCE_ITEMS}
+          />
         </Section>
 
         <Section id="work" title="Projects" tone="bg-haze">
-          <Rail label="Projects">
-            {PROJECT_RAIL.map((p) => (
-              <RailCard key={p.title}>
-                <MiniCard
-                  kind="Project"
-                  date={p.period}
-                  title={p.title}
-                  org={p.org}
-                  summary={p.summary}
-                  tag={
-                    p.client && (
-                      <>
-                        Client<span className="hidden sm:inline"> project</span>
-                      </>
-                    )
-                  }
-                  links={
-                    <>
-                      {p.demo && (
-                        <TextLink href={p.demo} name={p.title}>
-                          Demo
-                        </TextLink>
-                      )}
-                      {p.page && (
-                        <TextLink href={p.page.href} name={p.title}>
-                          {p.page.short || p.page.label}
-                        </TextLink>
-                      )}
-                      {p.github && (
-                        <TextLink href={p.github} name={p.title}>
-                          Code
-                        </TextLink>
-                      )}
-                    </>
-                  }
-                >
-                  <Panel
-                    org={p.client || p.org}
-                    orgLabel={p.client ? "Client" : "Organization"}
-                    dates={p.period}
-                    overview={p.overview}
-                    highlights={p.highlights}
-                    tools={[...list(p.stack), ...list(p.skills)]}
-                    actions={<ProjectButtons p={p} />}
-                  />
-                </MiniCard>
-              </RailCard>
-            ))}
-          </Rail>
+          <Explorer
+            id="proj"
+            label="Project type"
+            groups={[
+              ["client", "Client projects", "Client"],
+              ["independent", "Independent projects", "Independent"],
+            ]}
+            items={PROJECT_ITEMS}
+          />
         </Section>
 
         <Section id="research" title="Research">
@@ -519,8 +469,8 @@ function App() {
                   <ResearchVisual kind={r.visual} />
                 </div>
                 <div className="flex flex-col p-6 sm:p-8">
-                  <p className="m-0 font-mono text-[0.75rem] text-ink/60">{r.period}</p>
-                  <h3 className="m-0 mt-3 font-display text-[1.5rem] leading-[1.15] font-semibold">{r.title}</h3>
+                  {r.venue && <p className="m-0 mb-3 font-mono text-[0.75rem] text-ink/60">{r.venue}</p>}
+                  <h3 className="m-0 font-display text-[1.5rem] leading-[1.15] font-semibold">{r.title}</h3>
                   <p className="m-0 mt-2 text-[0.9375rem] text-ink/65">
                     {r.group}. Advised by {r.advisor}.
                   </p>
@@ -529,7 +479,7 @@ function App() {
                     <Details title={r.title} meta="Research">
                       <Panel
                         org={r.group}
-                        dates={r.period}
+                        venue={r.venue}
                         overview={r.summary}
                         highlights={r.work}
                         tools={list(r.stack)}

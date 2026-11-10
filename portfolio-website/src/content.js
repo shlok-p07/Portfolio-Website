@@ -8,11 +8,15 @@ import oasisLogo from "./assets/logos/oasis.webp";
 import rainfallLogo from "./assets/logos/rainfall.webp";
 import acesLogo from "./assets/logos/aces.webp";
 import disruptLogo from "./assets/logos/disrupt.webp";
+import nudiningLogo from "./assets/logos/nudining.webp";
+import phishawareLogo from "./assets/logos/phishaware.svg";
 
 
 export const PROJECTS = [
   {
     title: "NU Hire",
+    logo: nuhireLogo,
+    mark: "NH",
     client: "Khoury College of Computer Sciences",
     overview: "A web application for a live client, Khoury College, that teaches students the hiring process from the employer's side.",
     highlights: [
@@ -30,6 +34,8 @@ export const PROJECTS = [
   },
   {
     title: "Boston Bruins: Post-Draft Development Pathways",
+    logo: bruinsLogo,
+    mark: "BB",
     client: "Boston Bruins",
     overview: "A predictive-modeling engagement with the Boston Bruins, modeling optimal post-draft development pathways for the club's prospects. Professional practicum for DS 4535.",
     highlights: [
@@ -45,6 +51,8 @@ export const PROJECTS = [
   },
   {
     title: "Rainfall Learning IDE",
+    logo: rainfallLogo,
+    mark: "RL",
     overview: "A real-time collaborative IDE for Rainfall Learning in which a tutor and a student can edit the same file at once and neither loses work.",
     highlights: [
       "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
@@ -60,6 +68,7 @@ export const PROJECTS = [
   },
   {
     title: "Derivative Hedging via Reinforcement Learning",
+    mark: "RL·Δ",
     overview: "Reinforcement-learning agents (PPO and SAC) trained to hedge a short European call on real SPY market data, benchmarked against Black-Scholes delta hedging and the Whalley-Wilmott band.",
     highlights: [
       "Trained on 1,205 thirty-day windows of SPY history (2021–2026) and evaluated over 450 paired episodes in each of four market and transaction-cost regimes.",
@@ -81,6 +90,8 @@ export const PROJECTS = [
   },
   {
     title: "PhishAware",
+    logo: phishawareLogo,
+    mark: "PA",
     overview: "A gamified phishing-awareness platform that trains employees against AI-generated, role-specific attack scenarios.",
     highlights: [
       "Led a 3-person team building the platform end to end.",
@@ -105,6 +116,8 @@ export const PROJECTS = [
   },
   {
     title: "NU Dining",
+    logo: nudiningLogo,
+    mark: "NUD",
     overview: "Menus, opening hours, meal voting and a nutrition tracker for Northeastern's three residential dining halls.",
     highlights: [
       "Pulls daily menus and hours from DineOnCampus with a scraper built to get past Cloudflare's blocking.",
@@ -337,6 +350,7 @@ export const RESEARCH = [
   {
     title: "Artificial Intelligence Coding Tools in Computer Science Education",
     visual: "study",
+    venue: "ACM SIGCSE 2027",
     metric: { value: "2 posters", label: "submitted to ACM SIGCSE 2027" },
     summary: "Measuring how four AI coding assistants compare with human programmers in computer science education. Two posters submitted to ACM SIGCSE 2027.",
     role: "Undergraduate Researcher",
@@ -354,7 +368,8 @@ export const RESEARCH = [
   {
     title: "Fighting AI-Generated Phishing with AI-Generated Training: Adaptive, Role-Specific Simulation with Calibration Scoring",
     visual: "loop",
-    metric: { value: "WiCyS 2027", label: "submitted, decision December 2026" },
+    metric: { value: "WiCyS 2027", label: "submitted" },
+    venue: "WiCyS 2027",
     summary: "Turning PhishAware into security research: AI-generated, role-specific phishing practice that adapts to each learner's weak spots and flags people who are confidently wrong. Submitted to WiCyS 2027.",
     role: "Undergraduate Researcher",
     group: "Northeastern University",
