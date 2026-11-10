@@ -90,6 +90,7 @@ export const PROJECTS = [
   },
   {
     title: "PhishAware",
+    client: "CS 4530 (Fundamentals of Software Engineering)",
     logo: phishawareLogo,
     mark: "PA",
     overview: "Phishing emails are now written by AI, yet most security training is still a generic, once-a-year module. I led a three-person team building PhishAware, which generates attacks matched to each employee's role across email, SMS and phone calls through a two-stage Groq and Gemini pipeline with failover, and scores each employee's risk with a scikit-learn model (R² 0.94). Under the hood: single sign-on written from scratch on OIDC with PKCE, a multi-tenant backend after migrating the data layer across 44 files, and 57 API operations generated from one OpenAPI contract, all backed by 1,341 tests. The work became research submitted to WiCyS 2027.",
@@ -103,7 +104,7 @@ export const PROJECTS = [
       "Turned into security research with Prof. Sarita Singh, submitted to WiCyS 2027: adaptive, role-specific training with calibration scoring.",
       "Contract-first API: one OpenAPI specification (57 operations across 45 paths) generates the Zod validators and React Query hooks via Orval; 1,341 automated tests.",
     ],
-    org: "Independent project",
+    org: "Khoury College of Computer Sciences",
     period: "Jul — Sep 2026",
     featured: true,
     metric: { value: "R² 0.94", label: "employee phishing-risk model" },
