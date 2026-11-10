@@ -176,13 +176,15 @@ const Panel = ({ org, dates, overview, highlights, tools, actions }) => (
     <Block title="Highlights">
       <Points items={highlights} />
     </Block>
-    <Block title="Skills and tools">
-      <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
-        {tools.map((t) => (
-          <ToolPill key={t} name={t} />
-        ))}
-      </ul>
-    </Block>
+    {tools.length > 0 && (
+      <Block title="Skills and tools">
+        <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
+          {tools.map((t) => (
+            <ToolPill key={t} name={t} />
+          ))}
+        </ul>
+      </Block>
+    )}
     {actions}
   </div>
 );

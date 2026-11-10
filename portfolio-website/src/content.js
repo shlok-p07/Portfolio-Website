@@ -7,36 +7,21 @@ export const PROJECTS = [
       "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
       "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
       "Real-time collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
+      "Built a 10-check GitHub Actions CI/CD gate (tests, Docker build, migrations and a security audit) that every merge to main must pass.",
+      "Ran end-to-end QA of the live classroom flow and logged 60+ issues, including a critical bug that locked students out mid-session.",
+      "Made dbmate migrations fail-stop before the server starts, and fixed the Docker build so it runs on both x86 and ARM.",
       "Built for a live client at Khoury College of Computer Sciences.",
     ],
     org: "Khoury College of Computer Sciences",
-    summary: "A live hiring simulation for Khoury students, with real-time team collaboration over Socket.IO.",
+    summary: "A live hiring simulation for Khoury students, with real-time team collaboration and a 10-check CI/CD gate on every merge.",
     client: "Khoury College of Computer Sciences",
     period: "Sep 2026 — Present",
     description:
       "A web application that teaches students the hiring process from the employer's side. Students are grouped into hiring teams and work through a realistic pipeline — reading a job description, screening resumes under time pressure, evaluating recorded interviews, and negotiating a group offer — while an advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals. Real-time collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
-    stack: "Socket.IO",
+    stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions, dbmate",
     skills:
       "Requirements Elicitation, Client Development, Software Consulting, Project Integration, Project Collaboration, Communication",
     note: "Built for a live client and still in progress.",
-  },
-  {
-    title: "Boston Bruins — Post-Draft Development Pathways",
-    overview: "Modeling optimal post-draft development pathways for the club's prospective players.",
-    highlights: [
-      "Capstone project for DS 4535, with the Boston Bruins as the client.",
-      "Covered by a non-disclosure agreement: data, methods and findings stay confidential.",
-    ],
-    org: "Boston Bruins",
-    summary: "Modeling post-draft development pathways for the club's prospects, under a non-disclosure agreement.",
-    client: "Boston Bruins",
-    context: "DS 4535",
-    period: "Sep 2026 — Present",
-    description:
-      "Modeling optimal post-draft development pathways for the club's prospective players.",
-    skills:
-      "Data Science, Analytics, Technical Consulting, Stakeholder Management, Agile, Sprint Planning, Scope Management, Risk Management",
-    note: "Covered by a non-disclosure agreement. Scope only — no data, methods or findings.",
   },
   {
     title: "Derivative Hedging via Reinforcement Learning",
@@ -63,11 +48,13 @@ export const PROJECTS = [
     title: "PhishAware",
     overview: "A gamified phishing-awareness platform that trains employees against AI-generated, role-specific attack scenarios.",
     highlights: [
+      "Led a 3-person team building the platform end to end.",
       "Generates each scenario with a two-stage LLM pipeline matched to the employee's role, using Groq as primary and Gemini as fallback.",
       "Practice across a simulated inbox, SMS thread and phone call, with lessons covering six attack vectors.",
       "Scores each employee's phishing risk with a scikit-learn model (R² 0.94) served over FastAPI.",
       "Single sign-on built from scratch on OIDC with PKCE, supporting Okta, Entra ID, Google Workspace and Auth0.",
-      "47 REST endpoints with the client and validation generated from one OpenAPI specification via Orval; 1,341 automated tests.",
+      "Migrated the data layer across 44 files and built a multi-tenant organization backend with role-based access control.",
+      "Contract-first API: one OpenAPI specification (57 operations across 45 paths) generates the Zod validators and React Query hooks via Orval; 1,341 automated tests.",
     ],
     org: "Independent project",
     period: "Jul — Sep 2026",
@@ -75,8 +62,8 @@ export const PROJECTS = [
     metric: { value: "R² 0.94", label: "employee phishing-risk model" },
     summary: "Security-training platform that scores each employee's phishing risk and generates training matched to their role.",
     description:
-      "A full-stack phishing-awareness platform covering six attack vectors. A scikit-learn risk model (R-squared 0.94) served over FastAPI scores each employee, and a Groq and Gemini pipeline generates scenarios matched to their role. 47 REST endpoints, with frontend types generated from a single OpenAPI specification via Orval, and an OIDC authentication flow with PKCE for organization single sign-on.",
-    stack: "TypeScript, Python, FastAPI, MongoDB, scikit-learn, Groq, Gemini, OpenAPI, Orval",
+      "A full-stack phishing-awareness platform covering six attack vectors. A scikit-learn risk model (R-squared 0.94) served over FastAPI scores each employee, and a Groq and Gemini pipeline generates scenarios matched to their role. A contract-first OpenAPI specification (57 operations across 45 paths) generates the frontend's Zod validators and React Query hooks via Orval, and a from-scratch OIDC flow with PKCE handles organization single sign-on.",
+    stack: "Next.js, TypeScript, Python, FastAPI, MongoDB, scikit-learn, Groq, Gemini, OpenAPI, Orval, Zod, React Query",
     github: "https://github.com/shlok-p07/Phish-Aware",
     demo: "https://phish-aware.onrender.com/",
   },
@@ -135,6 +122,34 @@ export const PROJECTS = [
 
 const EXPERIENCE_RAW = [
   {
+    role: "Software Engineering Co-op",
+    overview: "Incoming software engineering co-op at Travelers, working remotely with the Hartford, CT office.",
+    org: "Travelers",
+    start: "2027-01",
+    end: "2027-05",
+    period: "Jan — May 2027",
+    location: "Hartford, CT (Remote)",
+    points: [
+      "Joining Travelers as a software engineering co-op from January to May 2027.",
+    ],
+  },
+  {
+    role: "Data Analyst",
+    overview: "Data analyst on a predictive-modeling engagement with the Boston Bruins, modeling post-draft development pathways for the club's prospects.",
+    org: "Boston Bruins",
+    start: "2026-09",
+    end: null,
+    context: "Professional Practicum, DS 4535",
+    stack: "Python, pandas, scikit-learn, Agile, Stakeholder Management",
+    period: "Sep 2026 — Present",
+    location: "Boston, MA",
+    points: [
+      "Building a reproducible Python data pipeline (pandas, scikit-learn) for a predictive-modeling engagement.",
+      "Lead requirements elicitation with stakeholders, scoping objectives into a delivery plan across Agile sprints.",
+      "Covered by a non-disclosure agreement: data, methods and findings stay confidential.",
+    ],
+  },
+  {
     role: "Peer Programmer",
     overview: "Peer programmer with NU ACES, Northeastern's Alliance of Civically Engaged Students.",
     org: "NU ACES",
@@ -164,6 +179,7 @@ const EXPERIENCE_RAW = [
       "Built a production CMS that lets non-technical editors publish to 5,000+ students, cutting publish time by 10%.",
       "Architected version history, rollback, role-based access control, and soft-delete archiving on Next.js and Prisma.",
       "Engineered Prisma-validated API endpoints enforcing schema integrity on every mutation over PostgreSQL.",
+      "Manage the development lifecycle for a team of 5+ engineers as one of 3 tech leads: tickets, sprint planning and code review.",
     ],
   },
   {
@@ -286,7 +302,7 @@ export const TOOLKIT = [
     label: "Languages",
     items: [
       "Python", "TypeScript", "JavaScript",
-      "Java", "SQL", "MATLAB",
+      "Java", "SQL", "C++", "HTML/CSS", "MATLAB",
     ],
   },
   {
@@ -307,15 +323,19 @@ export const TOOLKIT = [
   },
   {
     label: "Backend",
-    items: ["Node.js", "Express", "Flask"],
+    items: ["Node.js", "Express", "Flask", "FastAPI"],
   },
   {
     label: "Databases",
     items: ["PostgreSQL", "Supabase", "MongoDB", "Prisma"],
   },
   {
+    label: "AI tools",
+    items: ["Claude Code", "GitHub Copilot", "Groq", "Gemini"],
+  },
+  {
     label: "Infrastructure",
-    items: ["Docker", "Git", "AWS"],
+    items: ["Docker", "Git", "GitHub Actions", "AWS", "Linear"],
   },
   {
     label: "Testing & design",
@@ -332,7 +352,7 @@ export const PROFILE = {
   school: "Khoury College of Computer Sciences and D'Amore-McKim School of Business",
   gpa: "3.74 / 4.0",
   graduation: "May 2029",
-  availability: "January to September 2027",
+  availability: "June to September 2027",
   honors: "Dean's List, Northeastern Honors College",
   societies: "Disrupt (Northeastern FinTech Club), Student Government Association, NU ACES, NU Oasis",
   coursework: {
