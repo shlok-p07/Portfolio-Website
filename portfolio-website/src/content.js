@@ -441,7 +441,7 @@ export const PROFILE = {
 
   degree: "B.S. Computer Science and Business Administration, concentration in Financial Technology",
   school: "Khoury College of Computer Sciences and D'Amore-McKim School of Business",
-  gpa: "3.74 / 4.0",
+  gpa: "3.7 / 4.0",
   graduation: "May 2029",
   availability: "June to September 2027",
   honors: "Dean's List, Northeastern Honors College",
