@@ -41,7 +41,7 @@ const Arrow = ({ dir, disabled, onClick, label }) => (
   </button>
 );
 
-export default function Rail({ label, children }) {
+export default function Rail({ label, heading, children }) {
   const track = useRef(null);
   const [auto] = useState(() => !prefersReduced());
   const [edge, setEdge] = useState({ start: true, end: false });
@@ -194,9 +194,11 @@ export default function Rail({ label, children }) {
 
   return (
     <div role="region" aria-label={label}>
-      {/* No arrows when every card already fits: there is nothing to scroll to. */}
-      <div className={`mb-5 flex justify-end ${edge.start && edge.end ? "invisible" : ""}`}>
-        <div className="flex gap-2">
+      {/* No arrows when every card already fits: there is nothing to scroll to.
+          An optional heading shares the row, so it stays visible either way. */}
+      <div className="mb-5 flex items-end justify-between gap-4">
+        {heading}
+        <div className={`ml-auto flex gap-2 ${edge.start && edge.end ? "invisible" : ""}`}>
           <Arrow dir={-1} disabled={edge.start} onClick={() => step(-1)} label={`Previous ${label.toLowerCase()}`} />
           <Arrow dir={1} disabled={edge.end} onClick={() => step(1)} label={`Next ${label.toLowerCase()}`} />
         </div>

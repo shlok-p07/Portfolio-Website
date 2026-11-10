@@ -41,6 +41,11 @@ const TICKER = [
 const PROJECT_RAIL = [...PROJECTS.filter((p) => p.featured), ...PROJECTS.filter((p) => !p.featured)];
 const list = (v) => (v ? v.split(", ") : []);
 
+const EXPERIENCE_GROUPS = [
+  ["professional", "Professional experience"],
+  ["student", "Student organizations"],
+];
+
 const newTab = (href) =>
   /^https?:/.test(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
 
@@ -467,21 +472,31 @@ function App() {
         </Section>
 
         <Section id="experience" title="Experience">
-          <Rail label="Roles">
-            {EXPERIENCE.map((j) => (
-              <RailCard key={`${j.role}-${j.org}`}>
-                <MiniCard kind="Experience" date={j.period} title={j.role} org={j.org} summary={j.points[0]}>
-                  <Panel
-                    org={j.context ? `${j.org}, ${j.context}` : j.org}
-                    dates={j.period}
-                    overview={j.overview}
-                    highlights={j.points}
-                    tools={list(j.stack)}
-                  />
-                </MiniCard>
-              </RailCard>
+          <div className="flex flex-col gap-14">
+            {EXPERIENCE_GROUPS.map(([group, heading]) => (
+              <Rail
+                key={group}
+                label={heading}
+                heading={
+                  <h3 className="m-0 font-display text-[1.5rem] leading-[1.15] font-semibold">{heading}</h3>
+                }
+              >
+                {EXPERIENCE.filter((j) => j.group === group).map((j) => (
+                  <RailCard key={`${j.role}-${j.org}`}>
+                    <MiniCard kind={heading} date={j.period} title={j.role} org={j.org} summary={j.points[0]}>
+                      <Panel
+                        org={j.context ? `${j.org}, ${j.context}` : j.org}
+                        dates={j.period}
+                        overview={j.overview}
+                        highlights={j.points}
+                        tools={list(j.stack)}
+                      />
+                    </MiniCard>
+                  </RailCard>
+                ))}
+              </Rail>
             ))}
-          </Rail>
+          </div>
         </Section>
 
         <Section

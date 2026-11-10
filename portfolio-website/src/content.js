@@ -1,29 +1,6 @@
 
 export const PROJECTS = [
   {
-    title: "NU Hire",
-    overview: "A web application that teaches students the hiring process from the employer's side.",
-    highlights: [
-      "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
-      "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
-      "Real-time collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
-      "Built a 10-check GitHub Actions CI/CD gate (tests, Docker build, migrations and a security audit) that every merge to main must pass.",
-      "Ran end-to-end QA of the live classroom flow and logged 60+ issues, including a critical bug that locked students out mid-session.",
-      "Made dbmate migrations fail-stop before the server starts, and fixed the Docker build so it runs on both x86 and ARM.",
-      "Built for a live client at Khoury College of Computer Sciences.",
-    ],
-    org: "Khoury College of Computer Sciences",
-    summary: "A live hiring simulation for Khoury students, with real-time team collaboration and a 10-check CI/CD gate on every merge.",
-    client: "Khoury College of Computer Sciences",
-    period: "Sep 2026 — Present",
-    description:
-      "A web application that teaches students the hiring process from the employer's side. Students are grouped into hiring teams and work through a realistic pipeline — reading a job description, screening resumes under time pressure, evaluating recorded interviews, and negotiating a group offer — while an advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals. Real-time collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
-    stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions, dbmate",
-    skills:
-      "Requirements Elicitation, Client Development, Software Consulting, Project Integration, Project Collaboration, Communication",
-    note: "Built for a live client and still in progress.",
-  },
-  {
     title: "Derivative Hedging via Reinforcement Learning",
     overview: "Reinforcement-learning agents (PPO and SAC) trained to hedge a short European call on real SPY market data, benchmarked against Black-Scholes delta hedging and the Whalley-Wilmott band.",
     highlights: [
@@ -122,7 +99,26 @@ export const PROJECTS = [
 
 const EXPERIENCE_RAW = [
   {
+    role: "Software Engineer",
+    group: "professional",
+    overview: "A web application for a live client at Khoury College that teaches students the hiring process from the employer's side: teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor injects complications live.",
+    org: "NU Hire",
+    start: "2026-09",
+    end: null,
+    context: "Khoury College of Computer Sciences",
+    stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions, dbmate, Requirements Elicitation, Software Consulting",
+    period: "Sep 2026 — Present",
+    location: "Boston, MA",
+    points: [
+      "Built a 10-check GitHub Actions CI/CD gate (tests, Docker build, migrations and a security audit) that every merge to main must pass.",
+      "Ran end-to-end QA of the live classroom flow and logged 60+ issues, including a critical bug that locked students out mid-session.",
+      "Made dbmate migrations fail-stop before the server starts, and fixed the Docker build so it runs on both x86 and ARM.",
+      "Real-time team collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
+    ],
+  },
+  {
     role: "Software Engineering Co-op",
+    group: "professional",
     overview: "Incoming software engineering co-op at Travelers, working remotely with the Hartford, CT office.",
     org: "Travelers",
     start: "2027-01",
@@ -135,6 +131,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Data Analyst",
+    group: "professional",
     overview: "Data analyst on a predictive-modeling engagement with the Boston Bruins, modeling post-draft development pathways for the club's prospects.",
     org: "Boston Bruins",
     start: "2026-09",
@@ -151,6 +148,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Peer Programmer",
+    group: "student",
     overview: "Peer programmer with NU ACES, Northeastern's Alliance of Civically Engaged Students.",
     org: "NU ACES",
     start: "2026-09",
@@ -167,6 +165,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Lead Software Engineer",
+    group: "student",
     overview: "Lead software engineer on Student Government's Digital Innovation team, building the CMS behind the SGA website.",
     org: "Student Government Association",
     start: "2026-01",
@@ -184,6 +183,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Quantitative Analyst",
+    group: "student",
     overview: "Quantitative analyst with Disrupt, Northeastern's FinTech initiative, building and testing trading strategies.",
     org: "Disrupt: The FinTech Initiative",
     start: "2026-01",
@@ -200,6 +200,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Project-Series Mentor",
+    group: "student",
     overview: "Mentor in NU Oasis's project series at Northeastern.",
     org: "NU Oasis",
     start: "2026-01",
@@ -215,6 +216,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Teaching Assistant",
+    group: "professional",
     org: "Program Design and Implementation II",
     overview: "Teaching assistant for Program Design and Implementation II at Khoury College of Computer Sciences.",
     start: "2026-05",
@@ -232,6 +234,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Lead Software Engineer",
+    group: "student",
     overview: "Lead software engineer for Rainfall Learning's real-time collaborative IDE.",
     org: "Rainfall Learning",
     start: "2025-12",
@@ -247,6 +250,7 @@ const EXPERIENCE_RAW = [
   },
   {
     role: "Teaching Assistant",
+    group: "professional",
     org: "Rutgers University",
     overview: "Teaching assistant for a summer math program at Rutgers University.",
     start: "2024-06",
