@@ -173,7 +173,7 @@ const EXPERIENCE_RAW = [
     stack: "Next.js, TypeScript, React, Puck, Prisma, PostgreSQL, Supabase, Tailwind CSS, shadcn/ui",
     period: "Jan 2026 — Present",
     location: "Boston, MA",
-    overview: "Lead Software Engineer and one of three technical leads on Student Government's Digital Innovation team. I manage the development lifecycle for a team of more than five engineers and build the content management system behind the SGA website, which allows non-technical officers to publish without writing code.",
+    overview: "Lead Software Engineer and the sole technical lead on Student Government's Digital Innovation team. I manage the development lifecycle for a team of more than five engineers and build the content management system behind the SGA website, which allows non-technical officers to publish without writing code.",
     points: [
       "Run ticketing, sprint planning and code review for the team.",
       "The system serves more than 5,000 students and has reduced publishing time by 10%.",
