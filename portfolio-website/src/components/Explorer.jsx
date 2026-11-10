@@ -102,7 +102,7 @@ const Detail = ({ item, pointsLabel }) => {
             {item.fact.label}
           </p>
         )}
-        <p className="m-0 mt-5 max-w-[65ch] text-ink/85">{item.overview}</p>
+        <p className="m-0 mt-5 max-w-[56ch] text-ink/85">{item.overview}</p>
 
         {open && (
           <div id={moreId}>
@@ -113,7 +113,7 @@ const Detail = ({ item, pointsLabel }) => {
                 <h4 className="m-0 mt-8 mb-3 font-mono text-[0.75rem] font-bold text-ink/65">
                   {pointsLabel}
                 </h4>
-                <ul className="m-0 max-w-[68ch] list-none p-0">
+                <ul className="m-0 max-w-[58ch] list-none p-0">
                   {item.points.map((t) => (
                     <li key={t} className="mt-3 flex gap-3 first:mt-0">
                       <span
