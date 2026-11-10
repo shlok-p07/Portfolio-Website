@@ -18,7 +18,7 @@ export const PROJECTS = [
     logo: nuhireLogo,
     mark: "NH",
     client: "Khoury College of Computer Sciences",
-    overview: "A web application built for a client, Khoury College, that teaches students the hiring process from the employer's side. It was never handed off to the client.",
+    overview: "What does hiring look like from the other side of the table? NU Hire puts Khoury students in the employer's seat: teams screen resumes against the clock, judge recorded interviews and negotiate an offer together, while an advisor drops no-shows and internal referrals into the exercise live. I worked on the parts that keep a live classroom from breaking: a 10-check GitHub Actions gate on every merge, database migrations that stop the server before a bad schema can run, a Docker build that works on both x86 and ARM, and resume text extraction behind keyword-based applicant screening. End-to-end QA of the classroom flow logged 60+ issues, including a bug that locked students out mid-session. Built for Khoury College, though never handed off.",
     highlights: [
       "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
       "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
@@ -37,7 +37,7 @@ export const PROJECTS = [
     logo: bruinsLogo,
     mark: "BB",
     client: "Boston Bruins",
-    overview: "A predictive-modeling engagement with the Boston Bruins, modeling optimal post-draft development pathways for the club's prospects. Professional practicum for DS 4535.",
+    overview: "Draft day is only the start: what a prospect does over the next few seasons decides whether the pick pays off. For the Boston Bruins I'm building a reproducible Python pipeline (pandas, scikit-learn) to model the development pathways that work best for the club's prospects, and leading the requirements sessions that turn the club's open questions into a delivery plan, sprint by sprint. The engagement is under a non-disclosure agreement, so the data, methods and findings stay with the club.",
     highlights: [
       "Building a reproducible Python data pipeline (pandas, scikit-learn) for the club's predictive-modeling questions.",
       "Leading requirements elicitation with the club's stakeholders, scoping objectives into a delivery plan across Agile sprints.",
@@ -53,7 +53,7 @@ export const PROJECTS = [
     title: "Rainfall Learning IDE",
     logo: rainfallLogo,
     mark: "RL",
-    overview: "A real-time collaborative IDE for Rainfall Learning in which a tutor and a student can edit the same file at once and neither loses work.",
+    overview: "Two people typing in the same file is the classic way to lose work. Rainfall Learning's IDE lets a tutor and a student edit together in real time, and I led its UI development on a team of 10+ engineers. Edits merge through Yjs CRDTs rather than locks, so changes converge without a server picking a winner, and a client that drops offline catches up when it reconnects. Edit conflicts fell to 2%, rendering ran 20% faster under concurrent editing, and Dockerized builds cut environment failures by 15%.",
     highlights: [
       "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
       "A client that drops offline reconciles its changes when it reconnects.",
@@ -69,7 +69,7 @@ export const PROJECTS = [
   {
     title: "Derivative Hedging via Reinforcement Learning",
     mark: "RL·Δ",
-    overview: "Reinforcement-learning agents (PPO and SAC) trained to hedge a short European call on real SPY market data, benchmarked against Black-Scholes delta hedging and the Whalley-Wilmott band.",
+    overview: "Can a reinforcement-learning agent hedge options better than the textbook formula? I trained PPO and SAC agents to hedge a short call on real SPY data, 1,205 thirty-day windows from 2021 to 2026, and pitted them against Black-Scholes delta hedging and the Whalley-Wilmott band across four market and transaction-cost regimes, with a 10,000-resample paired bootstrap behind every comparison. The honest answer was no: the agent's edge was not significant, Whalley-Wilmott matched it with 65–87% fewer trades, and a CVaR reward taught the agent to bet on market drift instead of hedging.",
     highlights: [
       "Trained on 1,205 thirty-day windows of SPY history (2021–2026) and evaluated over 450 paired episodes in each of four market and transaction-cost regimes.",
       "Tested every comparison with a 10,000-resample paired bootstrap, so null results read as null results.",
@@ -92,7 +92,7 @@ export const PROJECTS = [
     title: "PhishAware",
     logo: phishawareLogo,
     mark: "PA",
-    overview: "A gamified phishing-awareness platform that trains employees against AI-generated, role-specific attack scenarios.",
+    overview: "Phishing emails are now written by AI, yet most security training is still a generic, once-a-year module. I led a three-person team building PhishAware, which generates attacks matched to each employee's role across email, SMS and phone calls through a two-stage Groq and Gemini pipeline with failover, and scores each employee's risk with a scikit-learn model (R² 0.94). Under the hood: single sign-on written from scratch on OIDC with PKCE, a multi-tenant backend after migrating the data layer across 44 files, and 57 API operations generated from one OpenAPI contract, all backed by 1,341 tests. The work became research submitted to WiCyS 2027.",
     highlights: [
       "Led a 3-person team building the platform end to end.",
       "Generates each scenario with a two-stage LLM pipeline matched to the employee's role, using Groq as primary and Gemini as fallback.",
@@ -118,7 +118,7 @@ export const PROJECTS = [
     title: "NU Dining",
     logo: nudiningLogo,
     mark: "NUD",
-    overview: "Menus, opening hours, meal voting and a nutrition tracker for Northeastern's three residential dining halls.",
+    overview: "Which dining hall is worth the walk today? NU Dining pulls daily menus and opening hours for Northeastern's three residential dining halls from DineOnCampus, through a scraper built to get past Cloudflare's blocking, and adds meal voting and calorie tracking on a Supabase PostgreSQL backend with row-level security. It treats stale data as a bug: menus older than 14 days are withheld, and every view shows how old its data is.",
     highlights: [
       "Pulls daily menus and hours from DineOnCampus with a scraper built to get past Cloudflare's blocking.",
       "Supabase PostgreSQL backend with row-level security, plus authenticated calorie tracking and meal voting.",
