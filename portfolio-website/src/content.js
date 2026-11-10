@@ -29,8 +29,22 @@ export const PROJECTS = [
     page: { label: "Project page", short: "Site", href: "https://khoury-co-op.github.io/NUHire/" },
   },
   {
+    title: "Boston Bruins: Post-Draft Development Pathways",
+    client: "Boston Bruins",
+    overview: "A predictive-modeling engagement with the Boston Bruins, modeling optimal post-draft development pathways for the club's prospects. Professional practicum for DS 4535.",
+    highlights: [
+      "Building a reproducible Python data pipeline (pandas, scikit-learn) for the club's predictive-modeling questions.",
+      "Leading requirements elicitation with the club's stakeholders, scoping objectives into a delivery plan across Agile sprints.",
+      "Covered by a non-disclosure agreement: data, methods and findings stay confidential.",
+    ],
+    org: "Boston Bruins",
+    period: "Sep 2026 — Present",
+    summary: "Modeling post-draft development pathways for the club's prospects, under a non-disclosure agreement.",
+    stack: "Python, pandas, scikit-learn",
+    skills: "Stakeholder Management, Agile, Requirements Elicitation",
+  },
+  {
     title: "Rainfall Learning IDE",
-    client: "Rainfall Learning",
     overview: "A real-time collaborative IDE for Rainfall Learning in which a tutor and a student can edit the same file at once and neither loses work.",
     highlights: [
       "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
@@ -75,6 +89,7 @@ export const PROJECTS = [
       "Scores each employee's phishing risk with a scikit-learn model (R² 0.94) served over FastAPI.",
       "Single sign-on built from scratch on OIDC with PKCE, supporting Okta, Entra ID, Google Workspace and Auth0.",
       "Migrated the data layer across 44 files and built a multi-tenant organization backend with role-based access control.",
+      "Turned into security research with Prof. Sarita Singh, submitted to WiCyS 2027: adaptive, role-specific training with calibration scoring.",
       "Contract-first API: one OpenAPI specification (57 operations across 45 paths) generates the Zod validators and React Query hooks via Orval; 1,341 automated tests.",
     ],
     org: "Independent project",
@@ -303,6 +318,7 @@ const EXPERIENCE_RAW = [
 export const RESEARCH = [
   {
     title: "Multimodal Machine Learning for Parkinson's Detection",
+    visual: "auroc",
     metric: { value: "0.720 → 0.774", label: "AUROC across 2,685 subjects" },
     summary: "Combining voice, finger-tapping and walking data from 2,685 people to detect Parkinson's disease, improving the detection score (AUROC) from 0.720 to 0.774.",
     role: "Undergraduate Researcher",
@@ -320,6 +336,7 @@ export const RESEARCH = [
   },
   {
     title: "Artificial Intelligence Coding Tools in Computer Science Education",
+    visual: "study",
     metric: { value: "2 posters", label: "submitted to ACM SIGCSE 2027" },
     summary: "Measuring how four AI coding assistants compare with human programmers in computer science education. Two posters submitted to ACM SIGCSE 2027.",
     role: "Undergraduate Researcher",
@@ -333,6 +350,25 @@ export const RESEARCH = [
       "Two posters submitted to the ACM SIGCSE 2027 symposium.",
     ],
     stack: "Claude Code, GitHub Copilot, Cursor, ChatGPT, Python, Java, Prolog, TypeScript, LaTeX",
+  },
+  {
+    title: "Fighting AI-Generated Phishing with AI-Generated Training: Adaptive, Role-Specific Simulation with Calibration Scoring",
+    visual: "loop",
+    metric: { value: "WiCyS 2027", label: "submitted, decision December 2026" },
+    summary: "Turning PhishAware into security research: AI-generated, role-specific phishing practice that adapts to each learner's weak spots and flags people who are confidently wrong. Submitted to WiCyS 2027.",
+    role: "Undergraduate Researcher",
+    group: "Northeastern University",
+    advisor: "Prof. Sarita Singh",
+    period: "Fall 2026",
+    work: [
+      "Advised by Prof. Sarita Singh. Submitted to WiCyS 2027.",
+      "A two-stage LLM pipeline generates role-specific scenarios across six channels: email, SMS, voice, QR codes, social media and web pages.",
+      "Deterministic application logic constrains every scenario to a fixed taxonomy of eight gradeable red-flag cues.",
+      "Learners classify each message, identify the cues behind their decision and report their confidence; a calibration score finds learners who are confidently incorrect.",
+      "An adaptive model steers practice toward each learner's weakest attack types and persuasion tactics, and missed cues return through spaced repetition. Personalized targeting is gated by opt-in consent.",
+      "A formative evaluation with student participants found the cue-level explanations clear and useful; their feedback drove four design revisions.",
+    ],
+    stack: "TypeScript, Next.js, FastAPI, MongoDB, Groq, Gemini",
   },
 ];
 

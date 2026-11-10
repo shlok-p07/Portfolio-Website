@@ -255,6 +255,46 @@ const StudyMatrix = () => (
   </figure>
 );
 
+/* The phishing study's training loop: scenarios arrive on six channels, the
+   learner works through three steps, and the system adapts. Setup, not
+   results, like the study matrix. */
+const CHANNELS = ["Email", "SMS", "Voice", "QR", "Social", "Web"];
+const STEPS = ["Classify", "Flag cues", "Confidence"];
+const TrainingLoop = () => (
+  <figure
+    className="m-0 w-full"
+    role="img"
+    aria-label="Training loop: scenarios across six channels; learners classify each message, flag its red-flag cues and rate their confidence; the system then adapts practice to their weakest tactics"
+  >
+    <div aria-hidden="true" className="font-mono text-[0.6875rem]">
+      <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-6">
+        {CHANNELS.map((c) => (
+          <span key={c} className="border border-ink/20 bg-paper py-1.5 text-center font-bold">
+            {c}
+          </span>
+        ))}
+      </div>
+      <div className="relative mt-3 grid grid-cols-3 gap-1.5 pr-7">
+        {STEPS.map((s, i) => (
+          <span key={s} className="border-2 border-ink bg-paper px-1.5 py-2 text-center font-bold">
+            <span className="text-ink/60">{i + 1}</span> {s}
+          </span>
+        ))}
+        <svg viewBox="0 0 24 64" className="absolute top-1/2 right-0 h-16 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M2 14H14V54H2" />
+          <path d="M7 49 2 54l5 5" strokeLinecap="square" />
+        </svg>
+      </div>
+      <div className="mt-6 mr-7 bg-brand px-3 py-2 text-center font-bold text-on-brand">
+        Adapt: weakest tactics, spaced repetition
+      </div>
+    </div>
+    <figcaption aria-hidden="true" className="mt-3 font-mono text-[0.6875rem] text-ink/60">
+      Six channels, eight gradeable cues, one adaptive loop
+    </figcaption>
+  </figure>
+);
+
 /* AUROC on a fixed 0.65–0.80 axis, with the p-value printed beside it rather
    than hidden: the gain is suggestive, not significant. */
 const AurocChart = () => {
@@ -286,6 +326,13 @@ const AurocChart = () => {
       </div>
     </figure>
   );
+};
+
+// Each research entry names its figure.
+const VISUALS = { auroc: AurocChart, study: StudyMatrix, loop: TrainingLoop };
+const ResearchVisual = ({ kind }) => {
+  const Visual = VISUALS[kind];
+  return <Visual />;
 };
 
 function App() {
@@ -463,13 +510,13 @@ function App() {
 
         <Section id="research" title="Research">
           <div className="flex flex-col gap-8">
-            {RESEARCH.map((r, i) => (
+            {RESEARCH.map((r) => (
               <article
                 key={r.title}
                 className="grid border-2 border-ink bg-paper shadow-hard lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
               >
                 <div className="flex items-center border-b-2 border-ink bg-haze p-6 sm:p-8 lg:border-r-2 lg:border-b-0">
-                  {i === 0 ? <AurocChart /> : <StudyMatrix />}
+                  <ResearchVisual kind={r.visual} />
                 </div>
                 <div className="flex flex-col p-6 sm:p-8">
                   <p className="m-0 font-mono text-[0.75rem] text-ink/60">{r.period}</p>
