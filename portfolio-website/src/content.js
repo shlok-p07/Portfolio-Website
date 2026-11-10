@@ -6,6 +6,8 @@ import rutgersLogo from "./assets/logos/rutgers.webp";
 import sgaLogo from "./assets/logos/sga.webp";
 import oasisLogo from "./assets/logos/oasis.webp";
 import rainfallLogo from "./assets/logos/rainfall.webp";
+import acesLogo from "./assets/logos/aces.webp";
+import disruptLogo from "./assets/logos/disrupt.webp";
 
 
 export const PROJECTS = [
@@ -132,6 +134,7 @@ const EXPERIENCE_RAW = [
     group: "student",
     overview: "Peer programmer with NU ACES, Northeastern's Alliance of Civically Engaged Students.",
     org: "NU ACES",
+    logo: acesLogo,
     mark: "ACES",
     start: "2026-09",
     end: null,
@@ -173,6 +176,7 @@ const EXPERIENCE_RAW = [
     group: "student",
     overview: "Quantitative analyst with Disrupt, Northeastern's FinTech initiative, building and testing trading strategies.",
     org: "Disrupt: The FinTech Initiative",
+    logo: disruptLogo,
     mark: "DISRUPT",
     start: "2026-01",
     end: "2026-05",
