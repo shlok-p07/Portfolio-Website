@@ -491,7 +491,7 @@ function App() {
                       title={j.role}
                       org={j.org}
                       summary={j.points[0]}
-                      cover={<Cover seed={j.org} mark={j.mark} repo={j.github} />}
+                      cover={<Cover seed={j.org} mark={j.mark} logo={j.logo} repo={j.github} />}
                       links={
                         <>
                           {j.demo && (

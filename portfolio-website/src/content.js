@@ -1,3 +1,12 @@
+import nuhireLogo from "./assets/logos/nuhire.webp";
+import travelersLogo from "./assets/logos/travelers.webp";
+import bruinsLogo from "./assets/logos/bruins.webp";
+import northeasternLogo from "./assets/logos/northeastern.webp";
+import rutgersLogo from "./assets/logos/rutgers.webp";
+import sgaLogo from "./assets/logos/sga.webp";
+import oasisLogo from "./assets/logos/oasis.webp";
+import rainfallLogo from "./assets/logos/rainfall.webp";
+
 
 export const PROJECTS = [
   {
@@ -45,22 +54,6 @@ export const PROJECTS = [
     demo: "https://phish-aware.onrender.com/",
   },
   {
-    title: "Rainfall Learning",
-    overview: "A real-time collaborative IDE in which two people can edit the same file at once and neither loses work.",
-    highlights: [
-      "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
-      "A client that drops offline reconciles its changes when it reconnects.",
-      "Led UI development with 10+ engineers; edit conflicts fell to 2%.",
-      "Built the React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
-    ],
-    org: "Rainfall Learning",
-    period: "Dec 2025 — Jul 2026",
-    summary: "Two people edit the same file at once without losing work, using CRDT merging instead of locks.",
-    description:
-      "Two people can edit the same file at once and neither one loses work. Merging is CRDT-based rather than lock-based, so changes converge without a server arbitrating who wins, and a client that drops offline reconciles when it returns.",
-    stack: "React, TypeScript, Yjs, Express, Prisma, PostgreSQL, Docker",
-  },
-  {
     title: "NU Dining",
     overview: "Menus, opening hours, meal voting and a nutrition tracker for Northeastern's three residential dining halls.",
     highlights: [
@@ -76,25 +69,6 @@ export const PROJECTS = [
     stack: "React, Vite, Tailwind CSS, Supabase, PostgreSQL",
     github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
   },
-  {
-    title: "SGA Website CMS",
-    overview: "The internal CMS that lets Student Government's webmaster team update the SGA website without changing code.",
-    highlights: [
-      "Drag-and-drop page building with React Puck for non-technical officers, publishing to 5,000+ students.",
-      "Version history, rollback, role-based access control and soft-delete archiving on Next.js and Prisma.",
-      "Prisma-validated API endpoints over PostgreSQL, with Supabase authentication and Vercel hosting.",
-      "Cut publishing time by 10%.",
-    ],
-    org: "Student Government Association",
-    period: "Jan 2026 — Present",
-    featured: true,
-    metric: { value: "5,000+", label: "students reached" },
-    summary: "Drag-and-drop publishing for Student Government officers, with version history and role-based access, reaching 5,000+ students.",
-    description:
-      "Student Government replaces most of its staff every year, which makes editing raw HTML a poor long-term plan. Non-technical officers get drag-and-drop page building instead, with version history and role-based access control behind it.",
-    stack: "TypeScript, Next.js, React, Puck, Prisma, PostgreSQL, Supabase, Tailwind CSS, shadcn/ui",
-    github: "https://github.com/SGAOperations/website-development",
-  },
 ];
 
 const EXPERIENCE_RAW = [
@@ -103,6 +77,7 @@ const EXPERIENCE_RAW = [
     group: "professional",
     overview: "A web application for a live client at Khoury College that teaches students the hiring process from the employer's side: teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor injects complications live.",
     org: "NU Hire",
+    logo: nuhireLogo,
     mark: "NH",
     github: "https://github.com/Oasis-NEU/NUHire",
     start: "2026-09",
@@ -123,6 +98,7 @@ const EXPERIENCE_RAW = [
     group: "professional",
     overview: "Incoming software engineering co-op at Travelers, working remotely with the Hartford, CT office.",
     org: "Travelers",
+    logo: travelersLogo,
     mark: "T",
     start: "2027-01",
     end: "2027-05",
@@ -137,6 +113,7 @@ const EXPERIENCE_RAW = [
     group: "professional",
     overview: "Data analyst on a predictive-modeling engagement with the Boston Bruins, modeling post-draft development pathways for the club's prospects.",
     org: "Boston Bruins",
+    logo: bruinsLogo,
     mark: "BB",
     start: "2026-09",
     end: null,
@@ -171,19 +148,21 @@ const EXPERIENCE_RAW = [
   {
     role: "Lead Software Engineer",
     group: "student",
-    overview: "Lead software engineer on Student Government's Digital Innovation team, building the CMS behind the SGA website.",
+    overview: "Lead software engineer on Student Government's Digital Innovation team, building the CMS behind the SGA website. Student Government replaces most of its staff every year, so non-technical officers build pages by drag and drop instead of editing code.",
     org: "Student Government Association",
+    logo: sgaLogo,
     mark: "SGA",
     github: "https://github.com/SGAOperations/website-development",
     demo: "https://sga-site-builder.vercel.app",
     start: "2026-01",
     end: null,
-    stack: "Next.js, TypeScript, React, Prisma, PostgreSQL",
+    stack: "Next.js, TypeScript, React, Puck, Prisma, PostgreSQL, Supabase, Tailwind CSS, shadcn/ui",
     context: "Northeastern University",
     period: "Jan 2026 — Present",
     location: "Boston, MA",
     points: [
       "Built a production CMS that lets non-technical editors publish to 5,000+ students, cutting publish time by 10%.",
+      "Drag-and-drop page building with React Puck, with Supabase authentication and Vercel hosting.",
       "Architected version history, rollback, role-based access control, and soft-delete archiving on Next.js and Prisma.",
       "Engineered Prisma-validated API endpoints enforcing schema integrity on every mutation over PostgreSQL.",
       "Manage the development lifecycle for a team of 5+ engineers as one of 3 tech leads: tickets, sprint planning and code review.",
@@ -212,6 +191,7 @@ const EXPERIENCE_RAW = [
     group: "student",
     overview: "Mentor in NU Oasis's project series at Northeastern.",
     org: "NU Oasis",
+    logo: oasisLogo,
     mark: "OASIS",
     github: "https://github.com/Oasis-NEU/f26-group-8",
     start: "2026-01",
@@ -229,6 +209,7 @@ const EXPERIENCE_RAW = [
     role: "Teaching Assistant",
     group: "professional",
     org: "Program Design and Implementation II",
+    logo: northeasternLogo,
     mark: "OOD",
     overview: "Teaching assistant for Program Design and Implementation II at Khoury College of Computer Sciences.",
     start: "2026-05",
@@ -247,17 +228,19 @@ const EXPERIENCE_RAW = [
   {
     role: "Lead Software Engineer",
     group: "student",
-    overview: "Lead software engineer for Rainfall Learning's real-time collaborative IDE.",
+    overview: "Lead software engineer for Rainfall Learning's real-time collaborative IDE, in which two people can edit the same file at once and neither loses work.",
     org: "Rainfall Learning",
+    logo: rainfallLogo,
     mark: "RL",
     start: "2025-12",
     end: "2026-07",
-    stack: "React, TypeScript, Yjs, Docker, Vitest",
+    stack: "React, TypeScript, Yjs, Express, Prisma, PostgreSQL, Docker, Vitest",
     period: "Dec 2025 — Jul 2026",
     location: "Boston, MA",
     points: [
       "Led UI development on a real-time collaborative IDE with 10+ engineers, cutting edit conflicts to 2% via Yjs CRDT sync.",
       "Built a React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
+      "Edits merge through CRDTs rather than locks, so a client that drops offline reconciles its changes when it reconnects.",
       "Dockerized build pipelines to reduce environment failures by 15%, hardening deployments with automated testing.",
     ],
   },
@@ -265,6 +248,7 @@ const EXPERIENCE_RAW = [
     role: "Teaching Assistant",
     group: "professional",
     org: "Rutgers University",
+    logo: rutgersLogo,
     mark: "RU",
     overview: "Teaching assistant for a summer math program at Rutgers University.",
     start: "2024-06",

@@ -7,7 +7,11 @@ import { siGithub } from "simple-icons";
    commit graph, a branch leaving main and merging back, and the repository's
    name, so the cards with code read differently at a glance. Purely
    decorative: the card's text already names the organisation and the
-   footer carries the link. */
+   footer carries the link.
+
+   The organisation's logo sits on a white plate in the band's corner, so
+   every brand keeps its own colours whatever the band behind it. Without a
+   logo the plate carries the organisation's mark instead. */
 
 const W = 320;
 const H = 112;
@@ -61,7 +65,7 @@ const Graph = () => (
   </svg>
 );
 
-export default function Cover({ seed, mark, repo }) {
+export default function Cover({ seed, mark, logo, repo }) {
   const { cx, cy, rings } = terrain(seed, Boolean(repo));
   const repoName = repo && new URL(repo).pathname.split("/").filter(Boolean).at(-1);
 
@@ -82,11 +86,15 @@ export default function Cover({ seed, mark, repo }) {
         </g>
       </svg>
       {repo && <Graph />}
-      <span className="absolute bottom-2.5 left-5 font-display text-[2.5rem] leading-none font-semibold tracking-[-0.02em]">
-        {mark}
+      <span className="absolute bottom-2.5 left-4 flex h-16 items-center border-2 border-ink bg-paper px-2 py-1.5 text-ink shadow-hard-sm">
+        {logo ? (
+          <img src={logo} alt="" width="160" height="48" className="h-12 w-auto max-w-[9.5rem] object-contain" />
+        ) : (
+          <span className="px-1 font-display text-[1.5rem] leading-none font-semibold tracking-[-0.01em]">{mark}</span>
+        )}
       </span>
       {repoName && (
-        <span className="absolute top-3 right-3 inline-flex max-w-[60%] items-center gap-1.5 border-2 border-ink bg-paper py-0.5 pr-2 pl-1.5 font-mono text-[0.6875rem] leading-5 font-bold text-ink">
+        <span className="absolute top-2 right-3 inline-flex max-w-[60%] items-center gap-1.5 border-2 border-ink bg-paper py-0.5 pr-2 pl-1.5 font-mono text-[0.6875rem] leading-5 font-bold text-ink">
           <svg viewBox="0 0 24 24" className="size-3 shrink-0 fill-current">
             <path d={siGithub.path} />
           </svg>
