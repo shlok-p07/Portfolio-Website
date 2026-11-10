@@ -3,7 +3,7 @@ import {
   siNextdotjs, siNodedotjs, siNumpy, siOpenjdk, siPandas, siPostgresql, siPrisma,
   siPuppeteer, siPython, siPytorch, siReact, siScikitlearn, siScipy, siStreamlit,
   siSupabase, siTailwindcss, siTensorflow, siTypescript, siVite, siVitest,
-  siCplusplus, siFastapi, siLinear, siGithubactions, siMysql, siSocketdotio, siKeycloak,
+  siCplusplus, siFastapi, siLinear, siJira, siGithubactions, siMysql, siSocketdotio, siKeycloak,
   siClaude, siGithubcopilot, siGooglegemini, siZod, siReactquery,
 } from "simple-icons";
 
@@ -21,7 +21,7 @@ const ICONS = {
   PostgreSQL: siPostgresql, Supabase: siSupabase, MongoDB: siMongodb, Prisma: siPrisma,
   Docker: siDocker, Git: siGit, Vitest: siVitest, Puppeteer: siPuppeteer,
   Streamlit: siStreamlit, Figma: siFigma, AWS: siAmazonwebservices,
-  "C++": siCplusplus, FastAPI: siFastapi, Linear: siLinear, "GitHub Actions": siGithubactions,
+  "C++": siCplusplus, FastAPI: siFastapi, Linear: siLinear, Jira: siJira, "GitHub Actions": siGithubactions,
   MySQL: siMysql, "Socket.IO": siSocketdotio, Keycloak: siKeycloak, "Claude Code": siClaude,
   "GitHub Copilot": siGithubcopilot, Gemini: siGooglegemini, Zod: siZod, "React Query": siReactquery,
 };

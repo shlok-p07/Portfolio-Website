@@ -335,7 +335,7 @@ export const TOOLKIT = [
   },
   {
     label: "Infrastructure",
-    items: ["Docker", "Git", "GitHub Actions", "AWS", "Linear"],
+    items: ["Docker", "Git", "GitHub Actions", "AWS", "Linear", "Jira"],
   },
   {
     label: "Testing & design",
