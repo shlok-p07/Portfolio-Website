@@ -174,9 +174,127 @@ function ServiceArt() {
   );
 }
 
+/* Life outside the terminal: a short first-person note beside a spread of
+   prints. The photos are openly licensed shots of the places and things
+   behind each interest, not photos of Shlok, so each caption names what it
+   shows and the credits sit right under the spread.
+
+   From sm up the prints are laid out on a table: x, y and w are percentages
+   of the 6:5 spread, r the resting tilt, z the stacking order. The top
+   row sits in front so no print hides another's caption. When the spread scrolls into view
+   they start stacked in the middle and deal out to those spots. */
+const PRINTS = [
+  {
+    src: "/life/skyline-trail.webp",
+    ratio: 3 / 2,
+    alt: "A paved trail climbing through a green meadow between tall firs under a clear blue sky",
+    caption: "Skyline Trail, Mount Rainier",
+    x: 0, y: 4, w: 56, r: -3, z: 3,
+    credit: { by: "Joe Mabel", lic: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0/", page: "https://commons.wikimedia.org/wiki/File:Heading_up_the_Skyline_Trail_from_Paradise,_Mount_Rainier_01.jpg" },
+  },
+  {
+    src: "/life/back-bay.webp",
+    ratio: 16 / 9,
+    alt: "Back Bay's brick row houses and towers reflected in the still Charles River",
+    caption: "Back Bay from the Charles",
+    x: 42, y: 0, w: 58, r: 2.5, z: 4,
+    credit: { by: "King of Hearts", lic: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0/", page: "https://commons.wikimedia.org/wiki/File:Charles_River_Esplanade_Boston_May_2018_panorama.jpg" },
+  },
+  {
+    src: "/life/chess-board.webp",
+    ratio: 1,
+    alt: "A walnut and maple chess board seen from above mid-game, its pieces casting long shadows",
+    caption: "Chess, from above",
+    x: 8, y: 47, w: 36, r: 2, z: 1,
+    credit: { by: "Dietmar Rabich", lic: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0/", page: "https://commons.wikimedia.org/wiki/File:Schachbrett_--_2021_--_9676.jpg" },
+  },
+  {
+    src: "/life/wood-type.webp",
+    ratio: 4 / 5,
+    alt: "A jumble of worn wooden letterpress type blocks in blues and browns",
+    caption: "Wood type",
+    x: 56, y: 37, w: 32, r: -2.5, z: 2,
+    credit: { by: "Michellecornelison", lic: "CC BY-SA 4.0", licUrl: "https://creativecommons.org/licenses/by-sa/4.0/", page: "https://commons.wikimedia.org/wiki/File:Wood_letterpress_type.jpg" },
+  },
+];
+
+// The spread is 6:5, so one unit of width is 5/6 of a unit of height.
+const SPREAD = 6 / 5;
+const CAPTION_SHARE = 0.16; // caption strip and mat, as a share of print width
+// Offset from each print's own resting centre to the centre of the spread,
+// in percentages of the print's own box (what translate() resolves against).
+const stackOffset = ({ x, y, w, ratio }) => {
+  const h = w * (1 / ratio + CAPTION_SHARE) * SPREAD;
+  return {
+    "--sx": `${((50 - (x + w / 2)) / w) * 100}%`,
+    "--sy": `${((50 - (y + h / 2)) / h) * 100}%`,
+  };
+};
+
+function Life() {
+  return (
+    <div className="grid gap-12 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:items-center lg:gap-16">
+      <div className="max-w-[34rem]">
+        <h3 className="m-0 font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.95] font-semibold tracking-[-0.03em] text-balance">
+          Life outside the terminal.
+        </h3>
+        <p className="m-0 mt-6 text-[1.125rem] leading-[1.65] text-pretty text-ink/85">
+          Most of my week happens in an editor. The rest happens over a chess board, out on a
+          trail, or in Illustrator and Photoshop, nudging a letterform until it sits right.
+        </p>
+        <p className="m-0 mt-4 text-[1.125rem] leading-[1.65] text-pretty text-ink/85">
+          In Boston I'm a peer programmer with NU ACES, planning service and civic-engagement
+          events for first-year and upper-class students.
+        </p>
+      </div>
+
+      <div>
+        <div data-reveal="prints" className="prints grid grid-cols-2 items-start gap-5 sm:block sm:relative sm:aspect-[6/5]">
+          {PRINTS.map((p) => (
+            <figure
+              key={p.src}
+              className="print m-0 border-2 border-ink bg-paper p-2 sm:absolute sm:left-[var(--x)] sm:top-[var(--y)] sm:w-[var(--w)] sm:p-2.5"
+              style={{ "--x": `${p.x}%`, "--y": `${p.y}%`, "--w": `${p.w}%`, "--r": `${p.r}deg`, "--z": p.z, zIndex: p.z, ...stackOffset(p) }}
+            >
+              <div className="overflow-hidden border-2 border-ink" style={{ aspectRatio: p.ratio }}>
+                <img src={p.src} alt={p.alt} loading="lazy" decoding="async" className="print-img block size-full object-cover" />
+              </div>
+              <figcaption className="pt-2 font-mono text-[0.6875rem] leading-[1.4] font-bold sm:text-[0.75rem]">{p.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+        <p className="m-0 mt-8 max-w-[34rem] font-mono text-[0.75rem] leading-[1.6] text-pretty text-ink/70">
+          Photos via Wikimedia Commons, resized and cropped:{" "}
+          {PRINTS.map((p, i) => (
+            <span key={p.src}>
+              <a href={p.credit.page} className="underline underline-offset-2 hover:text-ink">
+                {p.caption}
+              </a>{" "}
+              by {p.credit.by} (
+              <a href={p.credit.licUrl} className="underline underline-offset-2 hover:text-ink">
+                {p.credit.lic}
+              </a>
+              ){i < PRINTS.length - 1 ? "; " : "."}
+            </span>
+          ))}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export default function Interests() {
   return (
-    <div className="grid gap-8 text-ink sm:grid-cols-2 lg:grid-cols-4">
+    <div className="flex flex-col gap-20 text-ink">
+      <Life />
+      <Posters />
+    </div>
+  );
+}
+
+function Posters() {
+  return (
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
       <Poster word="Chess" tone="bg-brand text-on-brand" foot={MOVES.map((s) => `R${square(s)}`).join("  ")}>
         <ChessArt />
       </Poster>
