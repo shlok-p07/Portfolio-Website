@@ -32,7 +32,6 @@ const TICKER = [
   { sym: "RL hedging", value: "no significant edge", dir: "flat" },
   { sym: "Whalley-Wilmott", value: "80% fewer trades", dir: "up" },
   { sym: "Teaching", value: "100+ students", dir: "up" },
-  { sym: "SIGCSE 2027", value: "2 posters", dir: "up" },
   { sym: "GPA", value: PROFILE.gpa, dir: "up" },
 ];
 
