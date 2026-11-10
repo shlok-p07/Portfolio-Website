@@ -243,6 +243,6 @@ export default function Rail({ label, heading, children }) {
    reaches both edges. */
 export const RailCard = ({ children }) => (
   <li className="flex shrink-0 snap-start" style={{ width: "max(clamp(16rem, 21vw, 22rem), var(--fill, 0px))" }}>
-    <article className="flex w-full flex-col border-2 border-ink bg-paper p-5 shadow-hard-sm">{children}</article>
+    <article className="group flex w-full flex-col overflow-hidden border-2 border-ink bg-paper p-5 shadow-hard-sm">{children}</article>
   </li>
 );

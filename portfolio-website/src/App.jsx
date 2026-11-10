@@ -7,6 +7,7 @@ import SiteFooter from "./components/SiteFooter";
 import ToolPill from "./components/ToolPill";
 import Rail, { RailCard } from "./components/Rail";
 import Details from "./components/Details";
+import Cover from "./components/Cover";
 
 const NAV = [
   ["education", "Education"],
@@ -127,10 +128,11 @@ const TextLink = ({ href, children, name }) => (
    dates, title (up to two lines), organisation (one line; two on phones,
    where cards are narrow), summary (up to three lines), and a footer with
    "View details" and any links. */
-const MiniCard = ({ kind, date, title, org, summary, links, children }) => (
+const MiniCard = ({ kind, date, title, org, summary, links, cover, children }) => (
   <>
+    {cover}
     <p className="m-0 truncate font-mono text-[0.75rem] leading-5 text-ink/60">{date}</p>
-    <h3 className="m-0 mt-2 line-clamp-2 min-h-[2.3em] font-display text-[1.25rem] leading-[1.15] font-semibold">
+    <h3 className="m-0 mt-2 line-clamp-2 min-h-[2.3em] text-balance font-display text-[1.25rem] leading-[1.15] font-semibold">
       {title}
     </h3>
     <p className="m-0 mt-1 line-clamp-2 min-h-12 text-[0.875rem] leading-6 font-medium text-ink/70 sm:line-clamp-1 sm:min-h-6" title={org}>
@@ -483,13 +485,35 @@ function App() {
               >
                 {EXPERIENCE.filter((j) => j.group === group).map((j) => (
                   <RailCard key={`${j.role}-${j.org}`}>
-                    <MiniCard kind={heading} date={j.period} title={j.role} org={j.org} summary={j.points[0]}>
+                    <MiniCard
+                      kind={heading}
+                      date={j.period}
+                      title={j.role}
+                      org={j.org}
+                      summary={j.points[0]}
+                      cover={<Cover seed={j.org} mark={j.mark} repo={j.github} />}
+                      links={
+                        <>
+                          {j.demo && (
+                            <TextLink href={j.demo} name={j.org}>
+                              Live site
+                            </TextLink>
+                          )}
+                          {j.github && (
+                            <TextLink href={j.github} name={j.org}>
+                              Code
+                            </TextLink>
+                          )}
+                        </>
+                      }
+                    >
                       <Panel
                         org={j.context ? `${j.org}, ${j.context}` : j.org}
                         dates={j.period}
                         overview={j.overview}
                         highlights={j.points}
                         tools={list(j.stack)}
+                        actions={<ProjectButtons p={j} />}
                       />
                     </MiniCard>
                   </RailCard>
