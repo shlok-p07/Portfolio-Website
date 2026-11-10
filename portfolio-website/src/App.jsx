@@ -56,6 +56,7 @@ const EXPERIENCE_ITEMS = EXPERIENCE.map((j) => ({
   period: j.period,
   where: [j.context ? `${j.org}, ${j.context}` : j.org, j.location].filter(Boolean).join(" · "),
   overview: j.overview,
+  numbers: j.numbers || [],
   points: j.points,
   tools: list(j.stack),
   logo: j.logo,
@@ -76,6 +77,7 @@ const PROJECT_ITEMS = PROJECT_RAIL.map((p) => ({
   where: p.client ? `Client project for ${p.client}` : p.org,
   fact: p.metric,
   overview: p.overview,
+  numbers: p.numbers || [],
   points: p.highlights,
   tools: [...list(p.stack), ...list(p.skills)],
   logo: p.logo,
@@ -443,6 +445,7 @@ function App() {
               ["student", "Student organizations", "Student orgs"],
             ]}
             items={EXPERIENCE_ITEMS}
+            pointsLabel="What I did"
           />
         </Section>
 
@@ -455,6 +458,7 @@ function App() {
               ["client", "Client projects", "Client"],
             ]}
             items={PROJECT_ITEMS}
+            pointsLabel="Under the hood"
           />
         </Section>
 

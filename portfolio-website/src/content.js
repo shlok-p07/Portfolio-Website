@@ -18,65 +18,74 @@ export const PROJECTS = [
     logo: nuhireLogo,
     mark: "NH",
     client: "Khoury College of Computer Sciences",
-    overview: "What does hiring look like from the other side of the table? NU Hire puts Khoury students in the employer's seat: teams screen resumes against the clock, judge recorded interviews and negotiate an offer together, while an advisor drops no-shows and internal referrals into the exercise live. On a team of 10+ engineers, I worked on the parts that keep a live classroom from breaking: a 10-check GitHub Actions gate on every merge, database migrations that stop the server before a bad schema can run, a Docker build that works on both x86 and ARM, and resume text extraction behind keyword-based applicant screening. End-to-end QA of the classroom flow logged 60+ issues, including a bug that locked students out mid-session. Built for Khoury College, though never handed off.",
-    highlights: [
-      "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
-      "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
-      "Real-time collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
-      "Every merge to main passes a 10-check GitHub Actions gate: tests, Docker build, migrations and a security audit.",
-    ],
     org: "Khoury College of Computer Sciences",
     period: "Sep 2026 — Present",
     summary: "A live hiring simulation for Khoury students: teams screen resumes, judge interviews and negotiate an offer while an advisor injects complications.",
     stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions",
     github: "https://github.com/Oasis-NEU/NUHire",
     page: { label: "Project page", short: "Site", href: "https://khoury-co-op.github.io/NUHire/" },
+    overview: "What does hiring look like from the other side of the table? NU Hire puts Khoury students in the employer's seat: teams screen resumes against the clock, judge recorded interviews and negotiate an offer together, while an advisor drops no-shows and internal referrals into the exercise live. On a team of 10+ engineers, I owned the safeguards that keep a live classroom from breaking. Built for Khoury College, though never handed off.",
+    highlights: [
+      "A GitHub Actions gate runs tests, the Docker build, migrations and a security audit; nothing reaches main until all of them pass.",
+      "dbmate migrations run before the API starts and fail-stop on error, and CI fails whenever the Prisma schema drifts from the migrations.",
+      "Resume PDFs have their text extracted on upload, with a backfill for older rows, to power keyword-based applicant screening.",
+      "End-to-end QA caught a critical bug that locked students out of a session midway through.",
+      "Tightened TypeScript types across the Socket.IO controllers, the session store and the offer flow."
+    ],
+    numbers: [
+      ["10", "CI checks gate every merge to main"],
+      ["60+", "issues logged in end-to-end QA"],
+      ["10+", "engineers on the team"],
+      ["x86 + ARM", "Docker builds that run on both"]
+    ],
   },
   {
     title: "Boston Bruins: Post-Draft Development Pathways",
     logo: bruinsLogo,
     mark: "BB",
     client: "Boston Bruins",
-    overview: "Draft day is only the start: what a prospect does over the next few seasons decides whether the pick pays off. On a five-person team working with the Boston Bruins, I'm building a reproducible Python pipeline (pandas, scikit-learn) to model the development pathways that work best for the club's prospects, and leading the requirements sessions that turn the club's open questions into a delivery plan, sprint by sprint. The engagement is under a non-disclosure agreement, so the data, methods and findings stay with the club.",
-    highlights: [
-      "Building a reproducible Python data pipeline (pandas, scikit-learn) for the club's predictive-modeling questions.",
-      "Leading requirements elicitation with the club's stakeholders, scoping objectives into a delivery plan across Agile sprints.",
-      "Covered by a non-disclosure agreement: data, methods and findings stay confidential.",
-    ],
     org: "Boston Bruins",
     period: "Sep 2026 — Present",
     summary: "Modeling post-draft development pathways for the club's prospects, under a non-disclosure agreement.",
     stack: "Python, pandas, scikit-learn",
     skills: "Stakeholder Management, Agile, Requirements Elicitation",
+    overview: "Draft day is only the start: what a prospect does over the next few seasons decides whether the pick pays off. On a five-person team working with the Boston Bruins, I lead the requirements work with the club and build the modeling pipeline behind it. The engagement is under a non-disclosure agreement.",
+    highlights: [
+      "Requirements elicitation with club stakeholders, turning open questions into scoped objectives and a delivery plan across Agile sprints.",
+      "A reproducible Python pipeline (pandas, scikit-learn) for the club's predictive modeling of development pathways.",
+      "Data, methods and findings stay confidential under the non-disclosure agreement."
+    ],
+    numbers: [
+      ["5", "people on the team, including me"],
+      ["DS 4535", "professional practicum"]
+    ],
   },
   {
     title: "Rainfall Learning IDE",
     logo: rainfallLogo,
     mark: "RL",
-    overview: "Two people typing in the same file is the classic way to lose work. Rainfall Learning's IDE lets a tutor and a student edit together in real time, and I led its UI development on a team of 15+ engineers. Edits merge through Yjs CRDTs rather than locks, so changes converge without a server picking a winner, and a client that drops offline catches up when it reconnects. Edit conflicts fell to 2%, rendering ran 20% faster under concurrent editing, and Dockerized builds cut environment failures by 15%.",
-    highlights: [
-      "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
-      "A client that drops offline reconciles its changes when it reconnects.",
-      "Led UI development with 15+ engineers; edit conflicts fell to 2%.",
-      "Built the React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
-    ],
     org: "Rainfall Learning",
     period: "Dec 2025 — Jul 2026",
     summary: "Two people edit the same file at once without losing work, using CRDT merging instead of locks.",
     stack: "React, TypeScript, Yjs, Express, Prisma, PostgreSQL, Docker",
     page: { label: "Docs", href: "https://aryan0102.github.io/Rainfall-Learning/" },
+    overview: "Two people typing in the same file is the classic way to lose work. Rainfall Learning's IDE lets a tutor and a student edit together in real time, and I led its UI development on a team of 15+ engineers.",
+    highlights: [
+      "Edits merge through Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
+      "A client that drops offline reconciles its changes as soon as it reconnects.",
+      "Built the React and TypeScript UI layer that keeps the editor responsive while several people type.",
+      "Dockerized the build pipelines and hardened deployments with automated tests in Vitest."
+    ],
+    numbers: [
+      ["2%", "edit conflicts with CRDT sync"],
+      ["20%", "faster rendering under concurrent editing"],
+      ["15%", "fewer environment failures"],
+      ["15+", "engineers on the team"]
+    ],
   },
   {
     title: "Derivative Hedging via Reinforcement Learning",
     mark: "RL·Δ",
-    overview: "Can a reinforcement-learning agent hedge options better than the textbook formula? I trained PPO and SAC agents to hedge a short call on real SPY data, 1,205 thirty-day windows from 2021 to 2026, and pitted them against Black-Scholes delta hedging and the Whalley-Wilmott band across four market and transaction-cost regimes, with a 10,000-resample paired bootstrap behind every comparison. The honest answer was no: the agent's edge was not significant, Whalley-Wilmott matched it with 65–87% fewer trades, and a CVaR reward taught the agent to bet on market drift instead of hedging.",
-    highlights: [
-      "Trained on 1,205 thirty-day windows of SPY history (2021–2026) and evaluated over 450 paired episodes in each of four market and transaction-cost regimes.",
-      "Tested every comparison with a 10,000-resample paired bootstrap, so null results read as null results.",
-      "PPO's mean edge over delta hedging was not statistically significant in any regime; Whalley-Wilmott matched or beat both agents with 65–87% fewer trades.",
-      "A CVaR reward was gamed: the agent held a +0.27 long tilt instead of hedging, and its edge vanished once market drift was removed.",
-      "Built a five-page Streamlit dashboard for live demos, training, evaluation and scenario analysis.",
-    ],
     org: "Independent project",
     period: "Jan — Mar 2026",
     featured: true,
@@ -87,23 +96,26 @@ export const PROJECTS = [
     stack: "Python, PyTorch, Stable-Baselines3, NumPy, pandas, SciPy, Streamlit",
     github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
     demo: "https://reinforcementlearning-terminal.streamlit.app/",
+    overview: "Can a reinforcement-learning agent hedge options better than the textbook formula? I trained PPO and SAC agents to hedge a short call on real SPY data and pitted them against Black-Scholes delta hedging and the Whalley-Wilmott band. The honest answer was no, and the project is built to prove that rather than hide it.",
+    highlights: [
+      "Six hedging strategies across four market and transaction-cost regimes, with 450 paired episodes in each regime.",
+      "Every comparison runs through a paired bootstrap, so null results read as null results.",
+      "Whalley-Wilmott matched or beat both agents with 65–87% fewer trades, depending on the regime.",
+      "A CVaR reward got gamed: the agent held a +0.27 long tilt instead of hedging, and its edge vanished once a drift ablation removed the market trend.",
+      "A five-page Streamlit dashboard runs live demos, training, evaluation and scenario analysis."
+    ],
+    numbers: [
+      ["1,205", "thirty-day SPY windows, 2021–2026"],
+      ["10,000", "bootstrap resamples per comparison"],
+      ["80%", "fewer trades for Whalley-Wilmott, same result"],
+      ["p ≥ 0.29", "RL edge over delta hedging: not significant"]
+    ],
   },
   {
     title: "PhishAware",
     client: "CS 4530 (Fundamentals of Software Engineering)",
     logo: phishawareLogo,
     mark: "PA",
-    overview: "Phishing emails are now written by AI, yet most security training is still a generic, once-a-year module. I led a three-person team building PhishAware, which generates attacks matched to each employee's role across email, SMS and phone calls through a two-stage Groq and Gemini pipeline with failover, and scores each employee's risk with a scikit-learn model (R² 0.94). Under the hood: single sign-on written from scratch on OIDC with PKCE, a multi-tenant backend after migrating the data layer across 44 files, and 57 API operations generated from one OpenAPI contract, all backed by 1,341 tests. The work became research submitted to WiCyS 2027.",
-    highlights: [
-      "Led a 3-person team building the platform end to end.",
-      "Generates each scenario with a two-stage LLM pipeline matched to the employee's role, using Groq as primary and Gemini as fallback.",
-      "Practice across a simulated inbox, SMS thread and phone call, with lessons covering six attack vectors.",
-      "Scores each employee's phishing risk with a scikit-learn model (R² 0.94) served over FastAPI.",
-      "Single sign-on built from scratch on OIDC with PKCE, supporting Okta, Entra ID, Google Workspace and Auth0.",
-      "Migrated the data layer across 44 files and built a multi-tenant organization backend with role-based access control.",
-      "Turned into security research with Prof. Sarita Singh, submitted to WiCyS 2027: adaptive, role-specific training with calibration scoring.",
-      "Contract-first API: one OpenAPI specification (57 operations across 45 paths) generates the Zod validators and React Query hooks via Orval; 1,341 automated tests.",
-    ],
     org: "Khoury College of Computer Sciences",
     period: "Jul — Sep 2026",
     featured: true,
@@ -114,17 +126,25 @@ export const PROJECTS = [
     stack: "Next.js, TypeScript, Python, FastAPI, MongoDB, scikit-learn, Groq, Gemini, OpenAPI, Orval, Zod, React Query",
     github: "https://github.com/shlok-p07/Phish-Aware",
     demo: "https://phish-aware.onrender.com/",
+    overview: "Phishing emails are now written by AI, yet most security training is still a generic, once-a-year module. I led a three-person team building PhishAware for CS 4530: it writes attacks matched to each employee's role and scores who is most at risk. The work became research with Prof. Sarita Singh, submitted to WiCyS 2027.",
+    highlights: [
+      "A two-stage LLM pipeline writes each scenario for the employee's role, with Groq as primary and Gemini as failover.",
+      "Employees practice in a simulated inbox, SMS thread and phone call.",
+      "Single sign-on written from scratch on OIDC with PKCE, working with Okta, Entra ID, Google Workspace and Auth0.",
+      "Migrated the data layer across 44 files to a multi-tenant organization backend with role-based access control.",
+      "The OpenAPI contract (45 paths) generates the Zod validators and React Query hooks through Orval, and the scikit-learn risk model is served over FastAPI."
+    ],
+    numbers: [
+      ["R² 0.94", "employee phishing-risk model"],
+      ["57", "API operations from one OpenAPI contract"],
+      ["1,341", "automated tests"],
+      ["6", "attack vectors covered"]
+    ],
   },
   {
     title: "NU Dining",
     logo: nudiningLogo,
     mark: "NUD",
-    overview: "Which dining hall is worth the walk today? NU Dining pulls daily menus and opening hours for Northeastern's three residential dining halls from DineOnCampus, through a scraper built to get past Cloudflare's blocking, and adds meal voting and calorie tracking on a Supabase PostgreSQL backend with row-level security. It treats stale data as a bug: menus older than 14 days are withheld, and every view shows how old its data is.",
-    highlights: [
-      "Pulls daily menus and hours from DineOnCampus with a scraper built to get past Cloudflare's blocking.",
-      "Supabase PostgreSQL backend with row-level security, plus authenticated calorie tracking and meal voting.",
-      "Treats stale data as a failure: menus older than 14 days are withheld, and every view shows how old its data is.",
-    ],
     org: "NU Oasis",
     period: "Sep — Dec 2025",
     summary: "Live menus for three Northeastern dining halls, with calorie tracking and meal voting.",
@@ -132,6 +152,16 @@ export const PROJECTS = [
       "Live daily menus for three dining halls, pulled from DineOnCampus on scheduled serverless jobs. The Supabase PostgreSQL backend uses row-level security, with authenticated calorie tracking and meal voting on top.",
     stack: "React, Vite, Tailwind CSS, Supabase, PostgreSQL",
     github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
+    overview: "Which dining hall is worth the walk today? NU Dining shows live menus and opening hours for Northeastern's three residential dining halls, with meal voting and calorie tracking, built as a team project in NU Oasis.",
+    highlights: [
+      "A scraper built to get past Cloudflare's blocking pulls daily menus and hours from DineOnCampus on scheduled serverless jobs.",
+      "Supabase PostgreSQL backend with row-level security; calorie tracking and meal voting require sign-in.",
+      "Stale data is treated as a bug: older menus are withheld, and every view shows how old its data is."
+    ],
+    numbers: [
+      ["3", "residential dining halls covered"],
+      ["14 days", "oldest menu it will ever show"]
+    ],
   },
 ];
 
@@ -139,7 +169,6 @@ const EXPERIENCE_RAW = [
   {
     role: "Software Engineer",
     group: "professional",
-    overview: "One of 10+ engineers building NU Hire, a live hiring simulation for Khoury College. I took ownership of the team's release safety net: a 10-check CI/CD gate that every merge must pass, database migrations that stop the server before a bad schema can run, and end-to-end QA that logged 60+ issues, including a bug that locked students out mid-session. The project was never handed off to the client.",
     org: "NU Hire",
     logo: nuhireLogo,
     mark: "NH",
@@ -150,17 +179,22 @@ const EXPERIENCE_RAW = [
     stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions, dbmate, Requirements Elicitation, Software Consulting",
     period: "Sep 2026 — Present",
     location: "Boston, MA",
+    overview: "One of 10+ engineers building NU Hire, a live hiring simulation for Khoury College. I took ownership of the team's release safety net, so a bad merge or a broken migration never reaches a live classroom. The project was never handed off to the client.",
     points: [
-      "Built a 10-check GitHub Actions CI/CD gate (tests, Docker build, migrations and a security audit) that every merge to main must pass.",
-      "Ran end-to-end QA of the live classroom flow and logged 60+ issues, including a critical bug that locked students out mid-session.",
-      "Made dbmate migrations fail-stop before the server starts, and fixed the Docker build so it runs on both x86 and ARM.",
-      "Real-time team collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
+      "Built the GitHub Actions gate: tests, Docker build, migrations and a security audit, required on every pull request.",
+      "Made dbmate migrations fail-stop before the API starts, and added a CI check for Prisma schema drift.",
+      "Fixed the Docker build so it runs on both x86 and ARM machines.",
+      "Ran end-to-end QA of the live classroom flow, including a critical mid-session lockout bug."
+    ],
+    numbers: [
+      ["10", "CI checks on every merge"],
+      ["60+", "issues logged in QA"],
+      ["10+", "engineers on the team"]
     ],
   },
   {
     role: "Software Engineering Co-op",
     group: "professional",
-    overview: "Selected for Travelers' software engineering co-op, January to May 2027, working remotely with the Hartford, CT team. Travelers is one of the largest property and casualty insurers in the U.S.",
     org: "Travelers",
     logo: travelersLogo,
     mark: "T",
@@ -168,14 +202,13 @@ const EXPERIENCE_RAW = [
     end: "2027-05",
     period: "Jan — May 2027",
     location: "Hartford, CT (Remote)",
-    points: [
-      "Joining Travelers as a software engineering co-op from January to May 2027.",
-    ],
+    overview: "Selected for Travelers' software engineering co-op, January to May 2027, working remotely with the Hartford, CT team. Travelers is one of the largest property and casualty insurers in the U.S.",
+    points: [],
+    numbers: [],
   },
   {
     role: "Data Analyst",
     group: "professional",
-    overview: "On a five-person team (including me) working with the Boston Bruins, I lead requirements elicitation, turning the club stakeholders' open questions into a scoped, sprint-by-sprint delivery plan. Alongside that I build the reproducible Python pipeline behind the club's modeling of post-draft development pathways. The work is under a non-disclosure agreement.",
     org: "Boston Bruins",
     logo: bruinsLogo,
     mark: "BB",
@@ -185,16 +218,20 @@ const EXPERIENCE_RAW = [
     stack: "Python, pandas, scikit-learn, Agile, Stakeholder Management",
     period: "Sep 2026 — Present",
     location: "Boston, MA",
+    overview: "On a five-person team (including me) working with the Boston Bruins, I lead requirements elicitation, turning the club stakeholders' open questions into a scoped, sprint-by-sprint delivery plan, and build the modeling pipeline behind it. The work is under a non-disclosure agreement.",
     points: [
-      "Building a reproducible Python data pipeline (pandas, scikit-learn) for a predictive-modeling engagement.",
-      "Lead requirements elicitation with stakeholders, scoping objectives into a delivery plan across Agile sprints.",
-      "Covered by a non-disclosure agreement: data, methods and findings stay confidential.",
+      "A reproducible Python pipeline (pandas, scikit-learn) for the club's predictive modeling of post-draft development pathways.",
+      "Objectives scoped into Agile sprints, with a delivery plan built from the stakeholder sessions.",
+      "Data, methods and findings stay confidential."
+    ],
+    numbers: [
+      ["5", "people on the team, including me"],
+      ["DS 4535", "professional practicum"]
     ],
   },
   {
     role: "Peer Programmer",
     group: "student",
-    overview: "On the NU ACES leadership team, I plan and run community-building, civic-engagement and service events for first-year and upper-class students, and help incoming members start weekly service with Boston community partners.",
     org: "NU ACES",
     logo: acesLogo,
     mark: "ACES",
@@ -204,16 +241,19 @@ const EXPERIENCE_RAW = [
     stack: "Event Planning, Facilitation, Civic Engagement, Leadership",
     period: "Sep 2026 — Present",
     location: "Boston, MA",
+    overview: "On the NU ACES leadership team, I plan and run the events that bring first-year and upper-class students together around service and civic life.",
     points: [
-      "Plan, develop and facilitate community-building, civic-engagement and community-service events for first-year and upper-class participants.",
-      "Serve on the ACES leadership team, shaping social programming around the four pillars of service, civic learning, civic action and alliance building.",
-      "Share volunteer and civic-engagement experience with incoming students as they begin weekly service with Boston community partners.",
+      "Plan, develop and facilitate community-building, civic-engagement and community-service events.",
+      "Shape social programming around the program's four pillars.",
+      "Help incoming students as they begin weekly service with Boston community partners."
+    ],
+    numbers: [
+      ["4", "pillars: service, civic learning, civic action, alliance building"]
     ],
   },
   {
     role: "Lead Software Engineer",
     group: "student",
-    overview: "One of three tech leads on Student Government's Digital Innovation team, I run the development cycle for 5+ engineers (tickets, sprint planning and code review) while building the CMS that publishes the SGA website to 5,000+ students. Officers turn over every year, so we gave them drag-and-drop editing backed by version history and rollback, and publishing got 10% faster.",
     org: "Student Government Association",
     logo: sgaLogo,
     mark: "SGA",
@@ -225,18 +265,22 @@ const EXPERIENCE_RAW = [
     context: "Northeastern University",
     period: "Jan 2026 — Present",
     location: "Boston, MA",
+    overview: "One of three tech leads on Student Government's Digital Innovation team, I run the development cycle for 5+ engineers while building the CMS behind the SGA website. Officers turn over every year, so we gave them a tool that needs no code.",
     points: [
-      "Built a production CMS that lets non-technical editors publish to 5,000+ students, cutting publish time by 10%.",
-      "Drag-and-drop page building with React Puck, with Supabase authentication and Vercel hosting.",
-      "Architected version history, rollback, role-based access control, and soft-delete archiving on Next.js and Prisma.",
-      "Engineered Prisma-validated API endpoints enforcing schema integrity on every mutation over PostgreSQL.",
-      "Manage the development lifecycle for a team of 5+ engineers as one of 3 tech leads: tickets, sprint planning and code review.",
+      "Run tickets, sprint planning and code review for the team.",
+      "Drag-and-drop page building with React Puck, Supabase authentication and Vercel hosting.",
+      "Version history, rollback, role-based access control and soft-delete archiving on Next.js and Prisma.",
+      "Prisma-validated API endpoints keep malformed writes out of PostgreSQL."
+    ],
+    numbers: [
+      ["5,000+", "students reached"],
+      ["10%", "faster publishing"],
+      ["5+", "engineers I lead with two other tech leads"]
     ],
   },
   {
     role: "Quantitative Analyst",
     group: "student",
-    overview: "At Disrupt, Northeastern's FinTech club, I turned research on statistical arbitrage, factor investing and market microstructure into testable signals, then built the Python backtesting pipelines that ran them across 10M+ historical equity data points. Pairs-trading, mean-reversion and momentum strategies went live on $50,000 of simulated capital.",
     org: "Disrupt: The FinTech Initiative",
     logo: disruptLogo,
     mark: "DISRUPT",
@@ -246,16 +290,17 @@ const EXPERIENCE_RAW = [
     context: "Northeastern University",
     period: "Jan — May 2026",
     location: "Boston, MA",
-    points: [
-      "Built Python backtesting pipelines evaluating trading signals across 10M+ historical equity data points.",
-      "Developed pairs-trading, mean-reversion, and momentum strategies deployed on $50,000 of simulated capital.",
-      "Translated research on statistical arbitrage, factor investing, and market microstructure into testable signals.",
+    overview: "At Disrupt, Northeastern's FinTech club, I turned research on statistical arbitrage, factor investing and market microstructure into trading signals, then put every one through a backtest before it touched capital.",
+    points: ["Built Python backtesting pipelines in pandas and NumPy.", "Developed pairs-trading, mean-reversion and momentum strategies."],
+    numbers: [
+      ["10M+", "historical equity data points backtested"],
+      ["$50,000", "simulated capital deployed"],
+      ["3", "strategy families"]
     ],
   },
   {
     role: "Project-Series Mentor",
     group: "student",
-    overview: "As a project-series mentor at NU Oasis, I guide groups of 5+ students through building their first-ever web apps, from scoping the idea to shipping a working full-stack app in React, TypeScript, Node.js and Next.js: breaking down features, unblocking code and reviewing their pull requests.",
     org: "NU Oasis",
     logo: oasisLogo,
     mark: "OASIS",
@@ -266,9 +311,10 @@ const EXPERIENCE_RAW = [
     context: "Northeastern University",
     period: "Jan 2026 — Present",
     location: "Boston, MA",
-    points: [
-      "Mentor groups of 5+ students building and shipping their first-ever full-stack web apps.",
-      "Guide teams through projects built with React, TypeScript, Node.js and Next.js.",
+    overview: "As a project-series mentor at NU Oasis, I guide groups of 5+ students through building their first-ever web apps, from a rough idea to a working full-stack app.",
+    points: ["Break features down, unblock code and review pull requests.", "Teams build with React, TypeScript, Node.js and Next.js."],
+    numbers: [
+      ["5+", "students in each group"]
     ],
   },
   {
@@ -277,24 +323,27 @@ const EXPERIENCE_RAW = [
     org: "Program Design and Implementation II",
     logo: northeasternLogo,
     mark: "OOD",
-    overview: "As a teaching assistant for Program Design and Implementation II, Khoury College's object-oriented design course, I led 30+ weekly debugging sessions in Java and taught 100+ students to debug with AI tools such as Claude and GitHub Copilot. My grading feedback holds students to SOLID design and clean structure, not just passing tests.",
     start: "2026-05",
     end: null,
     stack: "Java, Gradle, JUnit, Mockito, Claude, GitHub Copilot",
     context: "Khoury College of Computer Sciences",
     period: "May 2026 — Present",
     location: "Boston, MA",
+    overview: "As a teaching assistant for Program Design and Implementation II, Khoury College's object-oriented design course, I help students write Java that is well designed, not just Java that passes.",
     points: [
-      "Led 30+ weekly debugging sessions in Java covering object-oriented programming, data structures, and control flow.",
-      "Guided students through writing test cases with JUnit and Mockito, and running them through the Gradle wrapper so local builds matched the grading environment.",
-      "Taught 100+ students AI-assisted debugging and prompt engineering with Claude and GitHub Copilot.",
-      "Graded against detailed rubrics with written feedback on SOLID principles, design, and correctness.",
+      "Debugging sessions cover object-oriented programming, data structures and control flow.",
+      "Coach test writing with JUnit and Mockito, run through the Gradle wrapper so local builds match the grader.",
+      "Teach prompt engineering and debugging with Claude and GitHub Copilot.",
+      "Grade against detailed rubrics with written feedback on SOLID principles, design and correctness."
+    ],
+    numbers: [
+      ["30+", "weekly debugging sessions led"],
+      ["100+", "students taught AI-assisted debugging"]
     ],
   },
   {
     role: "Lead Software Engineer",
     group: "student",
-    overview: "I led UI development for Rainfall Learning's real-time collaborative IDE on a team of 15+ engineers, so a tutor and a student can edit the same file at once without either losing work. Edit conflicts fell to 2%, rendering ran 20% faster under concurrent editing, and Dockerized builds cut environment failures by 15%.",
     org: "Rainfall Learning",
     logo: rainfallLogo,
     mark: "RL",
@@ -303,11 +352,17 @@ const EXPERIENCE_RAW = [
     stack: "React, TypeScript, Yjs, Express, Prisma, PostgreSQL, Docker, Vitest",
     period: "Dec 2025 — Jul 2026",
     location: "Boston, MA",
+    overview: "I led UI development for Rainfall Learning's real-time collaborative IDE on a team of 15+ engineers, so a tutor and a student can edit the same file at once without either losing work.",
     points: [
-      "Led UI development on a real-time collaborative IDE with 15+ engineers, cutting edit conflicts to 2% via Yjs CRDT sync.",
-      "Built a React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
-      "Edits merge through CRDTs rather than locks, so a client that drops offline reconciles its changes when it reconnects.",
-      "Dockerized build pipelines to reduce environment failures by 15%, hardening deployments with automated testing.",
+      "Yjs CRDT sync merges edits without locks, and offline clients reconcile when they reconnect.",
+      "Built the React and TypeScript UI layer for concurrent editing.",
+      "Dockerized build pipelines and hardened deployments with automated testing."
+    ],
+    numbers: [
+      ["15+", "engineers on the team"],
+      ["2%", "edit conflicts"],
+      ["20%", "faster rendering"],
+      ["15%", "fewer environment failures"]
     ],
   },
   {
@@ -316,15 +371,16 @@ const EXPERIENCE_RAW = [
     org: "Rutgers University",
     logo: rutgersLogo,
     mark: "RU",
-    overview: "Two summers as a teaching assistant in Rutgers University's math program, coordinating logistics for 100+ participants and helping lift math scores by 10% over a 6–8 week program.",
     start: "2024-06",
     end: "2025-08",
     stack: "Excel",
     period: "Summers 2024 & 2025",
     location: "New Brunswick, NJ",
-    points: [
-      "Coordinated logistics for 100+ camp participants.",
-      "Contributed to a 10% improvement in math scores over a 6–8 week program.",
+    overview: "Two summers as a teaching assistant in Rutgers University's summer math program, keeping a large camp running and its students on track.",
+    points: [],
+    numbers: [
+      ["100+", "camp participants coordinated"],
+      ["10%", "math score improvement in 6–8 weeks"]
     ],
   },
 ];

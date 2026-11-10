@@ -155,6 +155,7 @@
   /* A newly opened role's write-up eases in from just below. */
   .swap {
     animation: swap 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: calc(var(--i, 0) * 70ms);
   }
 
   /* The one orchestrated moment: the hero assembles on load. */
