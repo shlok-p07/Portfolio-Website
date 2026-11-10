@@ -18,7 +18,7 @@ export const PROJECTS = [
     logo: nuhireLogo,
     mark: "NH",
     client: "Khoury College of Computer Sciences",
-    overview: "A web application for a live client, Khoury College, that teaches students the hiring process from the employer's side.",
+    overview: "A web application built for a client, Khoury College, that teaches students the hiring process from the employer's side. It was never handed off to the client.",
     highlights: [
       "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
       "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
@@ -138,7 +138,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Software Engineer",
     group: "professional",
-    overview: "A web application for a live client at Khoury College that teaches students the hiring process from the employer's side: teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor injects complications live.",
+    overview: "A web application built for a client, Khoury College, that teaches students the hiring process from the employer's side: teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor injects complications live. It was never handed off to the client.",
     org: "NU Hire",
     logo: nuhireLogo,
     mark: "NH",
