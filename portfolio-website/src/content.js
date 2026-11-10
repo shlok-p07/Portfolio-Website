@@ -12,6 +12,39 @@ import disruptLogo from "./assets/logos/disrupt.webp";
 
 export const PROJECTS = [
   {
+    title: "NU Hire",
+    client: "Khoury College of Computer Sciences",
+    overview: "A web application for a live client, Khoury College, that teaches students the hiring process from the employer's side.",
+    highlights: [
+      "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
+      "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
+      "Real-time collaboration runs on Socket.IO, so a teammate's selections appear instantly for the whole group.",
+      "Every merge to main passes a 10-check GitHub Actions gate: tests, Docker build, migrations and a security audit.",
+    ],
+    org: "Khoury College of Computer Sciences",
+    period: "Sep 2026 — Present",
+    summary: "A live hiring simulation for Khoury students: teams screen resumes, judge interviews and negotiate an offer while an advisor injects complications.",
+    stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions",
+    github: "https://github.com/Oasis-NEU/NUHire",
+    page: { label: "Project page", short: "Site", href: "https://khoury-co-op.github.io/NUHire/" },
+  },
+  {
+    title: "Rainfall Learning IDE",
+    client: "Rainfall Learning",
+    overview: "A real-time collaborative IDE for Rainfall Learning in which a tutor and a student can edit the same file at once and neither loses work.",
+    highlights: [
+      "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
+      "A client that drops offline reconciles its changes when it reconnects.",
+      "Led UI development with 10+ engineers; edit conflicts fell to 2%.",
+      "Built the React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
+    ],
+    org: "Rainfall Learning",
+    period: "Dec 2025 — Jul 2026",
+    summary: "Two people edit the same file at once without losing work, using CRDT merging instead of locks.",
+    stack: "React, TypeScript, Yjs, Express, Prisma, PostgreSQL, Docker",
+    page: { label: "Docs", href: "https://aryan0102.github.io/Rainfall-Learning/" },
+  },
+  {
     title: "Derivative Hedging via Reinforcement Learning",
     overview: "Reinforcement-learning agents (PPO and SAC) trained to hedge a short European call on real SPY market data, benchmarked against Black-Scholes delta hedging and the Whalley-Wilmott band.",
     highlights: [

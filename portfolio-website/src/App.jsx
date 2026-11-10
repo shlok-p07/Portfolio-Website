@@ -12,9 +12,9 @@ import Experience from "./components/Experience";
 const NAV = [
   ["education", "Education"],
   ["toolkit", "Toolkit"],
+  ["experience", "Experience"],
   ["work", "Projects"],
   ["research", "Research"],
-  ["experience", "Experience"],
   ["interests", "Interests"],
   ["contact", "Contact"],
 ];
@@ -38,8 +38,13 @@ const TICKER = [
 
 
 
-// Featured work leads the rail; the rest follow in their original order.
-const PROJECT_RAIL = [...PROJECTS.filter((p) => p.featured), ...PROJECTS.filter((p) => !p.featured)];
+// Client projects lead the rail, then featured work, then the rest, each in
+// their original order.
+const PROJECT_RAIL = [
+  ...PROJECTS.filter((p) => p.client),
+  ...PROJECTS.filter((p) => !p.client && p.featured),
+  ...PROJECTS.filter((p) => !p.client && !p.featured),
+];
 const list = (v) => (v ? v.split(", ") : []);
 
 const newTab = (href) =>
@@ -123,9 +128,14 @@ const TextLink = ({ href, children, name }) => (
    dates, title (up to two lines), organisation (one line; two on phones,
    where cards are narrow), summary (up to three lines), and a footer with
    "View details" and any links. */
-const MiniCard = ({ kind, date, title, org, summary, links, children }) => (
+const MiniCard = ({ kind, date, title, org, summary, links, tag, children }) => (
   <>
-    <p className="m-0 truncate font-mono text-[0.75rem] leading-5 text-ink/60">{date}</p>
+    <p className="m-0 flex items-center justify-between gap-2 font-mono text-[0.75rem] leading-5 text-ink/60">
+      <span className="truncate">{date}</span>
+      {tag && (
+        <span className="shrink-0 bg-brand px-1.5 text-[0.6875rem] font-bold text-on-brand">{tag}</span>
+      )}
+    </p>
     <h3 className="m-0 mt-2 line-clamp-2 min-h-[2.3em] text-balance font-display text-[1.25rem] leading-[1.15] font-semibold">
       {title}
     </h3>
@@ -163,11 +173,11 @@ const KeyFacts = ({ rows }) => (
   </dl>
 );
 
-const Panel = ({ org, dates, overview, highlights, tools, actions }) => (
+const Panel = ({ org, orgLabel = "Organization", dates, overview, highlights, tools, actions }) => (
   <div className="flex flex-col gap-5">
     <KeyFacts
       rows={[
-        ["Organization", org],
+        [orgLabel, org],
         ["Dates", dates],
       ]}
     />
@@ -191,9 +201,10 @@ const Panel = ({ org, dates, overview, highlights, tools, actions }) => (
 );
 
 const ProjectButtons = ({ p }) =>
-  (p.demo || p.github) && (
+  (p.demo || p.page || p.github) && (
     <p className="m-0 flex flex-wrap gap-3 border-t border-ink/15 pt-5">
       {p.demo && <Button href={p.demo}>Live demo</Button>}
+      {p.page && <Button href={p.page.href}>{p.page.label}</Button>}
       {p.github && (
         <Button href={p.github} tone="primary">
           Source code
@@ -394,7 +405,11 @@ function App() {
           </div>
         </Section>
 
-        <Section id="work" title="Projects">
+        <Section id="experience" title="Experience">
+          <Experience roles={EXPERIENCE} />
+        </Section>
+
+        <Section id="work" title="Projects" tone="bg-haze">
           <Rail label="Projects">
             {PROJECT_RAIL.map((p) => (
               <RailCard key={p.title}>
@@ -404,11 +419,23 @@ function App() {
                   title={p.title}
                   org={p.org}
                   summary={p.summary}
+                  tag={
+                    p.client && (
+                      <>
+                        Client<span className="hidden sm:inline"> project</span>
+                      </>
+                    )
+                  }
                   links={
                     <>
                       {p.demo && (
                         <TextLink href={p.demo} name={p.title}>
                           Demo
+                        </TextLink>
+                      )}
+                      {p.page && (
+                        <TextLink href={p.page.href} name={p.title}>
+                          {p.page.short || p.page.label}
                         </TextLink>
                       )}
                       {p.github && (
@@ -420,7 +447,8 @@ function App() {
                   }
                 >
                   <Panel
-                    org={p.org}
+                    org={p.client || p.org}
+                    orgLabel={p.client ? "Client" : "Organization"}
                     dates={p.period}
                     overview={p.overview}
                     highlights={p.highlights}
@@ -433,7 +461,7 @@ function App() {
           </Rail>
         </Section>
 
-        <Section id="research" title="Research" tone="bg-haze">
+        <Section id="research" title="Research">
           <div className="flex flex-col gap-8">
             {RESEARCH.map((r, i) => (
               <article
@@ -465,10 +493,6 @@ function App() {
               </article>
             ))}
           </div>
-        </Section>
-
-        <Section id="experience" title="Experience">
-          <Experience roles={EXPERIENCE} />
         </Section>
 
         <Section
