@@ -57,7 +57,6 @@ const EXPERIENCE_ITEMS = EXPERIENCE.map((j) => ({
   repo: j.github,
   links: [
     j.demo && { label: "Live site", href: j.demo },
-    j.page && { label: j.page.label, href: j.page.href },
     j.github && { label: "Source code", href: j.github, primary: true },
   ].filter(Boolean),
 }));
@@ -77,7 +76,6 @@ const PROJECT_ITEMS = PROJECTS.map((p) => ({
   repo: p.github,
   links: [
     p.demo && { label: "Live demo", href: p.demo },
-    p.page && { label: p.page.label, href: p.page.href },
     p.github && { label: "Source code", href: p.github, primary: true },
   ].filter(Boolean),
 }));

@@ -32,7 +32,6 @@ export const PROJECTS = [
     stack: "Next.js, TypeScript, Python, FastAPI, MongoDB, scikit-learn, Groq, Gemini, OpenAPI, Orval, Zod, React Query",
     demo: "https://phish-aware.onrender.com/",
     github: "https://github.com/shlok-p07/Phish-Aware",
-    page: { label: "Read the study", href: "#research" },
   },
   {
     title: "Derivative Hedging via Reinforcement Learning",
@@ -89,7 +88,6 @@ const EXPERIENCE_RAW = [
     logo: nuhireLogo,
     mark: "NH",
     github: "https://github.com/Oasis-NEU/NUHire",
-    page: { label: "Project page", href: "https://khoury-co-op.github.io/NUHire/" },
     start: "2026-09",
     end: null,
     context: "built for Khoury College of Computer Sciences",
@@ -190,7 +188,6 @@ const EXPERIENCE_RAW = [
     org: "Rainfall Learning",
     logo: rainfallLogo,
     mark: "RL",
-    page: { label: "Docs", href: "https://aryan0102.github.io/Rainfall-Learning/" },
     start: "2025-12",
     end: "2026-07",
     stack: "React, TypeScript, Yjs, Express, Prisma, PostgreSQL, Docker, Vitest",
