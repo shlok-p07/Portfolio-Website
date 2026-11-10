@@ -507,7 +507,7 @@ function App() {
               Get in touch.
             </h2>
             <p className="m-0 mt-6 max-w-[36rem] text-[1.25rem] leading-[1.5] font-medium text-ink/80">
-              I'm looking for co-op roles from {PROFILE.availability}. Email is the fastest way to
+              I'm looking for an internship from {PROFILE.availability}. Email is the fastest way to
               reach me.
             </p>
             <div className="pointer-events-auto mt-9 flex flex-wrap gap-4">
