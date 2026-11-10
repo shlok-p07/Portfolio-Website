@@ -87,7 +87,7 @@ export default function SiteHeader({ name, nav, resume }) {
                 <a
                   href={`#${id}`}
                   aria-current={active === id ? "true" : undefined}
-                  className="text-ink no-underline decoration-2 underline-offset-[6px] transition-colors hover:underline aria-[current]:text-cta aria-[current]:underline"
+                  className="nav-link text-ink no-underline transition-colors aria-[current]:text-cta"
                 >
                   {label}
                 </a>
@@ -145,6 +145,11 @@ export default function SiteHeader({ name, nav, resume }) {
           ))}
         </ul>
       </nav>
+      <span
+        aria-hidden="true"
+        className="scroll-progress pointer-events-none absolute inset-x-0 -bottom-0.5 h-0.5 origin-left bg-cta"
+        style={{ transform: "scaleX(0)" }}
+      />
     </header>
   );
 }

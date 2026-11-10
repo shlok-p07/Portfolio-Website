@@ -3,6 +3,8 @@ import {
   siNextdotjs, siNodedotjs, siNumpy, siOpenjdk, siPandas, siPostgresql, siPrisma,
   siPuppeteer, siPython, siPytorch, siReact, siScikitlearn, siScipy, siStreamlit,
   siSupabase, siTailwindcss, siTensorflow, siTypescript, siVite, siVitest,
+  siCplusplus, siFastapi, siLinear, siJira, siGithubactions, siMysql, siSocketdotio, siKeycloak,
+  siClaude, siGithubcopilot, siGooglegemini, siZod, siReactquery,
 } from "simple-icons";
 
 /* A tool as a pill: its official logo in its brand colour (Simple Icons,
@@ -19,6 +21,9 @@ const ICONS = {
   PostgreSQL: siPostgresql, Supabase: siSupabase, MongoDB: siMongodb, Prisma: siPrisma,
   Docker: siDocker, Git: siGit, Vitest: siVitest, Puppeteer: siPuppeteer,
   Streamlit: siStreamlit, Figma: siFigma, AWS: siAmazonwebservices,
+  "C++": siCplusplus, FastAPI: siFastapi, Linear: siLinear, Jira: siJira, "GitHub Actions": siGithubactions,
+  MySQL: siMysql, "Socket.IO": siSocketdotio, Keycloak: siKeycloak, "Claude Code": siClaude,
+  "GitHub Copilot": siGithubcopilot, Gemini: siGooglegemini, Zod: siZod, "React Query": siReactquery,
 };
 
 const luminance = (hex) => {

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PROJECTS, EXPERIENCE, RESEARCH, TOOLKIT, PROFILE, CONTACT } from "./content";
 import Contours from "./components/Contours";
 import Ticker from "./components/Ticker";
@@ -5,15 +6,15 @@ import Interests from "./components/Interests";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import ToolPill from "./components/ToolPill";
-import Rail, { RailCard } from "./components/Rail";
 import Details from "./components/Details";
+import Explorer from "./components/Explorer";
 
 const NAV = [
   ["education", "Education"],
   ["toolkit", "Toolkit"],
+  ["experience", "Experience"],
   ["work", "Projects"],
   ["research", "Research"],
-  ["experience", "Experience"],
   ["interests", "Interests"],
   ["contact", "Contact"],
 ];
@@ -37,9 +38,47 @@ const TICKER = [
 
 
 
-// Featured work leads the rail; the rest follow in their original order.
-const PROJECT_RAIL = [...PROJECTS.filter((p) => p.featured), ...PROJECTS.filter((p) => !p.featured)];
 const list = (v) => (v ? v.split(", ") : []);
+
+/* Experience and Projects share one explorer; these shape each section's
+   entries for it. */
+const EXPERIENCE_ITEMS = EXPERIENCE.map((j) => ({
+  key: `${j.role}-${j.org}`,
+  group: j.group,
+  title: j.role,
+  org: j.org,
+  period: j.period,
+  where: [j.context ? `${j.org}, ${j.context}` : j.org, j.location].filter(Boolean).join(" · "),
+  overview: j.overview,
+  points: j.points,
+  tools: list(j.stack),
+  logo: j.logo,
+  mark: j.mark,
+  repo: j.github,
+  links: [
+    j.demo && { label: "Live site", href: j.demo },
+    j.github && { label: "Source code", href: j.github, primary: true },
+  ].filter(Boolean),
+}));
+
+const PROJECT_ITEMS = PROJECTS.map((p) => ({
+  key: p.title,
+  group: "all",
+  title: p.title,
+  org: p.client ? `Client: ${p.client}` : p.org,
+  period: p.period,
+  where: p.client ? `Client project for ${p.client}` : p.org,
+  overview: p.overview,
+  points: p.highlights,
+  tools: [...list(p.stack), ...list(p.skills)],
+  logo: p.logo,
+  mark: p.mark,
+  repo: p.github,
+  links: [
+    p.demo && { label: "Live demo", href: p.demo },
+    p.github && { label: "Source code", href: p.github, primary: true },
+  ].filter(Boolean),
+}));
 
 const newTab = (href) =>
   /^https?:/.test(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
@@ -71,23 +110,20 @@ const Section = ({ id, title, tone = "bg-paper", dark, children }) => (
   <section id={id} className={`scroll-mt-16 border-b-2 border-ink py-20 sm:py-24 ${tone}`}>
     <Wrap>
       <h2
+        data-reveal="wipe"
         className={`m-0 mb-12 border-b-2 pb-6 font-display text-[clamp(2.5rem,6vw,4.25rem)] leading-[0.95] font-semibold tracking-[-0.02em] ${
           dark ? "border-white" : "border-ink"
         }`}
       >
-        {title}
+        <span className="wipe block">{title}</span>
       </h2>
-      {children}
+      <div data-reveal style={{ "--i": 1 }}>
+        {children}
+      </div>
     </Wrap>
   </section>
 );
 
-/* The card's key figure as one line, the figure set in bold. */
-const Fact = ({ m }) => (
-  <p className="m-0 mt-2 text-[0.9375rem] text-ink/70">
-    <strong className="font-semibold text-ink">{m.value}</strong> {m.label}
-  </p>
-);
 
 const Points = ({ items }) => (
   <ul className="m-0 list-none p-0">
@@ -98,47 +134,6 @@ const Points = ({ items }) => (
       </li>
     ))}
   </ul>
-);
-
-/* Small text links inside a card. Each carries its project's name for
-   screen readers, since several cards share the same labels. */
-const TextLink = ({ href, children, name }) => (
-  <a
-    href={href}
-    {...newTab(href)}
-    className="text-[0.875rem] font-medium text-ink/70 underline decoration-ink/30 underline-offset-4 hover:text-ink hover:decoration-ink"
-  >
-    {children}
-    <span className="sr-only">
-      {" "}
-      for {name}
-      {newTab(href).target && " (opens in a new tab)"}
-    </span>
-  </a>
-);
-
-/* The one card used by both rails. Every card carries the same lines in the
-   same order, each with a fixed height, so lines sit level across cards:
-   dates, title (up to two lines), organisation (one line; two on phones,
-   where cards are narrow), summary (up to three lines), and a footer with
-   "View details" and any links. */
-const MiniCard = ({ kind, date, title, org, summary, links, children }) => (
-  <>
-    <p className="m-0 truncate font-mono text-[0.75rem] leading-5 text-ink/60">{date}</p>
-    <h3 className="m-0 mt-2 line-clamp-2 min-h-[2.3em] font-display text-[1.25rem] leading-[1.15] font-semibold">
-      {title}
-    </h3>
-    <p className="m-0 mt-1 line-clamp-2 min-h-12 text-[0.875rem] leading-6 font-medium text-ink/70 sm:line-clamp-1 sm:min-h-6" title={org}>
-      {org}
-    </p>
-    <p className="m-0 mt-3 line-clamp-3 min-h-[4.8em] text-[0.9375rem] leading-[1.6] text-ink/80">{summary}</p>
-    <div className="mt-5 flex min-h-11 flex-nowrap items-center gap-x-4 overflow-hidden border-t border-ink/15 pt-4 whitespace-nowrap">
-      <Details title={title} meta={kind}>
-        {children}
-      </Details>
-      {links}
-    </div>
-  </>
 );
 
 /* The single layout every details panel uses, top to bottom and always in
@@ -162,13 +157,14 @@ const KeyFacts = ({ rows }) => (
   </dl>
 );
 
-const Panel = ({ org, dates, overview, highlights, tools, actions }) => (
+const Panel = ({ org, orgLabel = "Organization", dates, venue, overview, highlights, tools, actions }) => (
   <div className="flex flex-col gap-5">
     <KeyFacts
       rows={[
-        ["Organization", org],
-        ["Dates", dates],
-      ]}
+        [orgLabel, org],
+        dates && ["Dates", dates],
+        venue && ["Venue", venue],
+      ].filter(Boolean)}
     />
     <Block title="Overview">
       <p className="m-0">{overview}</p>
@@ -176,29 +172,18 @@ const Panel = ({ org, dates, overview, highlights, tools, actions }) => (
     <Block title="Highlights">
       <Points items={highlights} />
     </Block>
-    <Block title="Skills and tools">
-      <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
-        {tools.map((t) => (
-          <ToolPill key={t} name={t} />
-        ))}
-      </ul>
-    </Block>
+    {tools.length > 0 && (
+      <Block title="Skills and tools">
+        <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
+          {tools.map((t) => (
+            <ToolPill key={t} name={t} />
+          ))}
+        </ul>
+      </Block>
+    )}
     {actions}
   </div>
 );
-
-const ProjectButtons = ({ p }) =>
-  (p.demo || p.github) && (
-    <p className="m-0 flex flex-wrap gap-3 border-t border-ink/15 pt-5">
-      {p.demo && <Button href={p.demo}>Live demo</Button>}
-      {p.github && (
-        <Button href={p.github} tone="primary">
-          Source code
-        </Button>
-      )}
-    </p>
-  );
-
 
 /* The second study's design as a matrix of conditions: four assistants by
    four languages, each cell holding the three tasks. Setup, not results. */
@@ -241,6 +226,46 @@ const StudyMatrix = () => (
   </figure>
 );
 
+/* The phishing study's training loop: scenarios arrive on six channels, the
+   learner works through three steps, and the system adapts. Setup, not
+   results, like the study matrix. */
+const CHANNELS = ["Email", "SMS", "Voice", "QR", "Social", "Web"];
+const STEPS = ["Classify", "Flag cues", "Confidence"];
+const TrainingLoop = () => (
+  <figure
+    className="m-0 w-full"
+    role="img"
+    aria-label="Training loop: scenarios across six channels; learners classify each message, flag its red-flag cues and rate their confidence; the system then adapts practice to their weakest tactics"
+  >
+    <div aria-hidden="true" className="font-mono text-[0.6875rem]">
+      <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-6">
+        {CHANNELS.map((c) => (
+          <span key={c} className="border border-ink/20 bg-paper py-1.5 text-center font-bold">
+            {c}
+          </span>
+        ))}
+      </div>
+      <div className="relative mt-3 grid grid-cols-3 gap-1.5 pr-7">
+        {STEPS.map((s, i) => (
+          <span key={s} className="border-2 border-ink bg-paper px-1.5 py-2 text-center font-bold">
+            <span className="text-ink/60">{i + 1}</span> {s}
+          </span>
+        ))}
+        <svg viewBox="0 0 24 64" className="absolute top-1/2 right-0 h-16 w-6" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M2 14H14V54H2" />
+          <path d="M7 49 2 54l5 5" strokeLinecap="square" />
+        </svg>
+      </div>
+      <div className="mt-6 mr-7 bg-brand px-3 py-2 text-center font-bold text-on-brand">
+        Adapt: weakest tactics, spaced repetition
+      </div>
+    </div>
+    <figcaption aria-hidden="true" className="mt-3 font-mono text-[0.6875rem] text-ink/60">
+      Six channels, eight gradeable cues, one adaptive loop
+    </figcaption>
+  </figure>
+);
+
 /* AUROC on a fixed 0.65–0.80 axis, with the p-value printed beside it rather
    than hidden: the gain is suggestive, not significant. */
 const AurocChart = () => {
@@ -274,7 +299,39 @@ const AurocChart = () => {
   );
 };
 
+// Each research entry names its figure.
+const VISUALS = { auroc: AurocChart, study: StudyMatrix, loop: TrainingLoop };
+const ResearchVisual = ({ kind }) => {
+  const Visual = VISUALS[kind];
+  return <Visual />;
+};
+
+/* Scroll reveals: sections, headings and cards ease in as they enter the
+   view. Only armed when motion is welcome, so without JavaScript, with
+   reduced motion or before this runs, everything is simply visible. */
+function useReveal() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    const root = document.documentElement;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+    root.classList.add("reveal-ready");
+    return () => io.disconnect();
+  }, []);
+}
+
 function App() {
+  useReveal();
   return (
     <>
       <a
@@ -345,13 +402,6 @@ function App() {
                 <p className="m-0 text-[0.9375rem] font-medium">{PROFILE.honors}</p>
                 <Details title="Coursework and certifications" meta="Education">
                   <div className="flex flex-col gap-5">
-                    <KeyFacts
-                      rows={[
-                        ["Degree", "B.S. Computer Science and Business Administration"],
-                        ["Concentration", "Financial Technology"],
-                        ["Graduating", PROFILE.graduation],
-                      ]}
-                    />
                     {Object.entries(PROFILE.coursework).map(([group, courses]) => (
                       <Block key={group} title={group}>
                         <Points items={courses} />
@@ -378,8 +428,8 @@ function App() {
 
         <Section id="toolkit" title="Toolkit" tone="bg-haze">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {TOOLKIT.map((g) => (
-              <section key={g.label} className="border-2 border-ink bg-paper p-4" aria-label={g.label}>
+            {TOOLKIT.map((g, i) => (
+              <section key={g.label} data-reveal style={{ "--i": i }} className="border-2 border-ink bg-paper p-4" aria-label={g.label}>
                 <h3 className="m-0 mb-3 font-mono text-[0.75rem] font-bold text-ink/65">{g.label}</h3>
                 <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
                   {g.items.map((t) => (
@@ -391,67 +441,52 @@ function App() {
           </div>
         </Section>
 
-        <Section id="work" title="Projects">
-          <Rail label="Projects">
-            {PROJECT_RAIL.map((p) => (
-              <RailCard key={p.title}>
-                <MiniCard
-                  kind="Project"
-                  date={p.period}
-                  title={p.title}
-                  org={p.org}
-                  summary={p.summary}
-                  links={
-                    <>
-                      {p.demo && (
-                        <TextLink href={p.demo} name={p.title}>
-                          Demo
-                        </TextLink>
-                      )}
-                      {p.github && (
-                        <TextLink href={p.github} name={p.title}>
-                          Code
-                        </TextLink>
-                      )}
-                    </>
-                  }
-                >
-                  <Panel
-                    org={p.org}
-                    dates={p.period}
-                    overview={p.overview}
-                    highlights={p.highlights}
-                    tools={[...list(p.stack), ...list(p.skills)]}
-                    actions={<ProjectButtons p={p} />}
-                  />
-                </MiniCard>
-              </RailCard>
-            ))}
-          </Rail>
+        <Section id="experience" title="Experience">
+          <Explorer
+            id="exp"
+            label="Experience type"
+            groups={[
+              ["professional", "Professional experience", "Professional"],
+              ["student", "Student organizations", "Student orgs"],
+            ]}
+            items={EXPERIENCE_ITEMS}
+            pointsLabel="Contributions"
+          />
         </Section>
 
-        <Section id="research" title="Research" tone="bg-haze">
+        <Section id="work" title="Projects" tone="bg-haze">
+          <Explorer
+            id="proj"
+            label="Project type"
+            groups={[["all", "Projects", "Projects"]]}
+            items={PROJECT_ITEMS}
+            pointsLabel="Technical details"
+          />
+        </Section>
+
+        <Section id="research" title="Research">
           <div className="flex flex-col gap-8">
             {RESEARCH.map((r, i) => (
               <article
                 key={r.title}
+                data-reveal
+                style={{ "--i": i }}
                 className="grid border-2 border-ink bg-paper shadow-hard lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
               >
                 <div className="flex items-center border-b-2 border-ink bg-haze p-6 sm:p-8 lg:border-r-2 lg:border-b-0">
-                  {i === 0 ? <AurocChart /> : <StudyMatrix />}
+                  <ResearchVisual kind={r.visual} />
                 </div>
                 <div className="flex flex-col p-6 sm:p-8">
-                  <p className="m-0 font-mono text-[0.75rem] text-ink/60">{r.period}</p>
-                  <h3 className="m-0 mt-3 font-display text-[1.5rem] leading-[1.15] font-semibold">{r.title}</h3>
+                  {r.venue && <p className="m-0 mb-3 font-mono text-[0.75rem] text-ink/60">{r.venue}</p>}
+                  <h3 className="m-0 font-display text-[1.5rem] leading-[1.15] font-semibold">{r.title}</h3>
                   <p className="m-0 mt-2 text-[0.9375rem] text-ink/65">
                     {r.group}. Advised by {r.advisor}.
                   </p>
-                  <Fact m={r.metric} />
                   <div className="mt-auto pt-6">
                     <Details title={r.title} meta="Research">
                       <Panel
                         org={r.group}
-                        dates={r.period}
+                        venue={r.venue}
                         overview={r.summary}
                         highlights={r.work}
                         tools={list(r.stack)}
@@ -462,24 +497,6 @@ function App() {
               </article>
             ))}
           </div>
-        </Section>
-
-        <Section id="experience" title="Experience">
-          <Rail label="Roles">
-            {EXPERIENCE.map((j) => (
-              <RailCard key={`${j.role}-${j.org}`}>
-                <MiniCard kind="Experience" date={j.period} title={j.role} org={j.org} summary={j.points[0]}>
-                  <Panel
-                    org={j.context ? `${j.org}, ${j.context}` : j.org}
-                    dates={j.period}
-                    overview={j.overview}
-                    highlights={j.points}
-                    tools={list(j.stack)}
-                  />
-                </MiniCard>
-              </RailCard>
-            ))}
-          </Rail>
         </Section>
 
         <Section
@@ -493,11 +510,11 @@ function App() {
         <section id="contact" className="relative scroll-mt-16 overflow-hidden border-t-2 border-ink bg-paper py-24 text-ink sm:py-28">
           <Contours className="absolute inset-0 size-full" />
           <Wrap className="pointer-events-none relative">
-            <h2 className="m-0 font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.92] font-semibold tracking-[-0.03em]">
-              Get in touch.
+            <h2 data-reveal="wipe" className="m-0 font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.92] font-semibold tracking-[-0.03em]">
+              <span className="wipe block">Get in touch.</span>
             </h2>
             <p className="m-0 mt-6 max-w-[36rem] text-[1.25rem] leading-[1.5] font-medium text-ink/80">
-              I'm looking for co-op roles from {PROFILE.availability}. Email is the fastest way to
+              I'm looking for an internship from {PROFILE.availability}. Email is the fastest way to
               reach me.
             </p>
             <div className="pointer-events-auto mt-9 flex flex-wrap gap-4">
