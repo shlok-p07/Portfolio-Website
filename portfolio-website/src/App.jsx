@@ -37,13 +37,6 @@ const TICKER = [
 
 
 
-// Client projects first, then featured work, then the rest, each in their
-// original order.
-const PROJECT_RAIL = [
-  ...PROJECTS.filter((p) => p.client),
-  ...PROJECTS.filter((p) => !p.client && p.featured),
-  ...PROJECTS.filter((p) => !p.client && !p.featured),
-];
 const list = (v) => (v ? v.split(", ") : []);
 
 /* Experience and Projects share one explorer; these shape each section's
@@ -64,13 +57,14 @@ const EXPERIENCE_ITEMS = EXPERIENCE.map((j) => ({
   repo: j.github,
   links: [
     j.demo && { label: "Live site", href: j.demo },
+    j.page && { label: j.page.label, href: j.page.href },
     j.github && { label: "Source code", href: j.github, primary: true },
   ].filter(Boolean),
 }));
 
-const PROJECT_ITEMS = PROJECT_RAIL.map((p) => ({
+const PROJECT_ITEMS = PROJECTS.map((p) => ({
   key: p.title,
-  group: p.client ? "client" : "independent",
+  group: "all",
   title: p.title,
   org: p.client ? `Client: ${p.client}` : p.org,
   period: p.period,
@@ -445,7 +439,7 @@ function App() {
               ["student", "Student organizations", "Student orgs"],
             ]}
             items={EXPERIENCE_ITEMS}
-            pointsLabel="What I did"
+            pointsLabel="Contributions"
           />
         </Section>
 
@@ -453,12 +447,9 @@ function App() {
           <Explorer
             id="proj"
             label="Project type"
-            groups={[
-              ["independent", "Independent projects", "Independent"],
-              ["client", "Client projects", "Client"],
-            ]}
+            groups={[["all", "Projects", "Projects"]]}
             items={PROJECT_ITEMS}
-            pointsLabel="Under the hood"
+            pointsLabel="Technical details"
           />
         </Section>
 

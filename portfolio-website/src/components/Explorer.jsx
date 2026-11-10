@@ -15,7 +15,8 @@ import ToolPill from "./ToolPill";
 
    Items arrive already shaped: { key, group, title, org, period, where,
    fact?, overview, numbers, points, tools, logo?, mark, repo?, links }.
-   Groups are [key, full label, short label for phones]. The overview tells
+   Groups are [key, full label, short label for phones]; with a single
+   group the switch is left out. The overview tells
    the story; Read more adds what it leaves out: the figures, set large,
    then the bullets under the explorer's own heading. */
 
@@ -206,52 +207,56 @@ export default function Explorer({
 
   return (
     <div>
-      <div
-        role="tablist"
-        aria-label={label}
-        className="relative grid max-w-[36rem] grid-cols-2 border-2 border-ink bg-paper shadow-hard"
-      >
-        <span
-          aria-hidden="true"
-          className="switch-thumb absolute inset-y-0 left-0 w-1/2 bg-ink"
-          style={{ transform: `translateX(${groupIndex * 100}%)` }}
-        />
-        {groups.map(([g, full, short], i) => {
-          const on = g === group;
-          const count = items.filter((it) => it.group === g).length;
-          return (
-            <button
-              key={g}
-              ref={(el) => (switcher.refs.current[i] = el)}
-              type="button"
-              role="tab"
-              id={`${id}-group-${g}`}
-              aria-selected={on}
-              aria-controls={`${id}-list`}
-              tabIndex={on ? 0 : -1}
-              onClick={() => setGroup(g)}
-              onKeyDown={switcher.onKeyDown(i)}
-              className={`relative z-10 flex min-h-12 cursor-pointer items-center justify-center gap-2 px-3 py-3 text-center text-[0.9375rem] leading-tight font-bold sm:text-[1rem] ${
-                on ? "text-paper" : "text-ink hover:bg-haze"
-              }`}
-            >
-              <span className="sm:hidden">{short}</span>
-              <span className="hidden sm:inline">{full}</span>
-              <span
-                className={`font-mono text-[0.75rem] ${on ? "text-paper/75" : "text-ink/60"}`}
+      {groups.length > 1 && (
+        <div
+          role="tablist"
+          aria-label={label}
+          className="relative grid max-w-[36rem] grid-cols-2 border-2 border-ink bg-paper shadow-hard"
+        >
+          <span
+            aria-hidden="true"
+            className="switch-thumb absolute inset-y-0 left-0 w-1/2 bg-ink"
+            style={{ transform: `translateX(${groupIndex * 100}%)` }}
+          />
+          {groups.map(([g, full, short], i) => {
+            const on = g === group;
+            const count = items.filter((it) => it.group === g).length;
+            return (
+              <button
+                key={g}
+                ref={(el) => (switcher.refs.current[i] = el)}
+                type="button"
+                role="tab"
+                id={`${id}-group-${g}`}
+                aria-selected={on}
+                aria-controls={`${id}-list`}
+                tabIndex={on ? 0 : -1}
+                onClick={() => setGroup(g)}
+                onKeyDown={switcher.onKeyDown(i)}
+                className={`relative z-10 flex min-h-12 cursor-pointer items-center justify-center gap-2 px-3 py-3 text-center text-[0.9375rem] leading-tight font-bold sm:text-[1rem] ${
+                  on ? "text-paper" : "text-ink hover:bg-haze"
+                }`}
               >
-                {count}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+                <span className="sm:hidden">{short}</span>
+                <span className="hidden sm:inline">{full}</span>
+                <span
+                  className={`font-mono text-[0.75rem] ${on ? "text-paper/75" : "text-ink/60"}`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div
         id={`${id}-list`}
-        role="tabpanel"
-        aria-labelledby={`${id}-group-${group}`}
-        className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10"
+        {...(groups.length > 1 && {
+          role: "tabpanel",
+          "aria-labelledby": `${id}-group-${group}`,
+        })}
+        className={`grid gap-8 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10 ${groups.length > 1 ? "mt-10" : ""}`}
       >
         <div
           role="tablist"
