@@ -18,7 +18,7 @@ export const PROJECTS = [
     logo: nuhireLogo,
     mark: "NH",
     client: "Khoury College of Computer Sciences",
-    overview: "What does hiring look like from the other side of the table? NU Hire puts Khoury students in the employer's seat: teams screen resumes against the clock, judge recorded interviews and negotiate an offer together, while an advisor drops no-shows and internal referrals into the exercise live. I worked on the parts that keep a live classroom from breaking: a 10-check GitHub Actions gate on every merge, database migrations that stop the server before a bad schema can run, a Docker build that works on both x86 and ARM, and resume text extraction behind keyword-based applicant screening. End-to-end QA of the classroom flow logged 60+ issues, including a bug that locked students out mid-session. Built for Khoury College, though never handed off.",
+    overview: "What does hiring look like from the other side of the table? NU Hire puts Khoury students in the employer's seat: teams screen resumes against the clock, judge recorded interviews and negotiate an offer together, while an advisor drops no-shows and internal referrals into the exercise live. On a team of 10+ engineers, I worked on the parts that keep a live classroom from breaking: a 10-check GitHub Actions gate on every merge, database migrations that stop the server before a bad schema can run, a Docker build that works on both x86 and ARM, and resume text extraction behind keyword-based applicant screening. End-to-end QA of the classroom flow logged 60+ issues, including a bug that locked students out mid-session. Built for Khoury College, though never handed off.",
     highlights: [
       "Student teams work through a full hiring pipeline: reading a job description, screening resumes under time pressure, evaluating recorded interviews and negotiating a group offer.",
       "An advisor watches every team's progress live and injects complications mid-exercise, such as candidate no-shows and internal referrals.",
@@ -37,7 +37,7 @@ export const PROJECTS = [
     logo: bruinsLogo,
     mark: "BB",
     client: "Boston Bruins",
-    overview: "Draft day is only the start: what a prospect does over the next few seasons decides whether the pick pays off. For the Boston Bruins I'm building a reproducible Python pipeline (pandas, scikit-learn) to model the development pathways that work best for the club's prospects, and leading the requirements sessions that turn the club's open questions into a delivery plan, sprint by sprint. The engagement is under a non-disclosure agreement, so the data, methods and findings stay with the club.",
+    overview: "Draft day is only the start: what a prospect does over the next few seasons decides whether the pick pays off. On a five-person team working with the Boston Bruins, I'm building a reproducible Python pipeline (pandas, scikit-learn) to model the development pathways that work best for the club's prospects, and leading the requirements sessions that turn the club's open questions into a delivery plan, sprint by sprint. The engagement is under a non-disclosure agreement, so the data, methods and findings stay with the club.",
     highlights: [
       "Building a reproducible Python data pipeline (pandas, scikit-learn) for the club's predictive-modeling questions.",
       "Leading requirements elicitation with the club's stakeholders, scoping objectives into a delivery plan across Agile sprints.",
@@ -53,11 +53,11 @@ export const PROJECTS = [
     title: "Rainfall Learning IDE",
     logo: rainfallLogo,
     mark: "RL",
-    overview: "Two people typing in the same file is the classic way to lose work. Rainfall Learning's IDE lets a tutor and a student edit together in real time, and I led its UI development on a team of 10+ engineers. Edits merge through Yjs CRDTs rather than locks, so changes converge without a server picking a winner, and a client that drops offline catches up when it reconnects. Edit conflicts fell to 2%, rendering ran 20% faster under concurrent editing, and Dockerized builds cut environment failures by 15%.",
+    overview: "Two people typing in the same file is the classic way to lose work. Rainfall Learning's IDE lets a tutor and a student edit together in real time, and I led its UI development on a team of 15+ engineers. Edits merge through Yjs CRDTs rather than locks, so changes converge without a server picking a winner, and a client that drops offline catches up when it reconnects. Edit conflicts fell to 2%, rendering ran 20% faster under concurrent editing, and Dockerized builds cut environment failures by 15%.",
     highlights: [
       "Merges edits with Yjs CRDTs rather than locks, so changes converge without a server deciding who wins.",
       "A client that drops offline reconciles its changes when it reconnects.",
-      "Led UI development with 10+ engineers; edit conflicts fell to 2%.",
+      "Led UI development with 15+ engineers; edit conflicts fell to 2%.",
       "Built the React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
     ],
     org: "Rainfall Learning",
@@ -139,7 +139,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Software Engineer",
     group: "professional",
-    overview: "A web application built for a client, Khoury College, that teaches students the hiring process from the employer's side: teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor injects complications live. It was never handed off to the client.",
+    overview: "One of 10+ engineers building NU Hire, a live hiring simulation for Khoury College. I took ownership of the team's release safety net: a 10-check CI/CD gate that every merge must pass, database migrations that stop the server before a bad schema can run, and end-to-end QA that logged 60+ issues, including a bug that locked students out mid-session. The project was never handed off to the client.",
     org: "NU Hire",
     logo: nuhireLogo,
     mark: "NH",
@@ -160,7 +160,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Software Engineering Co-op",
     group: "professional",
-    overview: "Incoming software engineering co-op at Travelers, working remotely with the Hartford, CT office.",
+    overview: "Selected for Travelers' software engineering co-op, January to May 2027, working remotely with the Hartford, CT team. Travelers is one of the largest property and casualty insurers in the U.S.",
     org: "Travelers",
     logo: travelersLogo,
     mark: "T",
@@ -175,7 +175,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Data Analyst",
     group: "professional",
-    overview: "Data analyst on a predictive-modeling engagement with the Boston Bruins, modeling post-draft development pathways for the club's prospects.",
+    overview: "On a five-person team (including me) working with the Boston Bruins, I lead requirements elicitation, turning the club stakeholders' open questions into a scoped, sprint-by-sprint delivery plan. Alongside that I build the reproducible Python pipeline behind the club's modeling of post-draft development pathways. The work is under a non-disclosure agreement.",
     org: "Boston Bruins",
     logo: bruinsLogo,
     mark: "BB",
@@ -194,7 +194,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Peer Programmer",
     group: "student",
-    overview: "Peer programmer with NU ACES, Northeastern's Alliance of Civically Engaged Students.",
+    overview: "On the NU ACES leadership team, I plan and run community-building, civic-engagement and service events for first-year and upper-class students, and help incoming members start weekly service with Boston community partners.",
     org: "NU ACES",
     logo: acesLogo,
     mark: "ACES",
@@ -213,7 +213,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Lead Software Engineer",
     group: "student",
-    overview: "Lead software engineer on Student Government's Digital Innovation team, building the CMS behind the SGA website. Student Government replaces most of its staff every year, so non-technical officers build pages by drag and drop instead of editing code.",
+    overview: "One of three tech leads on Student Government's Digital Innovation team, I run the development cycle for 5+ engineers (tickets, sprint planning and code review) while building the CMS that publishes the SGA website to 5,000+ students. Officers turn over every year, so we gave them drag-and-drop editing backed by version history and rollback, and publishing got 10% faster.",
     org: "Student Government Association",
     logo: sgaLogo,
     mark: "SGA",
@@ -236,7 +236,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Quantitative Analyst",
     group: "student",
-    overview: "Quantitative analyst with Disrupt, Northeastern's FinTech initiative, building and testing trading strategies.",
+    overview: "At Disrupt, Northeastern's FinTech club, I turned research on statistical arbitrage, factor investing and market microstructure into testable signals, then built the Python backtesting pipelines that ran them across 10M+ historical equity data points. Pairs-trading, mean-reversion and momentum strategies went live on $50,000 of simulated capital.",
     org: "Disrupt: The FinTech Initiative",
     logo: disruptLogo,
     mark: "DISRUPT",
@@ -255,7 +255,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Project-Series Mentor",
     group: "student",
-    overview: "Mentor in NU Oasis's project series at Northeastern.",
+    overview: "As a project-series mentor at NU Oasis, I guide groups of 5+ students through building their first-ever web apps, from scoping the idea to shipping a working full-stack app in React, TypeScript, Node.js and Next.js: breaking down features, unblocking code and reviewing their pull requests.",
     org: "NU Oasis",
     logo: oasisLogo,
     mark: "OASIS",
@@ -267,7 +267,7 @@ const EXPERIENCE_RAW = [
     period: "Jan 2026 — Present",
     location: "Boston, MA",
     points: [
-      "Mentor teams of 4+ students building and shipping full-stack software projects.",
+      "Mentor groups of 5+ students building and shipping their first-ever full-stack web apps.",
       "Guide teams through projects built with React, TypeScript, Node.js and Next.js.",
     ],
   },
@@ -277,7 +277,7 @@ const EXPERIENCE_RAW = [
     org: "Program Design and Implementation II",
     logo: northeasternLogo,
     mark: "OOD",
-    overview: "Teaching assistant for Program Design and Implementation II at Khoury College of Computer Sciences.",
+    overview: "As a teaching assistant for Program Design and Implementation II, Khoury College's object-oriented design course, I led 30+ weekly debugging sessions in Java and taught 100+ students to debug with AI tools such as Claude and GitHub Copilot. My grading feedback holds students to SOLID design and clean structure, not just passing tests.",
     start: "2026-05",
     end: null,
     stack: "Java, Gradle, JUnit, Mockito, Claude, GitHub Copilot",
@@ -294,7 +294,7 @@ const EXPERIENCE_RAW = [
   {
     role: "Lead Software Engineer",
     group: "student",
-    overview: "Lead software engineer for Rainfall Learning's real-time collaborative IDE, in which two people can edit the same file at once and neither loses work.",
+    overview: "I led UI development for Rainfall Learning's real-time collaborative IDE on a team of 15+ engineers, so a tutor and a student can edit the same file at once without either losing work. Edit conflicts fell to 2%, rendering ran 20% faster under concurrent editing, and Dockerized builds cut environment failures by 15%.",
     org: "Rainfall Learning",
     logo: rainfallLogo,
     mark: "RL",
@@ -304,7 +304,7 @@ const EXPERIENCE_RAW = [
     period: "Dec 2025 — Jul 2026",
     location: "Boston, MA",
     points: [
-      "Led UI development on a real-time collaborative IDE with 10+ engineers, cutting edit conflicts to 2% via Yjs CRDT sync.",
+      "Led UI development on a real-time collaborative IDE with 15+ engineers, cutting edit conflicts to 2% via Yjs CRDT sync.",
       "Built a React and TypeScript UI layer, improving render performance by 20% during concurrent editing.",
       "Edits merge through CRDTs rather than locks, so a client that drops offline reconciles its changes when it reconnects.",
       "Dockerized build pipelines to reduce environment failures by 15%, hardening deployments with automated testing.",
@@ -316,7 +316,7 @@ const EXPERIENCE_RAW = [
     org: "Rutgers University",
     logo: rutgersLogo,
     mark: "RU",
-    overview: "Teaching assistant for a summer math program at Rutgers University.",
+    overview: "Two summers as a teaching assistant in Rutgers University's math program, coordinating logistics for 100+ participants and helping lift math scores by 10% over a 6–8 week program.",
     start: "2024-06",
     end: "2025-08",
     stack: "Excel",
