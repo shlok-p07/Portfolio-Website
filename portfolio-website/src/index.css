@@ -33,9 +33,6 @@
   --shadow: #111827;
   --contour: rgba(31, 58, 95, 0.1);
   --contour-index: rgba(15, 118, 110, 0.45);
-  /* The index contour and commit branch on slate card covers: teal lifted
-     far enough to read on --brand. Decorative lines only, never text. */
-  --cover-index: #5eead4;
   color-scheme: light;
 }
 
@@ -140,19 +137,24 @@
   }
 
 
-  /* Experience covers: hovering or focusing a card lifts its terrain and
-     re-draws the branch on cards with code. Both rest fully drawn. */
-  .cover-terrain {
-    transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  /* Experience switch: the ink block slides to the chosen side. */
+  .switch-thumb {
+    transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  :is(.group:hover, .group:focus-within) .cover-terrain {
-    transform: scale(1.08) rotate(5deg);
+
+  /* Role list: entries stand on a hard shadow; the open one is pressed in. */
+  .role-item {
+    box-shadow: var(--shadow-hard-sm);
+    transition: transform 140ms ease-out, box-shadow 140ms ease-out, background-color 140ms ease-out;
   }
-  .cover-graph path[pathLength] {
-    stroke-dasharray: 1 1;
+  .role-item.is-on {
+    transform: translate(3px, 3px);
+    box-shadow: none;
   }
-  :is(.group:hover, .group:focus-within) .cover-graph path[pathLength] {
-    animation: branch 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  /* A newly opened role's write-up eases in from just below. */
+  .swap {
+    animation: swap 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   /* The one orchestrated moment: the hero assembles on load. */
@@ -199,12 +201,10 @@
 }
 
 
-@keyframes branch {
+@keyframes swap {
   from {
-    stroke-dashoffset: 1;
-  }
-  to {
-    stroke-dashoffset: 0;
+    opacity: 0;
+    transform: translateY(10px);
   }
 }
 
@@ -239,16 +239,11 @@
     overflow-x: auto;
   }
   .press,
-  .cover-terrain {
+  .switch-thumb,
+  .role-item {
     transition: none;
   }
-  :is(.group:hover, .group:focus-within) :is(.cover-terrain, .cover-graph path[pathLength]) {
-    transform: none;
+  .swap {
     animation: none;
   }
-}
-
-html[data-motion="paused"] :is(.group:hover, .group:focus-within) :is(.cover-terrain, .cover-graph path[pathLength]) {
-  transform: none;
-  animation: none;
 }

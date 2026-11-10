@@ -7,7 +7,7 @@ import SiteFooter from "./components/SiteFooter";
 import ToolPill from "./components/ToolPill";
 import Rail, { RailCard } from "./components/Rail";
 import Details from "./components/Details";
-import Cover from "./components/Cover";
+import Experience from "./components/Experience";
 
 const NAV = [
   ["education", "Education"],
@@ -41,11 +41,6 @@ const TICKER = [
 // Featured work leads the rail; the rest follow in their original order.
 const PROJECT_RAIL = [...PROJECTS.filter((p) => p.featured), ...PROJECTS.filter((p) => !p.featured)];
 const list = (v) => (v ? v.split(", ") : []);
-
-const EXPERIENCE_GROUPS = [
-  ["professional", "Professional experience"],
-  ["student", "Student organizations"],
-];
 
 const newTab = (href) =>
   /^https?:/.test(href) ? { target: "_blank", rel: "noopener noreferrer" } : {};
@@ -128,9 +123,8 @@ const TextLink = ({ href, children, name }) => (
    dates, title (up to two lines), organisation (one line; two on phones,
    where cards are narrow), summary (up to three lines), and a footer with
    "View details" and any links. */
-const MiniCard = ({ kind, date, title, org, summary, links, cover, children }) => (
+const MiniCard = ({ kind, date, title, org, summary, links, children }) => (
   <>
-    {cover}
     <p className="m-0 truncate font-mono text-[0.75rem] leading-5 text-ink/60">{date}</p>
     <h3 className="m-0 mt-2 line-clamp-2 min-h-[2.3em] text-balance font-display text-[1.25rem] leading-[1.15] font-semibold">
       {title}
@@ -474,53 +468,7 @@ function App() {
         </Section>
 
         <Section id="experience" title="Experience">
-          <div className="flex flex-col gap-14">
-            {EXPERIENCE_GROUPS.map(([group, heading]) => (
-              <Rail
-                key={group}
-                label={heading}
-                heading={
-                  <h3 className="m-0 font-display text-[1.5rem] leading-[1.15] font-semibold">{heading}</h3>
-                }
-              >
-                {EXPERIENCE.filter((j) => j.group === group).map((j) => (
-                  <RailCard key={`${j.role}-${j.org}`}>
-                    <MiniCard
-                      kind={heading}
-                      date={j.period}
-                      title={j.role}
-                      org={j.org}
-                      summary={j.points[0]}
-                      cover={<Cover seed={j.org} mark={j.mark} logo={j.logo} repo={j.github} />}
-                      links={
-                        <>
-                          {j.demo && (
-                            <TextLink href={j.demo} name={j.org}>
-                              Live site
-                            </TextLink>
-                          )}
-                          {j.github && (
-                            <TextLink href={j.github} name={j.org}>
-                              Code
-                            </TextLink>
-                          )}
-                        </>
-                      }
-                    >
-                      <Panel
-                        org={j.context ? `${j.org}, ${j.context}` : j.org}
-                        dates={j.period}
-                        overview={j.overview}
-                        highlights={j.points}
-                        tools={list(j.stack)}
-                        actions={<ProjectButtons p={j} />}
-                      />
-                    </MiniCard>
-                  </RailCard>
-                ))}
-              </Rail>
-            ))}
-          </div>
+          <Experience roles={EXPERIENCE} />
         </Section>
 
         <Section
