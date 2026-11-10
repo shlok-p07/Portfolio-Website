@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { PROJECTS, EXPERIENCE, RESEARCH, TOOLKIT, PROFILE, CONTACT } from "./content";
 import Contours from "./components/Contours";
 import Ticker from "./components/Ticker";
@@ -49,7 +50,6 @@ const EXPERIENCE_ITEMS = EXPERIENCE.map((j) => ({
   period: j.period,
   where: [j.context ? `${j.org}, ${j.context}` : j.org, j.location].filter(Boolean).join(" · "),
   overview: j.overview,
-  numbers: j.numbers || [],
   points: j.points,
   tools: list(j.stack),
   logo: j.logo,
@@ -69,9 +69,7 @@ const PROJECT_ITEMS = PROJECTS.map((p) => ({
   org: p.client ? `Client: ${p.client}` : p.org,
   period: p.period,
   where: p.client ? `Client project for ${p.client}` : p.org,
-  fact: p.metric,
   overview: p.overview,
-  numbers: p.numbers || [],
   points: p.highlights,
   tools: [...list(p.stack), ...list(p.skills)],
   logo: p.logo,
@@ -114,23 +112,20 @@ const Section = ({ id, title, tone = "bg-paper", dark, children }) => (
   <section id={id} className={`scroll-mt-16 border-b-2 border-ink py-20 sm:py-24 ${tone}`}>
     <Wrap>
       <h2
+        data-reveal="wipe"
         className={`m-0 mb-12 border-b-2 pb-6 font-display text-[clamp(2.5rem,6vw,4.25rem)] leading-[0.95] font-semibold tracking-[-0.02em] ${
           dark ? "border-white" : "border-ink"
         }`}
       >
-        {title}
+        <span className="wipe block">{title}</span>
       </h2>
-      {children}
+      <div data-reveal style={{ "--i": 1 }}>
+        {children}
+      </div>
     </Wrap>
   </section>
 );
 
-/* The card's key figure as one line, the figure set in bold. */
-const Fact = ({ m }) => (
-  <p className="m-0 mt-2 text-[0.9375rem] text-ink/70">
-    <strong className="font-semibold text-ink">{m.value}</strong> {m.label}
-  </p>
-);
 
 const Points = ({ items }) => (
   <ul className="m-0 list-none p-0">
@@ -313,7 +308,32 @@ const ResearchVisual = ({ kind }) => {
   return <Visual />;
 };
 
+/* Scroll reveals: sections, headings and cards ease in as they enter the
+   view. Only armed when motion is welcome, so without JavaScript, with
+   reduced motion or before this runs, everything is simply visible. */
+function useReveal() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    const root = document.documentElement;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            e.target.classList.add("is-in");
+            io.unobserve(e.target);
+          }
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+    );
+    document.querySelectorAll("[data-reveal]").forEach((el) => io.observe(el));
+    root.classList.add("reveal-ready");
+    return () => io.disconnect();
+  }, []);
+}
+
 function App() {
+  useReveal();
   return (
     <>
       <a
@@ -384,13 +404,6 @@ function App() {
                 <p className="m-0 text-[0.9375rem] font-medium">{PROFILE.honors}</p>
                 <Details title="Coursework and certifications" meta="Education">
                   <div className="flex flex-col gap-5">
-                    <KeyFacts
-                      rows={[
-                        ["Degree", "B.S. Computer Science and Business Administration"],
-                        ["Concentration", "Financial Technology"],
-                        ["Graduating", PROFILE.graduation],
-                      ]}
-                    />
                     {Object.entries(PROFILE.coursework).map(([group, courses]) => (
                       <Block key={group} title={group}>
                         <Points items={courses} />
@@ -417,8 +430,8 @@ function App() {
 
         <Section id="toolkit" title="Toolkit" tone="bg-haze">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {TOOLKIT.map((g) => (
-              <section key={g.label} className="border-2 border-ink bg-paper p-4" aria-label={g.label}>
+            {TOOLKIT.map((g, i) => (
+              <section key={g.label} data-reveal style={{ "--i": i }} className="border-2 border-ink bg-paper p-4" aria-label={g.label}>
                 <h3 className="m-0 mb-3 font-mono text-[0.75rem] font-bold text-ink/65">{g.label}</h3>
                 <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
                   {g.items.map((t) => (
@@ -455,9 +468,11 @@ function App() {
 
         <Section id="research" title="Research">
           <div className="flex flex-col gap-8">
-            {RESEARCH.map((r) => (
+            {RESEARCH.map((r, i) => (
               <article
                 key={r.title}
+                data-reveal
+                style={{ "--i": i }}
                 className="grid border-2 border-ink bg-paper shadow-hard lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]"
               >
                 <div className="flex items-center border-b-2 border-ink bg-haze p-6 sm:p-8 lg:border-r-2 lg:border-b-0">
@@ -469,7 +484,6 @@ function App() {
                   <p className="m-0 mt-2 text-[0.9375rem] text-ink/65">
                     {r.group}. Advised by {r.advisor}.
                   </p>
-                  <Fact m={r.metric} />
                   <div className="mt-auto pt-6">
                     <Details title={r.title} meta="Research">
                       <Panel
@@ -498,8 +512,8 @@ function App() {
         <section id="contact" className="relative scroll-mt-16 overflow-hidden border-t-2 border-ink bg-paper py-24 text-ink sm:py-28">
           <Contours className="absolute inset-0 size-full" />
           <Wrap className="pointer-events-none relative">
-            <h2 className="m-0 font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.92] font-semibold tracking-[-0.03em]">
-              Get in touch.
+            <h2 data-reveal="wipe" className="m-0 font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.92] font-semibold tracking-[-0.03em]">
+              <span className="wipe block">Get in touch.</span>
             </h2>
             <p className="m-0 mt-6 max-w-[36rem] text-[1.25rem] leading-[1.5] font-medium text-ink/80">
               I'm looking for an internship from {PROFILE.availability}. Email is the fastest way to

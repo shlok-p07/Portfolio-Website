@@ -23,9 +23,9 @@ export default function LogoHeader({ mark, logo, repo }) {
   return (
     <div aria-hidden="true" className="flex min-h-36 items-center justify-between gap-4 border-b-2 border-ink bg-paper px-6 py-6 sm:min-h-40 sm:px-8">
       {logo ? (
-        <img src={logo} alt="" className="h-20 w-auto max-w-[min(18rem,70%)] object-contain object-left sm:h-24" />
+        <img src={logo} alt="" className="logo-in h-20 w-auto max-w-[min(18rem,70%)] object-contain object-left sm:h-24" />
       ) : (
-        <span className="font-display text-[3rem] leading-none font-semibold tracking-[-0.02em] text-ink sm:text-[3.5rem]">{mark}</span>
+        <span className="logo-in font-display text-[3rem] leading-none font-semibold tracking-[-0.02em] text-ink sm:text-[3.5rem]">{mark}</span>
       )}
       {repoName && (
         <span className="inline-flex max-w-[45%] items-center gap-1.5 self-start border-2 border-ink bg-paper py-0.5 pr-2 pl-1.5 font-mono text-[0.6875rem] leading-5 font-bold text-ink">
