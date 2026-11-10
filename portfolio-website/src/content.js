@@ -389,7 +389,7 @@ export const PROFILE = {
       "Information Systems and Digital Technology",
     ],
   },
-  certifications: "Bloomberg Market Concepts, Bloomberg Finance Fundamentals, Bloomberg Spreadsheet Analysis, AKUNA Options 101, CFI Financial Analysis and Modeling, AmplifyMe Finance Accelerator, Markets Quantitative Analysis (MQA), WSP Microsoft Excel",
+  certifications: "Bloomberg Market Concepts, Bloomberg Finance Fundamentals, Bloomberg Spreadsheet Analysis, AKUNA Options 101, CFI Financial Analysis and Modeling, AmplifyMe Finance Accelerator, Citi Markets Quantitative Analysis (MQA) Job Simulation (Forage), WSP Microsoft Excel",
 
   intro:
     "I build full-stack software and do machine learning research on multimodal sensor data. The finance side comes from the business half of my degree.",
