@@ -91,10 +91,6 @@
   }
 
 
-  html[data-motion="paused"] .ticker-track {
-    animation-play-state: paused;
-  }
-
   /* Rails: a slim scrollbar that still signals there's more to the right. */
   .rail {
     scrollbar-width: thin;
@@ -104,13 +100,6 @@
   /* While a details panel is open the page behind it stays put. */
   html:has(dialog[open]) {
     overflow: hidden;
-  }
-
-  .ticker-track {
-    animation: ticker 48s linear infinite;
-  }
-  .ticker:hover .ticker-track {
-    animation-play-state: paused;
   }
 
 
@@ -283,12 +272,6 @@
   }
 }
 
-@keyframes ticker {
-  to {
-    transform: translateX(calc(-1 * var(--shift, 50%)));
-  }
-}
-
 
 
 
@@ -359,13 +342,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ticker-track,
   .rise,
   .drop {
     animation: none;
-  }
-  .ticker {
-    overflow-x: auto;
   }
   .press,
   .switch-thumb,

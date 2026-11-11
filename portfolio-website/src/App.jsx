@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { PROJECTS, EXPERIENCE, RESEARCH, TOOLKIT, PROFILE, CONTACT } from "./content";
 import Contours from "./components/Contours";
-import Ticker from "./components/Ticker";
 import About from "./components/About";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
@@ -22,20 +21,6 @@ const NAV = [
 const link = (label) => CONTACT.find((c) => c.label === label).href;
 const EMAIL = link("Email");
 const RESUME = link("Resume");
-
-/* Every figure here comes straight from the content below, including the
-   result that didn't clear significance. */
-const TICKER = [
-  { sym: "SGA CMS", value: "5,000+ students", dir: "up" },
-  { sym: "Backtesting", value: "10M+ data points", dir: "up" },
-  { sym: "Parkinson's research", value: "AUROC 0.720 → 0.774", dir: "up" },
-  { sym: "RL hedging", value: "no significant edge", dir: "flat" },
-  { sym: "Whalley-Wilmott", value: "80% fewer trades", dir: "up" },
-  { sym: "Teaching", value: "100+ students", dir: "up" },
-  { sym: "GPA", value: PROFILE.gpa, dir: "up" },
-];
-
-
 
 const list = (v) => (v ? v.split(", ") : []);
 
@@ -345,7 +330,7 @@ function App() {
       <main>
         <section className="relative overflow-hidden border-b-2 border-ink bg-paper text-ink">
           <Contours className="absolute inset-0 size-full" />
-          <Wrap className="pointer-events-none relative grid items-center gap-14 py-16 sm:py-20 md:grid-cols-[minmax(0,1fr)_15rem] md:gap-10 lg:min-h-[calc(100svh-7.5rem)] lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14">
+          <Wrap className="pointer-events-none relative grid items-center gap-14 py-16 sm:py-20 md:grid-cols-[minmax(0,1fr)_15rem] md:gap-10 lg:min-h-[calc(100svh-4.25rem)] lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14">
             <div className="pointer-events-auto">
               <p
                 className="rise m-0 inline-block border-2 border-ink bg-paper px-3 py-1 text-[0.9375rem] font-bold text-ink shadow-[3px_3px_0_0_var(--color-brand)]"
@@ -388,8 +373,6 @@ function App() {
             </div>
           </Wrap>
         </section>
-
-        <Ticker items={TICKER} />
 
         <Section
           id="about"

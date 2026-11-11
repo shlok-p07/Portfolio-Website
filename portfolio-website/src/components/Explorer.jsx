@@ -12,7 +12,7 @@ import ToolPill from "./ToolPill";
    Motion: switching groups deals the new list in, one entry after another;
    choosing an entry brings its panel in with the logo settling first; Read
    more unfolds in place rather than jumping. All of it is skipped for
-   visitors who prefer reduced motion or pause motion.
+   visitors who prefer reduced motion.
 
    Both the switch and the list are tab lists, so arrow keys, Home and End
    move between entries and Tab moves on to the panel. Each group remembers
