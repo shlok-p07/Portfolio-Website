@@ -1,4 +1,5 @@
 import { siGithub, siLinkedin } from "simple-icons";
+import { scrollToTop } from "../scrollToTop";
 
 /* Site footer spanning the full window, mirroring the header: logo and name
    pinned to the left corner, contact icons and the resume pinned to the
@@ -22,7 +23,7 @@ export default function SiteFooter({ name, github, linkedin, email, resume }) {
     <footer className="border-t-2 border-ink bg-paper text-ink">
       <div className="flex w-full flex-wrap items-center justify-between gap-x-6 gap-y-4 px-4 py-6 sm:px-6">
         <div className="flex items-center gap-4">
-          <a href="#top" className="flex items-center gap-3 font-display text-[1.125rem] font-semibold text-ink no-underline">
+          <a href="/" onClick={scrollToTop} className="flex items-center gap-3 font-display text-[1.125rem] font-semibold text-ink no-underline">
             <img src="/sp.svg" alt="" className="size-9 shrink-0 border-2 border-ink bg-[#fff]" />
             {name}
           </a>
