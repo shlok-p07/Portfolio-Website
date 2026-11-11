@@ -342,7 +342,7 @@ function App() {
 
       <SiteHeader name={PROFILE.name} nav={NAV} resume={RESUME} />
 
-      <main id="top">
+      <main>
         <section className="relative overflow-hidden border-b-2 border-ink bg-paper text-ink">
           <Contours className="absolute inset-0 size-full" />
           <Wrap className="pointer-events-none relative grid items-center gap-14 py-16 sm:py-20 md:grid-cols-[minmax(0,1fr)_15rem] md:gap-10 lg:min-h-[calc(100svh-7.5rem)] lg:grid-cols-[minmax(0,1fr)_21rem] lg:gap-14">

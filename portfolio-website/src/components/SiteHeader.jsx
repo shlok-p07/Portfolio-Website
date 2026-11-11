@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { scrollToTop } from "../scrollToTop";
 
 /* Sticky site header spanning the full window: logo pinned to the left
    corner, section links centred, actions pinned to the right corner. The
@@ -22,19 +23,49 @@ const Bars = ({ open }) => (
   </span>
 );
 
-/* Which section is in view: the one crossing a band just above the middle
-   of the window. */
+/* Which section is in view: the last one whose top has passed a line 40%
+   down the window, or none while the opening section fills the view. At
+   the very bottom of the page the last section counts, even if it is too
+   short to reach that line. As it changes, the address bar follows with
+   replaceState: "#education" while reading Education, and a plain URL with
+   no hash on the opening section. Scrolling never adds history entries,
+   so Back still leaves the page. */
 function useActiveSection(ids) {
   const [active, setActive] = useState(null);
+
   useEffect(() => {
-    const els = ids.map((id) => document.getElementById(id)).filter(Boolean);
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: "-40% 0px -55% 0px" }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.4;
+      let current = null;
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      }
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+      if (atBottom && window.scrollY > 0) current = ids[ids.length - 1];
+      setActive(current);
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [ids]);
+
+  useEffect(() => {
+    const hash = active ? `#${active}` : "";
+    if (location.hash === hash) return;
+    history.replaceState(null, "", location.pathname + location.search + hash);
+  }, [active]);
+
   return active;
 }
 
@@ -73,7 +104,8 @@ export default function SiteHeader({ name, nav, resume }) {
     <header ref={header} className="sticky top-0 z-40 border-b-2 border-ink bg-paper">
       <div className="flex h-16 w-full items-center justify-between gap-4 px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]">
         <a
-          href="#top"
+          href="/"
+          onClick={scrollToTop}
           className="flex min-w-0 items-center gap-3 justify-self-start font-display text-[1.125rem] font-semibold text-ink no-underline"
         >
           <img src="/sp.svg" alt="" className="size-9 shrink-0 border-2 border-ink bg-[#fff]" />
