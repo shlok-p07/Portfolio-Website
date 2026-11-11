@@ -91,14 +91,8 @@
   }
 
 
-  html[data-motion="paused"] :is(.ticker-track, .piece-tour, .pillar) {
+  html[data-motion="paused"] .ticker-track {
     animation-play-state: paused;
-  }
-  /* A draw loop frozen mid-cycle could leave the line invisible, so a paused
-     page shows it fully drawn. */
-  html[data-motion="paused"] :is(.trail-loop, .s-draw) {
-    animation: none;
-    stroke-dashoffset: 0;
   }
 
   /* Rails: a slim scrollbar that still signals there's more to the right. */
@@ -119,23 +113,59 @@
     animation-play-state: paused;
   }
 
-  /* Interest posters: one slow loop each. */
-  .piece-tour {
-    animation: piece-tour 8s ease-in-out infinite;
+
+
+  /* Life outside the terminal: prints rest at a tilt on their hard shadow.
+     Hovering one squares it up, lifts it off the table and lets the photo
+     drift in a little closer. */
+  .print {
+    transform: rotate(var(--r, 0deg));
+    box-shadow: var(--shadow-hard);
+    transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 520ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .trail-loop {
-    stroke-dasharray: 1 1;
-    animation: draw-loop 5s ease-in-out infinite;
+  .print-img {
+    transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .s-draw {
-    stroke-dasharray: 1 1;
-    animation: draw-loop 7s ease-in-out infinite;
+  @media (hover: hover) {
+    .print:hover {
+      z-index: 10 !important;
+      transform: translate(-4px, -6px) rotate(0deg) scale(1.03);
+      box-shadow: var(--shadow-hard-lg);
+    }
+    .print:hover .print-img {
+      transform: scale(1.07);
+    }
   }
-  .pillar {
-    animation: pillar 6s steps(1) infinite;
-    animation-delay: var(--d, 0s);
+  /* The one entrance: from sm up the prints wait stacked in the middle of
+     the table, then deal out to their spots one after another. On phones
+     they sit in a plain grid and rise in with the rest of the section. */
+  @media (min-width: 40rem) {
+    .reveal-ready [data-reveal="prints"]:not(.is-in) {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-ready [data-reveal="prints"]:not(.is-in) .print {
+      transform: translate(var(--sx), var(--sy)) rotate(calc(var(--r) * -1.5)) scale(0.86);
+      box-shadow: var(--shadow-hard-sm);
+    }
+    .reveal-ready [data-reveal="prints"].is-in .print {
+      animation: deal-print 1100ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      /* The top of the stack goes first. */
+      animation-delay: calc(180ms + (7 - var(--z, 0)) * 100ms);
+    }
   }
 
+  /* Lightbox: the frame settles in from slightly small; stepping to another
+     photo fades the new one in. */
+  .lightbox[open] .lightbox-frame {
+    animation: lightbox-in 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .lightbox[open] .lightbox-img {
+    animation: fade-in 360ms ease-out both;
+  }
+  .lightbox[open]::backdrop {
+    animation: fade-in 300ms ease-out both;
+  }
 
   /* Experience switch: the ink block slides to the chosen side. */
   .switch-thumb {
@@ -259,26 +289,29 @@
   }
 }
 
-/* The rook slides a1 → a4 → d4 → d1 → a1, resting on each square. */
-@keyframes piece-tour {
-  0%, 20% { transform: translate(0, 0); }
-  25%, 45% { transform: translate(0, -180px); }
-  50%, 70% { transform: translate(180px, -180px); }
-  75%, 95% { transform: translate(180px, 0); }
-  100% { transform: translate(0, 0); }
+
+
+
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(12px);
+  }
 }
 
-@keyframes draw-loop {
-  0% { stroke-dashoffset: 1; }
-  55%, 85% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: -1; }
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
 }
 
-@keyframes pillar {
-  0% { background: var(--color-brand); color: var(--color-on-brand); }
-  25% { background: transparent; color: inherit; }
+@keyframes deal-print {
+  from {
+    transform: translate(var(--sx), var(--sy)) rotate(calc(var(--r) * -1.5)) scale(0.86);
+    box-shadow: var(--shadow-hard-sm);
+  }
 }
-
 
 @keyframes logo-in {
   from {
@@ -328,23 +361,26 @@
 @media (prefers-reduced-motion: reduce) {
   .ticker-track,
   .rise,
-  .drop,
-  .piece-tour,
-  .pillar {
+  .drop {
     animation: none;
-  }
-  .trail-loop,
-  .s-draw {
-    animation: none;
-    stroke-dashoffset: 0;
   }
   .ticker {
     overflow-x: auto;
   }
   .press,
   .switch-thumb,
-  .role-item {
+  .role-item,
+  .print,
+  .print-img {
     transition: none;
+  }
+  .print:hover .print-img {
+    transform: none;
+  }
+  .lightbox[open] .lightbox-frame,
+  .lightbox[open] .lightbox-img,
+  .lightbox[open]::backdrop {
+    animation: none;
   }
   .swap,
   .logo-in,

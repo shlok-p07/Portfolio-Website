@@ -278,7 +278,6 @@ export const RESEARCH = [
   {
     title: "Artificial Intelligence Coding Tools in Computer Science Education",
     visual: "study",
-    venue: "Two posters submitted to ACM SIGCSE 2027",
     summary: "A study comparing four AI coding assistants with human programmers on generation, debugging and refactoring tasks in computer science education.",
     role: "Undergraduate Researcher",
     group: "Intelligent Automation (IoT) Research Group, Northeastern University",

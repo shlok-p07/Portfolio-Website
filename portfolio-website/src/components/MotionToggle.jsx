@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
 /* WCAG 2.2.2: anything that moves on its own for more than five seconds
-   needs a way to stop it. This one button pauses the ticker, the contour
-   maps, the interest posters and the card rails for the rest of
-   the visit. It deliberately isn't remembered across visits: a pause chosen
+   needs a way to stop it. This one button pauses the ticker and the contour
+   maps for the rest of the visit. It deliberately isn't remembered across visits: a pause chosen
    once shouldn't leave the page looking frozen on every later load.
    Visitors who already prefer reduced motion see nothing moving, so the
    button isn't shown to them. */
