@@ -2,8 +2,7 @@ import { useEffect, useRef } from "react";
 
 /* Animated topographic map: a drifting noise field traced with marching
    squares. The cursor raises a hill, so the lines bend around it. Pauses when
-   off-screen, when the tab is hidden or when the visitor pauses motion, and
-   draws one still frame when they prefer reduced motion. */
+   off-screen or when the tab is hidden, and draws one still frame when they prefer reduced motion. */
 
 const CELL = 14;
 const LEVELS = [0.18, 0.28, 0.38, 0.48, 0.58, 0.68, 0.78];
@@ -98,9 +97,7 @@ export default function Contours({ className }) {
 
     const loop = (now) => {
       raf = requestAnimationFrame(loop);
-      // The page-wide "Pause motion" control sets data-motion on <html>.
-      const paused = document.documentElement.dataset.motion === "paused";
-      if (!visible || paused || now - last < 33) return; // ~30fps is plenty for drift
+      if (!visible || now - last < 33) return; // ~30fps is plenty for drift
       last = now;
       t += 0.0035;
       mouse.k += ((mouse.x > -999 ? 1 : 0) - mouse.k) * 0.06;
