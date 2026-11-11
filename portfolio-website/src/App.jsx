@@ -360,8 +360,7 @@ function App() {
                 {PROFILE.name}
               </h1>
               <p className="rise m-0 mt-6 max-w-[36rem] text-[1.25rem] leading-[1.5] font-medium text-ink/80 sm:text-[1.4375rem]" style={{ "--i": 2 }}>
-                Software engineer and machine learning researcher. I build systems that hold up in
-                real use, and I report results exactly as they come out.
+                I build web apps and ML tools that people actually use.
               </p>
               <div className="rise mt-9 flex flex-wrap gap-4" style={{ "--i": 3 }}>
                 <Button href={EMAIL} tone="accent">
