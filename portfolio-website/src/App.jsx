@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { PROJECTS, EXPERIENCE, RESEARCH, TOOLKIT, PROFILE, CONTACT } from "./content";
 import Contours from "./components/Contours";
 import Ticker from "./components/Ticker";
-import Interests from "./components/Interests";
+import About from "./components/About";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
 import ToolPill from "./components/ToolPill";
@@ -10,12 +10,12 @@ import Details from "./components/Details";
 import Explorer from "./components/Explorer";
 
 const NAV = [
+  ["about", "About me"],
   ["education", "Education"],
   ["toolkit", "Toolkit"],
   ["experience", "Experience"],
   ["work", "Projects"],
   ["research", "Research"],
-  ["interests", "Interests"],
   ["contact", "Contact"],
 ];
 
@@ -334,7 +334,7 @@ function App() {
   return (
     <>
       <a
-        href="#education"
+        href="#about"
         className="sr-only z-50 bg-cta px-4 py-2 font-bold text-on-cta focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
       >
         Skip to content
@@ -391,6 +391,14 @@ function App() {
         </section>
 
         <Ticker items={TICKER} />
+
+        <Section
+          id="about"
+          title="About me"
+          tone="bg-haze"
+        >
+          <About />
+        </Section>
 
         <Section id="education" title="Education">
           <article className="grid grid-cols-2 gap-4 border-2 border-ink bg-paper p-6 shadow-hard sm:gap-6 sm:p-8 lg:grid-cols-[minmax(0,1.7fr)_minmax(0,0.75fr)_minmax(0,0.75fr)] lg:items-center">
@@ -496,14 +504,6 @@ function App() {
               </article>
             ))}
           </div>
-        </Section>
-
-        <Section
-          id="interests"
-          title="Interests"
-          tone="bg-haze"
-        >
-          <Interests />
         </Section>
 
         <section id="contact" className="relative scroll-mt-16 overflow-hidden border-t-2 border-ink bg-paper py-24 text-ink sm:py-28">
