@@ -34,10 +34,17 @@ const PRINTS = [
     x: 5, y: 29, w: 44, r: 2, z: 5,
   },
   {
+    src: "/life/dome-closeup.webp",
+    ratio: 1,
+    alt: "A close-up of the lit dome and arched windows of Boston's Christian Science Plaza at night, with a film date stamp",
+    caption: "The dome, up close",
+    x: 62, y: 71, w: 34, r: 3, z: 1,
+  },
+  {
     src: "/life/wing.webp",
     ratio: 1400 / 818,
     alt: "An airplane wing silhouetted against a thin orange horizon above the clouds",
-    caption: "Sunrise from the air",
+    caption: "Sunrise",
     x: 50, y: 27.5, w: 48, r: -2, z: 4,
   },
   {
@@ -51,23 +58,17 @@ const PRINTS = [
     src: "/life/seattle.webp",
     ratio: 3 / 2,
     alt: "Seattle's skyline and the Space Needle across the water, with a boat's wake in the foreground",
-    caption: "Seattle",
+    caption: "Seattle Skyline",
     x: 54, y: 49.5, w: 44, r: 2.5, z: 2,
   },
   {
     src: "/life/nyc.webp",
     ratio: 16 / 9,
     alt: "The Manhattan skyline on a clear afternoon, seen over rows of rooftops and trees, with a bridge on the right",
-    caption: "New York City skyline",
+    caption: "New York City Skyline",
     x: 0, y: 70, w: 56, r: -1.5, z: 1,
   },
-  {
-    src: "/life/dome-closeup.webp",
-    ratio: 1,
-    alt: "A close-up of the lit dome and arched windows of Boston's Christian Science Plaza at night, with a film date stamp",
-    caption: "The dome, up close",
-    x: 62, y: 71, w: 34, r: 3, z: 1,
-  },
+  
 ];
 
 // The spread is 25:36, so one unit of width is 36/25 of a unit of height.
