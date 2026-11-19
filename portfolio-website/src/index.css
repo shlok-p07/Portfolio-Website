@@ -47,7 +47,7 @@
 /* Dark: the same slate and teal after hours. Ink and paper swap; brand and
    cta lift so they still read against the dark page, and take dark text.
    The theme is set on <html> by the script in index.html before first
-   paint, from the visitor's choice or, failing that, their system. */
+   paint: the visitor's saved choice, else dark. */
 :root[data-theme="dark"] {
   --ink: #e6e9ef;
   --paper: #0d1219;

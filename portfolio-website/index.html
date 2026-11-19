@@ -8,16 +8,16 @@
     <title>Shlok Patel</title>
 
     <meta name="description" content="Shlok Patel — CS and FinTech student at Northeastern University. Full-stack projects, machine learning research in a sensor-fusion lab, and the roles behind them." />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="color-scheme" content="light dark" />
-    <!-- Set the theme before first paint so a dark visit never flashes white:
-         the visitor's saved choice, else their system setting. src/theme.js
-         keeps it in sync after load. -->
+    <meta name="theme-color" content="#0d1219" />
+    <meta name="color-scheme" content="dark light" />
+    <!-- Set the theme before first paint so the page never flashes white:
+         the visitor's saved choice, else dark, whatever the system setting.
+         src/theme.js keeps it in sync after load. -->
     <script>
       (function () {
         var saved = null;
         try { saved = localStorage.getItem("theme"); } catch (e) {}
-        var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        var dark = saved !== "light";
         document.documentElement.dataset.theme = dark ? "dark" : "light";
         document.querySelector('meta[name="theme-color"]').content = dark ? "#0d1219" : "#ffffff";
       })();
