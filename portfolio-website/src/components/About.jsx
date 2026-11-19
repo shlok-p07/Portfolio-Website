@@ -124,7 +124,7 @@ function Life() {
                 type="button"
                 onClick={() => setOpen(i)}
                 aria-label={`Enlarge photo: ${p.caption}`}
-                className="block w-full cursor-zoom-in overflow-hidden border-2 border-ink bg-ink p-0"
+                className="block w-full cursor-zoom-in overflow-hidden border-2 border-ink bg-scrim p-0"
                 style={{ aspectRatio: p.ratio }}
               >
                 <img src={p.src} alt={p.alt} loading="lazy" decoding="async" className="print-img block size-full object-cover" />
@@ -174,7 +174,7 @@ function Lightbox({ index, onChange }) {
         if (e.key === "ArrowRight") step(1);
         if (e.key === "ArrowLeft") step(-1);
       }}
-      className="lightbox m-auto max-h-none w-fit max-w-none border-0 bg-transparent p-0 text-ink backdrop:bg-ink/85"
+      className="lightbox m-auto max-h-none w-fit max-w-none border-0 bg-transparent p-0 text-ink backdrop:bg-scrim/85"
     >
       {p && (
         <figure className="lightbox-frame m-0 w-min border-2 border-ink bg-paper p-3 shadow-[10px_10px_0_0_var(--color-brand)] sm:p-4">
