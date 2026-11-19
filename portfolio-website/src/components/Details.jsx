@@ -25,7 +25,7 @@ export default function Details({ title, meta, children }) {
         ref={dialog}
         aria-labelledby={heading}
         onClick={(e) => e.target === dialog.current && dialog.current.close()}
-        className="m-auto max-h-[85svh] w-[calc(100%-2rem)] max-w-[44rem] border-2 border-ink bg-paper p-0 text-ink whitespace-normal break-words shadow-hard-lg backdrop:bg-black/45"
+        className="m-auto max-h-[85svh] w-[calc(100%-2rem)] max-w-[44rem] border-2 border-ink bg-paper p-0 text-ink whitespace-normal break-words shadow-hard-lg backdrop:bg-scrim/55"
       >
         <div className="sticky top-0 flex items-start justify-between gap-6 border-b-2 border-ink bg-brand p-5 text-on-brand sm:p-6">
           <div>

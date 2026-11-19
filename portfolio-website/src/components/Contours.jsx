@@ -41,6 +41,10 @@ export default function Contours({ className }) {
       colors.accent = css.getPropertyValue("--contour-index").trim();
     };
     readColors();
+    // Re-read the palette when the theme switches, and redraw at once so a
+    // still (reduced-motion) frame changes too.
+    const themeWatch = new MutationObserver(() => { readColors(); draw(); });
+    themeWatch.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -128,6 +132,7 @@ export default function Contours({ className }) {
       raf = requestAnimationFrame(loop);
       return () => {
         cancelAnimationFrame(raf);
+        themeWatch.disconnect();
         ro.disconnect();
         io.disconnect();
         host.removeEventListener("pointermove", onMove);
@@ -135,7 +140,10 @@ export default function Contours({ className }) {
         document.removeEventListener("visibilitychange", onVis);
       };
     }
-    return () => ro.disconnect();
+    return () => {
+      themeWatch.disconnect();
+      ro.disconnect();
+    };
   }, []);
 
   return <canvas ref={ref} aria-hidden="true" className={className} />;

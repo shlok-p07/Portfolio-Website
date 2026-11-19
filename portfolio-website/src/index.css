@@ -11,6 +11,11 @@
   --color-on-brand: var(--on-brand);
   --color-cta: var(--cta);
   --color-on-cta: var(--on-cta);
+  /* Plate: the white tile organisation logos sit on in either theme, so
+     every brand keeps its own colours. Scrim: the dim behind overlays. */
+  --color-plate: var(--plate);
+  --color-on-plate: var(--on-plate);
+  --color-scrim: var(--scrim);
 
   --font-display: "Clash Display", "Arial Black", sans-serif;
   --font-sans: "Satoshi", ui-sans-serif, system-ui, sans-serif;
@@ -33,7 +38,37 @@
   --shadow: #111827;
   --contour: rgba(31, 58, 95, 0.1);
   --contour-index: rgba(15, 118, 110, 0.45);
+  --plate: #ffffff;
+  --on-plate: #111827;
+  --scrim: #111827;
   color-scheme: light;
+}
+
+/* Dark: the same slate and teal after hours. Ink and paper swap; brand and
+   cta lift so they still read against the dark page, and take dark text.
+   The theme is set on <html> by the script in index.html before first
+   paint, from the visitor's choice or, failing that, their system. */
+:root[data-theme="dark"] {
+  --ink: #e6e9ef;
+  --paper: #0d1219;
+  --haze: #161d28;
+  --brand: #8fb0db;
+  --on-brand: #0d1219;
+  --cta: #2dd4bf;
+  --on-cta: #0d1219;
+  --shadow: #3d5273;
+  --contour: rgba(143, 176, 219, 0.12);
+  --contour-index: rgba(45, 212, 191, 0.42);
+  --scrim: #000000;
+  color-scheme: dark;
+}
+
+/* Switching theme: the new palette spreads out from the toggle in a circle
+   (driven from ThemeToggle). Only the root snapshot moves. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 @layer base {

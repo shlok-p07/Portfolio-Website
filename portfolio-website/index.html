@@ -9,7 +9,19 @@
 
     <meta name="description" content="Shlok Patel — CS and FinTech student at Northeastern University. Full-stack projects, machine learning research in a sensor-fusion lab, and the roles behind them." />
     <meta name="theme-color" content="#ffffff" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Set the theme before first paint so a dark visit never flashes white:
+         the visitor's saved choice, else their system setting. src/theme.js
+         keeps it in sync after load. -->
+    <script>
+      (function () {
+        var saved = null;
+        try { saved = localStorage.getItem("theme"); } catch (e) {}
+        var dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+        document.querySelector('meta[name="theme-color"]').content = dark ? "#0d1219" : "#ffffff";
+      })();
+    </script>
     <meta property="og:title" content="Shlok Patel" />
     <meta property="og:description" content="CS and FinTech at Northeastern. Full-stack software, machine learning research, incoming software engineering co-op at Travelers, looking for an internship June to September 2027." />
     <meta property="og:type" content="website" />

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { scrollToTop } from "../scrollToTop";
+import ThemeToggle from "./ThemeToggle";
 
 /* Sticky site header spanning the full window: logo pinned to the left
    corner, section links centred, actions pinned to the right corner. The
@@ -129,6 +130,7 @@ export default function SiteHeader({ name, nav, resume }) {
         </nav>
 
         <div className="flex items-center gap-3 justify-self-end">
+          <ThemeToggle />
 
           <a
             href={resume}
