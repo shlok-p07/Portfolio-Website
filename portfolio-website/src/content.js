@@ -10,43 +10,71 @@ import acesLogo from "./assets/logos/aces.webp";
 import disruptLogo from "./assets/logos/disrupt.webp";
 import nudiningLogo from "./assets/logos/nudining.webp";
 import phishawareLogo from "./assets/logos/phishaware.svg";
+import leveledgeLogo from "./assets/logos/leveledge.svg";
 
 
-export const PROJECTS = [
+const PROJECTS_RAW = [
   {
     title: "PhishAware",
     client: "CS 4530 (Fundamentals of Software Engineering)",
     logo: phishawareLogo,
     mark: "PA",
     org: "Khoury College of Computer Sciences",
-    period: "Jul — Sep 2026",
-    overview: "A phishing-awareness platform built for CS 4530 that generates simulated attacks tailored to each employee's role and estimates individual risk. I led a three-person team through its design and delivery. The platform became the basis of a study with Prof. Sarita Singh, submitted to WiCyS 2027.",
+    start: "2026-07",
+    end: "2026-11",
+    period: "Jul — Nov 2026",
+    overview: "A phishing-awareness platform built for CS 4530 that trains employees against simulated attacks across six vectors, written for each employee's role, and estimates individual risk. I led a three-person team through its design and delivery, then took it to production on AWS. The platform became the basis of a study with Prof. Sarita Singh, submitted to WiCyS 2027.",
     highlights: [
-      "A two-stage LLM pipeline writes each scenario for the employee's role, with Groq as the primary provider and Gemini as failover.",
-      "Employees practice across six attack vectors in a simulated inbox, SMS thread and phone call.",
-      "Single sign-on implemented from first principles on OIDC with PKCE, compatible with Okta, Entra ID, Google Workspace and Auth0.",
-      "Migrated the data layer across 44 files to a multi-tenant organization backend with role-based access control.",
-      "A contract-first API of 57 operations across 45 paths, whose OpenAPI specification generates Zod validators and React Query hooks through Orval.",
-      "A scikit-learn risk model (R² 0.94) served over FastAPI, and 1,341 automated tests across the codebase.",
+      "Placed 93% of new users at the right starting difficulty, predicting their awareness scores within ±5 points 85% of the time on 20,000 held-out records, with a scikit-learn gradient-boosting model (R² 0.94) served over FastAPI.",
+      "Shipped the full stack to production on a single AWS EC2 instance, provisioned in under three minutes, by defining it as an AWS CDK stack with Docker Compose, Caddy for TLS, secrets in SSM and the model in S3.",
+      "Cut the model from about 515 MB to 3.3 MB so that it fits a 2 GB production server, by choosing gradient boosting over random forests and loading it in a version-matched Docker image.",
+      "Kept training available through free-tier LLM outages by generating each role-specific scenario in a two-stage pipeline, with Groq as the primary provider and Gemini as failover.",
+      "Gave organizations single sign-on with Okta, Entra ID, Google Workspace and Auth0 by implementing OIDC with PKCE from first principles rather than through a third-party SDK.",
+      "Brought multi-tenant organizations with role-based access control to the platform by migrating the data layer across 44 files.",
+      "Kept client and server in agreement across 57 API operations by generating Zod validators and React Query hooks from one OpenAPI specification through Orval, backed by 1,370 tests that run isolated and in random order in CI.",
     ],
-    stack: "Next.js, TypeScript, Python, FastAPI, MongoDB, scikit-learn, Groq, Gemini, OpenAPI, Orval, Zod, React Query",
-    demo: "https://phish-aware.onrender.com/",
+    stack: "Next.js, TypeScript, Python, FastAPI, MongoDB, scikit-learn, Groq, Gemini, OpenAPI, Orval, Zod, React Query, Docker, AWS CDK, EC2, SSM, S3",
+    demo: "https://phish-aware.tech/",
     github: "https://github.com/shlok-p07/Phish-Aware",
+  },
+  {
+    title: "LevelEdge",
+    logo: leveledgeLogo,
+    mark: "LE",
+    org: "Independent project",
+    start: "2026-11",
+    end: null,
+    period: "Nov 2026 — Present",
+    overview: "A market-forecasting and research project I co-maintain that estimates the probability of a price closing above a given level, runs a rule-based ETF portfolio in a paper account, and tests every trading idea against a simple alternative on unseen data after costs. Ideas that fail are published with their numbers. I rebuilt the forecaster as v2 and built the portfolio, the AWS market scan, the forecast ledger and the trust score. It is for research and paper trading only.",
+    highlights: [
+      "Cut forecast error by 32% (Brier 0.126 against 0.185) on 4,800 held-out forecasts across five tickers by rebuilding the forecaster around one calibrated distribution per target, with volatility scaling, Student-t tails and an XGBoost layer kept only when it beats the baseline on a held-out fold.",
+      "Scanned 100 major US stocks and funds after every weekday close in about five minutes, using about 10% of the Lambda free tier, by fanning the forecaster out on AWS through EventBridge Scheduler, SQS, five Lambda workers and DynamoDB.",
+      "Made the live track record tamper-evident by committing every forecast to a public, hash-chained ledger before its outcome exists, timestamped by an outside authority and verifiable by anyone.",
+      "Graded every strategy from 0 to 100 on eight checks for self-deception, including holdout collapse, luck, overfitting, look-ahead and cost fragility, by building a research-integrity engine whose 135 tasks on AWS produce scores identical to a local run.",
+      "Held the paper portfolio's worst fall to −24% against −33% for 60/40 (2007–2026), at a cost of 0.7 points of annual return, by pairing a 60/40 core with a trend-following sleeve over 11 ETFs, traded weekly in an Alpaca paper account behind eight pre-trade safety checks.",
+      "Published about 20 pre-declared studies with 2020-onward holdouts, failures included: trading against Kalshi's prices lost about 2¢ a contract after fees, and no regime model, VIX signal or news-sentiment signal timed market falls out of sample.",
+      "Made the results readable to non-specialists by building a React dashboard on Vercel, backed by FastAPI on AWS Lambda, with plain-language headlines, a glossary and 93 offline tests behind the library.",
+    ],
+    stack: "Python, XGBoost, pandas, NumPy, FastAPI, React, TypeScript, Vite, AWS Lambda, SQS, EventBridge, DynamoDB, Supabase, Alpaca, GitHub Actions, Vercel",
+    demo: "https://leveledge.vercel.app/",
+    github: "https://github.com/krish1patel/LevelEdge",
   },
   {
     title: "Derivative Hedging via Reinforcement Learning",
     mark: "RL·Δ",
     org: "Independent project",
+    start: "2026-01",
+    end: "2026-03",
     period: "Jan — Mar 2026",
     overview: "An independent study of whether reinforcement-learning agents can hedge options more effectively than established methods. PPO and SAC agents were trained to hedge a short European call on SPY market data and compared with Black-Scholes delta hedging and the Whalley-Wilmott band. The agents showed no statistically significant advantage, and the Whalley-Wilmott band achieved comparable results with 80% fewer trades.",
     highlights: [
-      "Six hedging strategies evaluated on 1,205 thirty-day SPY windows (2021–2026), with 450 paired episodes in each of four market and transaction-cost regimes.",
-      "Every comparison tested with a 10,000-resample paired bootstrap, so that null results are reported as null results.",
-      "Across regimes, Whalley-Wilmott matched or outperformed both agents while trading 65–87% less often.",
-      "Under a CVaR reward the agent held a +0.27 long position instead of hedging; a drift ablation showed that its apparent advantage came from market drift.",
-      "A five-page Streamlit dashboard supports demonstrations, training, evaluation and scenario analysis.",
+      "Showed that neither PPO nor SAC hedged significantly better than established methods, across 450 paired episodes in each of four market and transaction-cost regimes, by evaluating six strategies on 1,205 thirty-day SPY windows (2021–2026).",
+      "Ensured that null results are reported as null results by testing every comparison with a 10,000-resample paired bootstrap and calibrating the benchmark on a held-out block of seeds.",
+      "Found that the Whalley-Wilmott band matched or outperformed both agents in every regime while trading 65–87% less often; at a 1% transaction cost it lost $0.75 per $100 of notional, against $2.22 for delta hedging.",
+      "Traced the CVaR-trained agent's apparent advantage to market drift by running a drift ablation, which showed that it held a +0.27 long position instead of hedging.",
+      "Let users train, evaluate and stress-test the agents without writing code by building a five-page Streamlit dashboard.",
     ],
-    stack: "Python, PyTorch, Stable-Baselines3, NumPy, pandas, SciPy, Streamlit",
+    stack: "Python, PyTorch, Stable-Baselines3, Gymnasium, NumPy, pandas, SciPy, Streamlit",
     demo: "https://reinforcementlearning-terminal.streamlit.app/",
     github: "https://github.com/shlok-p07/Reinforcement-Learning---Derivative-Hedging",
   },
@@ -55,14 +83,19 @@ export const PROJECTS = [
     logo: nudiningLogo,
     mark: "NUD",
     org: "NU Oasis",
-    period: "Sep — Dec 2025",
-    overview: "A team project in NU Oasis that provides live menus and opening hours for Northeastern's three residential dining halls, together with meal voting and calorie tracking.",
+    start: "2025-09",
+    end: null,
+    period: "Sep 2025 — Present",
+    overview: "A team project begun in NU Oasis that provides live menus and opening hours for Northeastern's three residential dining halls, together with dish rankings, meal voting and nutrition tracking. It has since been redesigned as a dark-first app and moved from Supabase to Firebase.",
     highlights: [
-      "A scraper designed to work around Cloudflare's blocking retrieves daily menus and hours from DineOnCampus on scheduled serverless jobs.",
-      "A Supabase PostgreSQL backend with row-level security; calorie tracking and meal voting require sign-in.",
-      "Stale data is treated as a defect: menus older than 14 days are withheld, and every view shows the age of its data.",
+      "Kept menus and hours for all three halls loading with no scraper running by reading them live from DineOnCampus in the browser, falling back in turn to a scraper cache, the copy saved on the device and a bundled schedule.",
+      "Made stale data visible rather than silent by labelling every page with which of those four sources it is showing, and every saved copy with when it was saved.",
+      "Limited rankings and votes to one per person per dish, from verified @northeastern.edu accounts only, by enforcing both in Firestore security rules tested against the Firebase emulator.",
+      "Cut the recent-votes feed's reads by 75% by polling every two minutes instead of every 30 seconds, and loaded the campus notes feed 20 at a time.",
+      "Made votes, notes and ratings anonymous to other students by storing a random account ID in place of a name, and removed existing names from the live data.",
     ],
-    stack: "React, Vite, Tailwind CSS, Supabase, PostgreSQL",
+    stack: "React, Vite, Tailwind CSS, Firebase, Firestore, Puppeteer, Vercel",
+    demo: "https://nu-dining.vercel.app/",
     github: "https://github.com/Oasis-NEU/f25-group-7?files=1",
   },
 ];
@@ -91,16 +124,18 @@ const EXPERIENCE_RAW = [
     start: "2026-09",
     end: null,
     context: "built for Khoury College of Computer Sciences",
-    stack: "Next.js, Express, Socket.IO, MySQL, Keycloak, Docker, GitHub Actions, dbmate",
+    stack: "Next.js, Express, Socket.IO, MySQL, Prisma, Keycloak, Docker, GitHub Actions, dbmate, Gemini",
     period: "Sep 2026 — Present",
     location: "Boston, MA",
-    overview: "Software engineer on a team of more than ten building NU Hire, a hiring simulation commissioned by Khoury College in which student teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor introduces complications in real time. I am responsible for the project's release reliability: continuous integration, database migrations, container builds and end-to-end quality assurance. The application was not handed off to the client.",
+    overview: "Software engineer on a team of more than ten building NU Hire, a hiring simulation commissioned by Khoury College in which student teams screen resumes, evaluate recorded interviews and negotiate an offer while an advisor introduces complications in real time. I am responsible for the project's release reliability (continuous integration, database migrations, container builds and end-to-end quality assurance) and own the data layer behind AI resume screening. The application was not handed off to the client.",
     points: [
-      "Built a GitHub Actions gate of ten required checks, covering tests, the Docker build, migrations and a security audit, for every merge to main.",
-      "Configured dbmate migrations to run and fail-stop before the API starts, and added a CI check for drift between the Prisma schema and the migrations.",
-      "Made the Docker build portable across x86 and ARM.",
-      "Conducted end-to-end QA of the classroom flow, logging more than 60 issues, including a critical defect that locked students out mid-session.",
-      "Implemented resume text extraction, with a backfill for existing records, to support keyword-based applicant screening.",
+      "Kept contact details out of AI screening, with no leaks across six PDF layouts and 1,000 generated resumes, by building a redaction layer that is the only type-safe path for a resume to reach Gemini.",
+      "Cut worst-case processing of 200 KB of hostile input from 2–3 minutes to under 30 ms by anchoring the four patterns that rescanned the text from every character.",
+      "Set the direction for resume screening by comparing keyword matching with an AI model and HackerRank's hiring agent, prototyping the keyword scorer (100 scores in 9 ms) and recommending a curated term list per posting; then built the 0–100 matcher, its results table and repository.",
+      "Gave the screener the text of every resume and job description by extracting it from PDFs on upload and backfilling existing records at each API start.",
+      "Blocked broken changes from reaching main with a GitHub Actions gate of ten required checks, covering tests, a Docker build portable across x86 and ARM, migrations and a security audit.",
+      "Stopped the API from starting against a failed or drifted schema by running dbmate migrations fail-stop before boot and adding a CI check that diffs the Prisma schema against the migrations.",
+      "Logged more than 60 issues, including a critical defect that locked students out mid-session, by conducting end-to-end QA of the classroom flow.",
     ],
   },
   {
@@ -170,16 +205,17 @@ const EXPERIENCE_RAW = [
     start: "2026-01",
     end: null,
     context: "Northeastern University",
-    stack: "Next.js, TypeScript, React, Puck, Prisma, PostgreSQL, Supabase, Tailwind CSS, shadcn/ui",
+    stack: "Next.js, TypeScript, React, Puck, Prisma, PostgreSQL, Supabase, Tailwind CSS, shadcn/ui, Vercel",
     period: "Jan 2026 — Present",
     location: "Boston, MA",
     overview: "Lead Software Engineer and the sole technical lead on Student Government's Digital Innovation team. I manage the development lifecycle for a team of more than five engineers and build the content management system behind the SGA website, which allows non-technical officers to publish without writing code.",
     points: [
-      "Run ticketing, sprint planning and code review for the team.",
-      "The system serves more than 5,000 students and has reduced publishing time by 10%.",
-      "Drag-and-drop page building with React Puck, Supabase authentication and Vercel hosting.",
-      "Version history, rollback, role-based access control and soft-delete archiving on Next.js and Prisma.",
-      "Prisma-validated API endpoints that prevent malformed writes to PostgreSQL.",
+      "Cut publishing time by 10% for a site that serves more than 5,000 students by developing a content management system that non-technical editors publish through directly.",
+      "Let officers build pages without code by integrating drag-and-drop editing with Puck, Supabase authentication and Vercel hosting.",
+      "Make every published change recoverable by architecting version history, rollback, role-based access control and soft-delete archiving on Next.js and Prisma.",
+      "Enforce schema integrity on every mutation to PostgreSQL through Prisma-validated API endpoints.",
+      "Lead a cross-functional team of more than five engineers as technical lead, running sprint planning, code review and ticket triage.",
+      "Unblocked document folders and editor keyboard shortcuts for release by fixing the double undo, broken text editing and inaccessible move dialog found in review.",
     ],
   },
   {
@@ -258,7 +294,7 @@ const EXPERIENCE_RAW = [
   },
 ];
 
-export const RESEARCH = [
+const RESEARCH_RAW = [
   {
     title: "Multimodal Machine Learning for Parkinson's Detection",
     visual: "auroc",
@@ -266,6 +302,8 @@ export const RESEARCH = [
     role: "Undergraduate Researcher",
     group: "Intelligent Automation (IoT) Research Group, Northeastern University",
     advisor: "Prof. Sarita Singh",
+    start: "2026-07",
+    end: null,
     period: "July 2026 — Present",
     work: [
       "Engineered a machine learning pipeline in librosa, Praat and PyTorch that fuses voice, tapping and gait signals, using gated and attention fusion networks over a stacking meta-learner.",
@@ -282,6 +320,8 @@ export const RESEARCH = [
     role: "Undergraduate Researcher",
     group: "Intelligent Automation (IoT) Research Group, Northeastern University",
     advisor: "Prof. Sarita Singh",
+    start: "2026-07",
+    end: "2026-09",
     period: "July — September 2026",
     work: [
       "Designed a differential human-baseline versus AI protocol benchmarking four coding assistants across four language paradigms on generation, debugging and refactoring.",
@@ -297,6 +337,8 @@ export const RESEARCH = [
     role: "Undergraduate Researcher",
     group: "Northeastern University",
     advisor: "Prof. Sarita Singh",
+    start: "2026-09",
+    end: "2026-12",
     period: "Fall 2026",
     work: [
       "Scenarios span six channels: email, SMS, voice, QR codes, social media and web pages.",
@@ -403,9 +445,15 @@ export const CONTACT = [
   { label: "Resume", value: "PDF", href: encodeURI("/Shlok Patel's Resume(CS).pdf") },
 ];
 
-export const EXPERIENCE = [...EXPERIENCE_RAW].sort((a, b) => {
+/* Every dated list reads newest first: by start month, then ongoing
+   entries ahead of finished ones that started the same month. */
+const newestFirst = (a, b) => {
   if (a.start !== b.start) return a.start < b.start ? 1 : -1;
   if (!a.end && b.end) return -1;
   if (a.end && !b.end) return 1;
   return 0;
-});
+};
+
+export const EXPERIENCE = [...EXPERIENCE_RAW].sort(newestFirst);
+export const PROJECTS = [...PROJECTS_RAW].sort(newestFirst);
+export const RESEARCH = [...RESEARCH_RAW].sort(newestFirst);
